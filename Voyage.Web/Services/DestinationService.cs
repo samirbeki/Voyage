@@ -116,5 +116,23 @@ namespace Voyage.Web.Services
 
             return true;
         }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var destination = await dbContext.Destinations
+                .FirstOrDefaultAsync(d => d.Id == id && !d.IsDeleted);
+
+            if (destination == null)
+            {
+                return false;
+            }
+
+            destination.IsDeleted = true;
+
+            await dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
     }
 }

@@ -15,5 +15,7 @@ namespace Voyage.Web.Services.Contracts
         Task<DestinationFormViewModel?> GetForEditAsync(int id);
 
         Task<bool> EditAsync(int id, DestinationFormViewModel model);
+
+        Task<bool> DeleteAsync(int id);
     }
 }

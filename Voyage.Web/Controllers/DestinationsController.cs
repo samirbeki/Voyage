@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Destinations;
 
@@ -93,6 +94,34 @@ namespace Voyage.Web.Controllers
             }
 
             return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var model = await destinationService.GetDetailsAsync(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var success = await destinationService.DeleteAsync(id);
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
