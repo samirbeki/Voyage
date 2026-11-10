@@ -38,9 +38,11 @@
                     <p class="v-card-text">@destination.Description</p>
 
                     <div class="v-card-footer">
-                        <a class="v-card-link stretched-link" href="#">
-                            View details
-                            <i class="bi bi-arrow-right"></i>
+                        <a class="v-card-link stretched-link"
+                        asp-action="Details"
+                        asp-route-id="@destination.Id">
+                        View details
+                        <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>

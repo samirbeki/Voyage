@@ -31,5 +31,23 @@ namespace Voyage.Web.Services
                 })
                 .ToListAsync();
         }
+        
+
+        public async Task<DestinationDetailsViewModel?> GetDetailsAsync(int id)
+        {
+            return await dbContext.Destinations
+                .AsNoTracking()
+                .Where(d => d.Id == id && !d.IsDeleted)
+                .Select(d => new DestinationDetailsViewModel
+                {
+                    Id = d.Id,
+                    Name = d.Name,
+                    Country = d.Country,
+                    ImageUrl = d.ImageUrl,
+                    CategoryName = d.Category.Name,
+                    Description = d.Description
+                })
+                .FirstOrDefaultAsync();
+        }
     }
 }

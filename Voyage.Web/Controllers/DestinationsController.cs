@@ -18,5 +18,18 @@ namespace Voyage.Web.Controllers
 
             return View(destinations);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var destination = await destinationService.GetDetailsAsync(id);
+
+            if (destination == null)
+            {
+                return NotFound();
+            }
+
+            return View(destination);
+        }
+
     }
 }

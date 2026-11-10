@@ -1,0 +1,50 @@
+﻿
+@model Voyage.Web.ViewModels.Destinations.DestinationDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="v-cover">
+    <img src="@Model.ImageUrl"
+         alt="@Model.Name"
+         onerror="this.style.display='none'" />
+
+    <div class="v-cover-overlay">
+        <div>
+            <span class="v-badge">
+                <i class="bi bi-tag"></i>
+                @Model.CategoryName
+            </span>
+        </div>
+
+        <h1>@Model.Name</h1>
+
+        <div>
+            <i class="bi bi-geo-alt"></i>
+            @Model.Country
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="v-panel">
+            <h2 class="v-panel-title">About this destination</h2>
+            <p class="mb-0">@Model.Description</p>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="v-panel">
+            <h2 class="v-panel-title">Actions</h2>
+
+            <div class="v-actions">
+                <a class="btn btn-outline-navy" asp-action="Index">
+                    <i class="bi bi-arrow-left"></i>
+                    Back to destinations
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
