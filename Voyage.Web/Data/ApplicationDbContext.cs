@@ -9,5 +9,9 @@ namespace Voyage.Web.Data
         public DbSet<Category> Categories { get; set; } = null!;
 
         public DbSet<Destination> Destinations { get; set; } = null!;
+
+        public DbSet<Trip> Trips { get; set; } = null!;
+
+        public DbSet<TripDestination> TripDestinations { get; set; } = null!;
     }
 }

@@ -286,6 +286,66 @@ namespace Voyage.Web.Data.Migrations
                     b.ToTable("Destinations");
                 });
 
+            modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Budget")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CoverImageUrl")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Trips");
+                });
+
+            modelBuilder.Entity("Voyage.Web.Data.Entities.TripDestination", b =>
+                {
+                    b.Property<int>("TripId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DestinationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TripId", "DestinationId");
+
+                    b.HasIndex("DestinationId");
+
+                    b.ToTable("TripDestinations");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -348,9 +408,49 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Voyage.Web.Data.Entities.TripDestination", b =>
+                {
+                    b.HasOne("Voyage.Web.Data.Entities.Destination", "Destination")
+                        .WithMany("TripDestinations")
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Voyage.Web.Data.Entities.Trip", "Trip")
+                        .WithMany("TripDestinations")
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Destination");
+
+                    b.Navigation("Trip");
+                });
+
             modelBuilder.Entity("Voyage.Web.Data.Entities.Category", b =>
                 {
                     b.Navigation("Destinations");
+                });
+
+            modelBuilder.Entity("Voyage.Web.Data.Entities.Destination", b =>
+                {
+                    b.Navigation("TripDestinations");
+                });
+
+            modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
+                {
+                    b.Navigation("TripDestinations");
                 });
 #pragma warning restore 612, 618
         }

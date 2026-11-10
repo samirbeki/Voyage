@@ -30,5 +30,7 @@ namespace Voyage.Web.Data.Entities
         public int CategoryId { get; set; }
 
         public Category Category { get; set; } = null!;
+
+        public ICollection<TripDestination> TripDestinations { get; set; } = new HashSet<TripDestination>();
     }
 }

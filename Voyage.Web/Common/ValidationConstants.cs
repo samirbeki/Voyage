@@ -16,5 +16,9 @@
         public const int DestinationDescriptionMaxLength = 2000;
 
         public const int ImageUrlMaxLength = 2048;
+
+        public const int TripTitleMinLength = 3;
+        public const int TripTitleMaxLength = 100;
+        public const int TripDescriptionMaxLength = 2000;
     }
 }
