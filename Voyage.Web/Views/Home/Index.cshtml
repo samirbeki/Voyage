@@ -1,8 +1,63 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Plan smarter. Travel further.";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Hero {
+    <section class="v-hero">
+        <div class="container v-hero-inner">
+            <span class="v-eyebrow"><i class="bi bi-stars"></i> Your trips, all in one place</span>
+            <h1 class="v-hero-title">Plan smarter.<br />Travel further.</h1>
+            <p class="v-hero-text">
+                VOYAGE helps you discover destinations, organize your trips day by day
+                and keep your travel budget under control.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+                <a class="btn btn-accent btn-lg px-4" asp-controller="Trips" asp-action="Create">
+                    <i class="bi bi-plus-lg"></i> Plan a trip
+                </a>
+                <a class="btn btn-outline-light btn-lg px-4" asp-controller="Destinations" asp-action="Index">
+                    Explore destinations
+                </a>
+            </div>
+        </div>
+    </section>
+}
+
+<section class="v-section">
+    <div class="v-section-head text-center">
+        <h2 class="v-section-title">Everything you need for your next journey</h2>
+        <p class="v-muted">From the first idea to the last day of the trip.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="v-feature">
+                <div class="v-feature-icon"><i class="bi bi-geo-alt"></i></div>
+                <h3>Discover destinations</h3>
+                <p>Browse handpicked places by category: beaches, mountains, city breaks and more.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="v-feature">
+                <div class="v-feature-icon"><i class="bi bi-calendar-week"></i></div>
+                <h3>Organize your trips</h3>
+                <p>Create trips with dates, destinations and activities, and keep every detail in one place.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="v-feature">
+                <div class="v-feature-icon"><i class="bi bi-wallet2"></i></div>
+                <h3>Track your budget</h3>
+                <p>Set a budget for every trip and always know how much you have left to spend.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="v-cta">
+    <div>
+        <h2>Ready for your next adventure?</h2>
+        <p>Create your first trip in less than a minute.</p>
+    </div>
+    <a class="btn btn-accent btn-lg px-4" asp-controller="Trips" asp-action="Create">Get started</a>
+</section>

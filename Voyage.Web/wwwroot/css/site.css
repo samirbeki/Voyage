@@ -1,31 +1,675 @@
+/* =========================================================
+   VOYAGE – design system
+   Navy + white, one warm accent, rounded cards, soft shadows
+   ========================================================= */
+
+:root {
+    --voyage-navy: #0B1F3A;
+    --voyage-navy-soft: #1C3557;
+    --voyage-accent: #F4A259;
+    --voyage-accent-dark: #E08A3C;
+    --voyage-teal: #2A9D8F;
+    --voyage-bg: #F7F8FA;
+    --voyage-surface: #FFFFFF;
+    --voyage-text: #1F2937;
+    --voyage-muted: #6B7280;
+    --voyage-border: #E5E7EB;
+    --voyage-danger: #DC2626;
+    --voyage-radius: 16px;
+    --voyage-radius-sm: 10px;
+    --voyage-shadow: 0 4px 18px rgba(11, 31, 58, 0.08);
+    --voyage-shadow-hover: 0 10px 28px rgba(11, 31, 58, 0.14);
+    --voyage-font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --voyage-font-display: "Playfair Display", Georgia, serif;
+}
+
+/* ---------- Base ---------- */
+
 html {
-  font-size: 14px;
+    font-size: 15px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html { font-size: 16px; }
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: var(--voyage-font);
+    background: var(--voyage-bg);
+    color: var(--voyage-text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body > .container {
+    flex: 1 0 auto;
+}
+
+a {
+    color: var(--voyage-navy-soft);
+}
+
+a:hover {
+    color: var(--voyage-accent-dark);
+}
+
+h1, h2, h3, h4 {
+    color: var(--voyage-navy);
+    font-weight: 700;
+}
+
+.v-main {
+    padding: 2.5rem 0 3.5rem;
+}
+
+.v-muted {
+    color: var(--voyage-muted);
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus,
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(244, 162, 89, 0.35);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+    border-radius: var(--voyage-radius-sm);
+    font-weight: 600;
+}
+
+.btn-accent {
+    background: var(--voyage-accent);
+    border-color: var(--voyage-accent);
+    color: var(--voyage-navy);
+}
+
+.btn-accent:hover, .btn-accent:focus {
+    background: var(--voyage-accent-dark);
+    border-color: var(--voyage-accent-dark);
+    color: var(--voyage-navy);
+}
+
+.btn-navy {
+    background: var(--voyage-navy);
+    border-color: var(--voyage-navy);
+    color: #fff;
+}
+
+.btn-navy:hover, .btn-navy:focus {
+    background: var(--voyage-navy-soft);
+    border-color: var(--voyage-navy-soft);
+    color: #fff;
+}
+
+.btn-outline-navy {
+    border: 1px solid var(--voyage-navy);
+    color: var(--voyage-navy);
+    background: transparent;
+}
+
+.btn-outline-navy:hover {
+    background: var(--voyage-navy);
+    color: #fff;
+}
+
+/* ---------- Navbar ---------- */
+
+.v-navbar {
+    background: var(--voyage-navy);
+    padding: 0.85rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.v-brand {
+    font-family: var(--voyage-font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: #fff !important;
+}
+
+.v-brand .bi {
+    color: var(--voyage-accent);
+}
+
+.v-navbar .nav-link {
+    color: rgba(255, 255, 255, 0.78) !important;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.45rem 0.8rem !important;
+    transition: color 0.15s, background 0.15s;
+}
+
+.v-navbar .nav-link:hover {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Hero (landing) ---------- */
+
+.v-hero {
+    background:
+        linear-gradient(115deg, rgba(11, 31, 58, 0.94) 0%, rgba(11, 31, 58, 0.75) 55%, rgba(42, 157, 143, 0.55) 100%),
+        url("/images/hero.jpg") center / cover no-repeat,
+        var(--voyage-navy);
+    color: #fff;
+    padding: 6rem 0 5.5rem;
+}
+
+.v-hero-inner {
+    max-width: 1140px;
+}
+
+.v-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.v-eyebrow .bi {
+    color: var(--voyage-accent);
+}
+
+.v-hero-title {
+    font-family: var(--voyage-font-display);
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    line-height: 1.08;
+    color: #fff;
+    margin-bottom: 1.25rem;
+}
+
+.v-hero-text {
+    font-size: 1.15rem;
+    max-width: 560px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 2rem;
+}
+
+/* ---------- Page header (inner pages) ---------- */
+
+.v-page-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.v-page-title {
+    font-family: var(--voyage-font-display);
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    margin: 0;
+}
+
+.v-page-subtitle {
+    color: var(--voyage-muted);
+    margin: 0.35rem 0 0;
+}
+
+/* ---------- Sections & features ---------- */
+
+.v-section {
+    padding: 1rem 0 3rem;
+}
+
+.v-section-head {
+    margin-bottom: 2.5rem;
+}
+
+.v-section-title {
+    font-family: var(--voyage-font-display);
+    font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+}
+
+.v-feature {
+    background: var(--voyage-surface);
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    padding: 2rem 1.75rem;
+    height: 100%;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.v-feature:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--voyage-shadow-hover);
+}
+
+.v-feature-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 1.5rem;
+    background: rgba(244, 162, 89, 0.15);
+    color: var(--voyage-accent-dark);
+    margin-bottom: 1.25rem;
+}
+
+.v-feature h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.v-feature p {
+    color: var(--voyage-muted);
+    margin: 0;
+}
+
+.v-cta {
+    background: var(--voyage-navy);
+    border-radius: var(--voyage-radius);
+    color: #fff;
+    padding: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.v-cta h2 {
+    color: #fff;
+    font-family: var(--voyage-font-display);
+    margin-bottom: 0.25rem;
+}
+
+.v-cta p {
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+}
+
+/* ---------- Cards (destinations, trips) ---------- */
+
+.v-card {
+    background: var(--voyage-surface);
+    border: none;
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.v-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--voyage-shadow-hover);
+}
+
+.v-card-img {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(135deg, var(--voyage-navy-soft), var(--voyage-teal));
+    overflow: hidden;
+}
+
+.v-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.v-card-badge {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+}
+
+.v-card-body {
+    padding: 1.25rem 1.35rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.v-card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+}
+
+.v-card-meta {
+    color: var(--voyage-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.v-card-text {
+    color: var(--voyage-text);
+    font-size: 0.95rem;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.v-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.v-card-link {
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--voyage-navy);
+}
+
+.v-card-link:hover {
+    color: var(--voyage-accent-dark);
+}
+
+/* Whole card clickable: put .stretched-link on the main link */
+.v-card .stretched-link::after {
+    border-radius: var(--voyage-radius);
+}
+
+/* ---------- Badges & chips ---------- */
+
+.v-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--voyage-navy);
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.v-badge-teal {
+    background: rgba(42, 157, 143, 0.12);
+    color: var(--voyage-teal);
+}
+
+.v-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--voyage-surface);
+    border: 1px solid var(--voyage-border);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.v-chip .bi {
+    color: var(--voyage-accent-dark);
+}
+
+/* ---------- Details page ---------- */
+
+.v-cover {
+    position: relative;
+    border-radius: var(--voyage-radius);
+    overflow: hidden;
+    aspect-ratio: 21 / 8;
+    background: linear-gradient(135deg, var(--voyage-navy-soft), var(--voyage-teal));
+    box-shadow: var(--voyage-shadow);
+    margin-bottom: 2rem;
+}
+
+.v-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.v-cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(11, 31, 58, 0) 35%, rgba(11, 31, 58, 0.85) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    color: #fff;
+}
+
+.v-cover-overlay h1 {
+    color: #fff;
+    font-family: var(--voyage-font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    margin: 0.5rem 0 0.25rem;
+}
+
+.v-panel {
+    background: var(--voyage-surface);
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.v-panel-title {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+}
+
+.v-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+/* ---------- Timeline (activities by day) ---------- */
+
+.v-timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.v-timeline::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--voyage-border);
+}
+
+.v-timeline-item {
+    position: relative;
+    padding: 0 0 1.4rem 2.4rem;
+}
+
+.v-timeline-item::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--voyage-accent);
+    border: 3px solid var(--voyage-surface);
+    box-shadow: 0 0 0 2px var(--voyage-accent);
+}
+
+.v-timeline-date {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--voyage-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.v-timeline-title {
+    font-weight: 600;
+    margin: 0.15rem 0;
+}
+
+/* ---------- Forms ---------- */
+
+.v-form-card {
+    background: var(--voyage-surface);
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    padding: 2.25rem;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.v-form-card .form-label {
+    font-weight: 600;
+    color: var(--voyage-navy);
+}
+
+.form-control, .form-select {
+    border-radius: var(--voyage-radius-sm);
+    border-color: var(--voyage-border);
+    padding: 0.65rem 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--voyage-accent);
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    text-align: start;
+}
+
+.field-validation-error, .text-danger {
+    color: var(--voyage-danger) !important;
+    font-size: 0.875rem;
+}
+
+.input-validation-error {
+    border-color: var(--voyage-danger) !important;
+}
+
+.validation-summary-errors ul {
+    margin: 0;
+    padding-left: 1.1rem;
+}
+
+/* ---------- Delete confirmation ---------- */
+
+.v-danger-card {
+    background: var(--voyage-surface);
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    border-top: 5px solid var(--voyage-danger);
+    padding: 2.25rem;
+    max-width: 620px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.v-danger-icon {
+    font-size: 2.6rem;
+    color: var(--voyage-danger);
+}
+
+/* ---------- Empty state ---------- */
+
+.v-empty {
+    background: var(--voyage-surface);
+    border: 2px dashed var(--voyage-border);
+    border-radius: var(--voyage-radius);
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+}
+
+.v-empty .bi {
+    font-size: 2.8rem;
+    color: var(--voyage-accent);
+}
+
+.v-empty h3 {
+    margin: 1rem 0 0.5rem;
+}
+
+/* ---------- Alerts ---------- */
+
+.v-alert-success {
+    background: rgba(42, 157, 143, 0.12);
+    color: #1d6f65;
+    border: none;
+    border-radius: var(--voyage-radius-sm);
+}
+
+/* ---------- Pagination (Advanced) ---------- */
+
+.pagination .page-link {
+    border: none;
+    border-radius: 8px !important;
+    margin: 0 0.15rem;
+    color: var(--voyage-navy);
+    font-weight: 500;
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--voyage-navy);
+    color: #fff;
+}
+
+/* ---------- Footer ---------- */
+
+.v-footer {
+    background: var(--voyage-navy);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 1.75rem 0;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.v-brand-sm {
+    font-family: var(--voyage-font-display);
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-right: 0.75rem;
+}
+
+.v-brand-sm .bi {
+    color: var(--voyage-accent);
+}
+
+.v-footer a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+}
+
+.v-footer a:hover {
+    color: var(--voyage-accent);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 575.98px) {
+    .v-hero { padding: 4rem 0 3.5rem; }
+    .v-form-card, .v-danger-card, .v-panel { padding: 1.5rem; }
+    .v-cta { padding: 1.75rem; }
+    .v-cover { aspect-ratio: 4 / 3; }
 }
