@@ -7,5 +7,9 @@ namespace Voyage.Web.Services.Contracts
         Task<IEnumerable<DestinationAllViewModel>> GetAllAsync();
 
         Task<DestinationDetailsViewModel?> GetDetailsAsync(int id);
+
+        Task<IEnumerable<CategoryOptionViewModel>> GetCategoriesAsync();
+
+        Task AddAsync(DestinationFormViewModel model);
     }
 }

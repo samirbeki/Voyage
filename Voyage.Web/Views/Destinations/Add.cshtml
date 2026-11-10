@@ -1,0 +1,64 @@
+﻿@model Voyage.Web.ViewModels.Destinations.DestinationFormViewModel
+
+@{
+    ViewData["Title"] = "Add destination";
+}
+
+<div class="v-form-card">
+    <h1 class="v-page-title mb-1">Add destination</h1>
+    <p class="v-page-subtitle mb-4">Share a new place with other travelers.</p>
+
+    <form method="post" asp-action="Add">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Name"></label>
+            <input class="form-control" asp-for="Name" placeholder="e.g. Lisbon" />
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Country"></label>
+            <input class="form-control" asp-for="Country" placeholder="e.g. Portugal" />
+            <span class="text-danger" asp-validation-for="Country"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="CategoryId"></label>
+            <select class="form-select"
+                    asp-for="CategoryId"
+                    asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                <option value="0">-- Select category --</option>
+            </select>
+            <span class="text-danger" asp-validation-for="CategoryId"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="ImageUrl"></label>
+            <input class="form-control"
+                   asp-for="ImageUrl"
+                   placeholder="/images/destinations/lisbon.jpg or https://..." />
+            <span class="text-danger" asp-validation-for="ImageUrl"></span>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label" asp-for="Description"></label>
+            <textarea class="form-control"
+                      rows="5"
+                      asp-for="Description"></textarea>
+            <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-accent px-4">
+                <i class="bi bi-check-lg"></i> Save
+            </button>
+
+            <a class="btn btn-outline-navy" asp-action="Index">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

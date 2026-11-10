@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Voyage.Web.Services.Contracts;
+using Voyage.Web.ViewModels.Destinations;
 
 namespace Voyage.Web.Controllers
 {
@@ -31,5 +32,31 @@ namespace Voyage.Web.Controllers
             return View(destination);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var model = new DestinationFormViewModel
+            {
+                Categories = await destinationService.GetCategoriesAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(DestinationFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await destinationService.GetCategoriesAsync();
+
+                return View(model);
+            }
+
+            await destinationService.AddAsync(model);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Voyage.Web.Data;
+using Voyage.Web.Data.Entities;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Destinations;
 
@@ -49,5 +50,35 @@ namespace Voyage.Web.Services
                 })
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<IEnumerable<CategoryOptionViewModel>> GetCategoriesAsync()
+        {
+            return await dbContext.Categories
+                .AsNoTracking()
+                .OrderBy(c => c.Name)
+                .Select(c => new CategoryOptionViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToListAsync();
+        }
+
+        public async Task AddAsync(DestinationFormViewModel model)
+        {
+            var destination = new Destination
+            {
+                Name = model.Name,
+                Country = model.Country,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                CategoryId = model.CategoryId
+            };
+
+            await dbContext.Destinations.AddAsync(destination);
+
+            await dbContext.SaveChangesAsync();
+        }
+
     }
 }
