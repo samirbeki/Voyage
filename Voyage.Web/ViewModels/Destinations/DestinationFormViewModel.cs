@@ -5,32 +5,40 @@ namespace Voyage.Web.ViewModels.Destinations
 {
     public class DestinationFormViewModel
     {
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
             ValidationConstants.DestinationNameMaxLength,
-            MinimumLength = ValidationConstants.DestinationNameMinLength)]
+            MinimumLength = ValidationConstants.DestinationNameMinLength,
+            ErrorMessage = ErrorMessages.StringLengthRange)]
         public string Name { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
             ValidationConstants.DestinationCountryMaxLength,
-            MinimumLength = ValidationConstants.DestinationCountryMinLength)]
+            MinimumLength = ValidationConstants.DestinationCountryMinLength,
+            ErrorMessage = ErrorMessages.StringLengthRange)]
         public string Country { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
             ValidationConstants.DestinationDescriptionMaxLength,
-            MinimumLength = ValidationConstants.DestinationDescriptionMinLength)]
+            MinimumLength = ValidationConstants.DestinationDescriptionMinLength,
+            ErrorMessage = ErrorMessages.StringLengthRange)]
         public string Description { get; set; } = null!;
 
         [RegularExpression(
             @"^(https?://.+|/images/.+)$",
-            ErrorMessage = "Enter a full link (https://...) or a path starting with /images.")]
-        [StringLength(ValidationConstants.ImageUrlMaxLength)]
+            ErrorMessage = ErrorMessages.InvalidImageUrl)]
+        [StringLength(
+            ValidationConstants.ImageUrlMaxLength,
+            ErrorMessage = ErrorMessages.MaxLengthField)]
         [Display(Name = "Image URL")]
         public string? ImageUrl { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Please select a category.")]
+        [Range(
+            1,
+            int.MaxValue,
+            ErrorMessage = ErrorMessages.CategoryRequired)]
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
