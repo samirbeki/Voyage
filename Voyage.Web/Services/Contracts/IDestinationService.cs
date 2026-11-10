@@ -11,5 +11,9 @@ namespace Voyage.Web.Services.Contracts
         Task<IEnumerable<CategoryOptionViewModel>> GetCategoriesAsync();
 
         Task AddAsync(DestinationFormViewModel model);
+
+        Task<DestinationFormViewModel?> GetForEditAsync(int id);
+
+        Task<bool> EditAsync(int id, DestinationFormViewModel model);
     }
 }

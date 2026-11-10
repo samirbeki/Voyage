@@ -58,5 +58,41 @@ namespace Voyage.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await destinationService.GetForEditAsync(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            model.Categories = await destinationService.GetCategoriesAsync();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, DestinationFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await destinationService.GetCategoriesAsync();
+
+                return View(model);
+            }
+
+            var success = await destinationService.EditAsync(id, model);
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Details), new { id });
+        }
     }
 }

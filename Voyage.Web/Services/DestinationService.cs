@@ -80,5 +80,41 @@ namespace Voyage.Web.Services
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<DestinationFormViewModel?> GetForEditAsync(int id)
+        {
+            return await dbContext.Destinations
+                .AsNoTracking()
+                .Where(d => d.Id == id && !d.IsDeleted)
+                .Select(d => new DestinationFormViewModel
+                {
+                    Name = d.Name,
+                    Country = d.Country,
+                    Description = d.Description,
+                    ImageUrl = d.ImageUrl,
+                    CategoryId = d.CategoryId
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> EditAsync(int id, DestinationFormViewModel model)
+        {
+            var destination = await dbContext.Destinations
+                .FirstOrDefaultAsync(d => d.Id == id && !d.IsDeleted);
+
+            if (destination == null)
+            {
+                return false;
+            }
+
+            destination.Name = model.Name;
+            destination.Country = model.Country;
+            destination.Description = model.Description;
+            destination.ImageUrl = model.ImageUrl;
+            destination.CategoryId = model.CategoryId;
+
+            await dbContext.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
