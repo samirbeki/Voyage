@@ -244,6 +244,56 @@ namespace Voyage.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Sun, sand and sea escapes.",
+                            Name = "Beach"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Peaks, trails and fresh air.",
+                            Name = "Mountains"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Short trips to vibrant cities.",
+                            Name = "City Break"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "History, museums and heritage.",
+                            Name = "Culture"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Parks, lakes and wildlife.",
+                            Name = "Nature"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Thrills and outdoor activities.",
+                            Name = "Adventure"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Spa retreats and relaxing getaways.",
+                            Name = "Wellness"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Snowy escapes and ski resorts.",
+                            Name = "Winter"
+                        });
                 });
 
             modelBuilder.Entity("Voyage.Web.Data.Entities.Destination", b =>
@@ -284,6 +334,208 @@ namespace Voyage.Web.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Destinations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Country = "Greece",
+                            Description = "Whitewashed villages, blue domes and famous sunsets over the Aegean Sea.",
+                            ImageUrl = "/images/destinations/santorini.jpg",
+                            IsDeleted = false,
+                            Name = "Santorini"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            Country = "Bulgaria",
+                            Description = "Mountain town at the foot of Pirin, popular for skiing and hiking.",
+                            ImageUrl = "/images/destinations/bansko.jpg",
+                            IsDeleted = false,
+                            Name = "Bansko"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            Country = "France",
+                            Description = "The city of light with iconic landmarks, cafés and world-class museums.",
+                            ImageUrl = "/images/destinations/paris.jpg",
+                            IsDeleted = false,
+                            Name = "Paris"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 4,
+                            Country = "Italy",
+                            Description = "Ancient ruins, Renaissance art and lively piazzas in the Eternal City.",
+                            ImageUrl = "/images/destinations/rome.jpg",
+                            IsDeleted = false,
+                            Name = "Rome"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 5,
+                            Country = "Croatia",
+                            Description = "Terraced lakes connected by waterfalls in a protected national park.",
+                            ImageUrl = "/images/destinations/plitvice.jpg",
+                            IsDeleted = false,
+                            Name = "Plitvice Lakes"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 6,
+                            Country = "Switzerland",
+                            Description = "Base for paragliding, canyoning and alpine adventures between two lakes.",
+                            ImageUrl = "/images/destinations/interlaken.jpg",
+                            IsDeleted = false,
+                            Name = "Interlaken"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 1,
+                            Country = "Bulgaria",
+                            Description = "Charming old town on the Black Sea coast with sandy beaches.",
+                            ImageUrl = "/images/destinations/sozopol.jpg",
+                            IsDeleted = false,
+                            Name = "Sozopol"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 3,
+                            Country = "Spain",
+                            Description = "Gaudí architecture, beaches and vibrant nightlife on the Mediterranean.",
+                            ImageUrl = "/images/destinations/barcelona.jpg",
+                            IsDeleted = false,
+                            Name = "Barcelona"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 3,
+                            Country = "Czech Republic",
+                            Description = "Fairytale old town with a famous astronomical clock and Charles Bridge.",
+                            ImageUrl = "/images/destinations/prague.jpg",
+                            IsDeleted = false,
+                            Name = "Prague"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 4,
+                            Country = "Japan",
+                            Description = "Thousands of temples, traditional tea houses and beautiful gardens.",
+                            ImageUrl = "/images/destinations/kyoto.jpg",
+                            IsDeleted = false,
+                            Name = "Kyoto"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 5,
+                            Country = "Canada",
+                            Description = "Turquoise lakes and rugged peaks in the heart of the Rockies.",
+                            ImageUrl = "/images/destinations/banff.jpg",
+                            IsDeleted = false,
+                            Name = "Banff"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 6,
+                            Country = "New Zealand",
+                            Description = "The adventure capital of the world for bungee jumping and skiing.",
+                            ImageUrl = "/images/destinations/queenstown.jpg",
+                            IsDeleted = false,
+                            Name = "Queenstown"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 1,
+                            Country = "Indonesia",
+                            Description = "Tropical beaches, rice terraces and spiritual temples.",
+                            ImageUrl = "/images/destinations/bali.jpg",
+                            IsDeleted = false,
+                            Name = "Bali"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 8,
+                            Country = "Switzerland",
+                            Description = "Car-free alpine village beneath the iconic Matterhorn.",
+                            ImageUrl = "/images/destinations/zermatt.jpg",
+                            IsDeleted = false,
+                            Name = "Zermatt"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 7,
+                            Country = "Bulgaria",
+                            Description = "The spa capital of the Balkans with dozens of mineral springs.",
+                            ImageUrl = "/images/destinations/velingrad.jpg",
+                            IsDeleted = false,
+                            Name = "Velingrad"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 4,
+                            Country = "Turkey",
+                            Description = "Where Europe meets Asia, full of bazaars, mosques and palaces.",
+                            ImageUrl = "/images/destinations/istanbul.jpg",
+                            IsDeleted = false,
+                            Name = "Istanbul"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 2,
+                            Country = "Bulgaria",
+                            Description = "Seven glacial lakes high in the Rila Mountains.",
+                            ImageUrl = "/images/destinations/rila.jpg",
+                            IsDeleted = false,
+                            Name = "Rila Lakes"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CategoryId = 5,
+                            Country = "Iceland",
+                            Description = "Gateway to geysers, waterfalls and the northern lights.",
+                            ImageUrl = "/images/destinations/reykjavik.jpg",
+                            IsDeleted = false,
+                            Name = "Reykjavik"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CategoryId = 7,
+                            Country = "Hungary",
+                            Description = "Grand thermal baths and elegant architecture along the Danube.",
+                            ImageUrl = "/images/destinations/budapest.jpg",
+                            IsDeleted = false,
+                            Name = "Budapest"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CategoryId = 8,
+                            Country = "Bulgaria",
+                            Description = "Bulgaria’s oldest ski resort surrounded by pine forests.",
+                            ImageUrl = "/images/destinations/borovets.jpg",
+                            IsDeleted = false,
+                            Name = "Borovets"
+                        });
                 });
 
             modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
