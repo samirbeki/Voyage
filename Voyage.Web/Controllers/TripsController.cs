@@ -135,5 +135,33 @@ namespace Voyage.Web.Controllers
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var model = await tripService.GetDetailsAsync(id, GetUserId());
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var success = await tripService.DeleteAsync(id, GetUserId());
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

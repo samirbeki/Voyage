@@ -17,5 +17,7 @@ namespace Voyage.Web.Services.Contracts
         Task<TripFormViewModel?> GetForEditAsync(int id, string userId);
 
         Task<bool> EditAsync(int id, TripFormViewModel model, string userId);
+
+        Task<bool> DeleteAsync(int id, string userId);
     }
 }

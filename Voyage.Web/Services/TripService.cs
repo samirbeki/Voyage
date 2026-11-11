@@ -196,5 +196,23 @@ namespace Voyage.Web.Services
 
             return true;
         }
+
+        public async Task<bool> DeleteAsync(int id, string userId)
+        {
+            var trip = await dbContext.Trips
+                .FirstOrDefaultAsync(t =>
+                    t.Id == id && t.OwnerId == userId);
+
+            if (trip == null)
+            {
+                return false;
+            }
+
+            dbContext.Trips.Remove(trip);
+
+            await dbContext.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
