@@ -1,0 +1,96 @@
+﻿@model Voyage.Web.ViewModels.Trips.TripDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="v-cover">
+    <img src="@Model.CoverImageUrl"
+         alt="@Model.Title"
+         onerror="this.style.display='none'" />
+
+    <div class="v-cover-overlay">
+        <h1>@Model.Title</h1>
+
+        <div>
+            <i class="bi bi-calendar-event"></i>
+            @Model.StartDate.ToString("dd MMM yyyy")
+            –
+            @Model.EndDate.ToString("dd MMM yyyy")
+        </div>
+
+        <span class="v-badge">
+            <i class="bi bi-clock"></i>
+            @Model.DaysCount days
+        </span>
+    </div>
+</div>
+
+<div class="row g-4 mt-2">
+    <div class="col-lg-8">
+        <div class="v-panel mb-4">
+            <h2 class="v-panel-title">About this trip</h2>
+
+            @if (string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <p class="v-muted">No description yet.</p>
+            }
+            else
+            {
+                <p>@Model.Description</p>
+            }
+        </div>
+
+        <div class="v-panel">
+            <h2 class="v-panel-title">Destinations</h2>
+
+            @if (!Model.Destinations.Any())
+            {
+                <p class="v-muted">No destinations available.</p>
+            }
+            else
+            {
+                <ul class="v-timeline">
+                    @foreach (var destination in Model.Destinations)
+                    {
+                        <li class="v-timeline-item">
+                            <div class="v-timeline-title">
+                                @destination.Name
+                            </div>
+
+                            <div class="v-timeline-date">
+                                @destination.Country
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="v-panel mb-4">
+            <h2 class="v-panel-title">Budget</h2>
+
+            <div class="d-flex justify-content-between mb-3">
+                <span class="v-muted">Total</span>
+                <strong>@Model.Budget.ToString("0.00") €</strong>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="v-muted">Per day</span>
+                <strong>@Model.BudgetPerDay.ToString("0.00") €</strong>
+            </div>
+        </div>
+
+        <div class="v-panel">
+            <h2 class="v-panel-title">Actions</h2>
+
+            <a class="btn btn-outline-navy w-100"
+               asp-action="Index">
+                <i class="bi bi-arrow-left"></i>
+                Back to my trips
+            </a>
+        </div>
+    </div>
+</div>

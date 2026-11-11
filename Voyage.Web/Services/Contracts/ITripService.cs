@@ -11,5 +11,7 @@ namespace Voyage.Web.Services.Contracts
         Task<bool> DestinationsExistAsync(IEnumerable<int> destinationIds);
 
         Task<int> CreateAsync(TripFormViewModel model, string userId);
+
+        Task<TripDetailsViewModel?> GetDetailsAsync(int id, string userId);
     }
 }

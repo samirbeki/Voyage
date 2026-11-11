@@ -87,5 +87,50 @@ namespace Voyage.Web.Services
 
             return trip.Id;
         }
+
+
+        public async Task<TripDetailsViewModel?> GetDetailsAsync(int id, string userId)
+        {
+            var trip = await dbContext.Trips
+                .AsNoTracking()
+                .Where(t => t.Id == id && t.OwnerId == userId)
+                .Select(t => new TripDetailsViewModel
+                {
+                    Id = t.Id,
+                    Title = t.Title,
+                    Description = t.Description,
+                    StartDate = t.StartDate,
+                    EndDate = t.EndDate,
+                    Budget = t.Budget,
+                    CoverImageUrl = t.CoverImageUrl,
+                    CreatedOn = t.CreatedOn,
+
+                    Destinations = t.TripDestinations
+                        .Where(td => !td.Destination.IsDeleted)
+                        .OrderBy(td => td.Destination.Name)
+                        .Select(td => new TripDestinationViewModel
+                        {
+                            Id = td.Destination.Id,
+                            Name = td.Destination.Name,
+                            Country = td.Destination.Country,
+                            ImageUrl = td.Destination.ImageUrl
+                        })
+                        .ToList()
+                })
+                .FirstOrDefaultAsync();
+
+            if (trip == null)
+            {
+                return null;
+            }
+
+            trip.DaysCount = (trip.EndDate - trip.StartDate).Days + 1;
+
+            trip.BudgetPerDay = Math.Round(
+                trip.Budget / trip.DaysCount,
+                2);
+
+            return trip;
+        }
     }
 }

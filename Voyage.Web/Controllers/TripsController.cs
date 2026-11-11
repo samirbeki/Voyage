@@ -61,9 +61,24 @@ namespace Voyage.Web.Controllers
                 return View(model);
             }
 
-            await tripService.CreateAsync(model, GetUserId());
+            var tripId = await tripService.CreateAsync(model, GetUserId());
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), new { id = tripId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var userId = GetUserId();
+
+            var model = await tripService.GetDetailsAsync(id, userId);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
         }
 
         private string GetUserId()
