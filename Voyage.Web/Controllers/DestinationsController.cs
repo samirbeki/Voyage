@@ -1,5 +1,6 @@
-﻿
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Destinations;
 
@@ -33,6 +34,7 @@ namespace Voyage.Web.Controllers
             return View(destination);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -44,10 +46,30 @@ namespace Voyage.Web.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(DestinationFormViewModel model)
         {
+            if (model.CategoryId > 0 &&
+                !await destinationService.CategoryExistsAsync(model.CategoryId))
+            {
+                ModelState.AddModelError(
+                    nameof(model.CategoryId),
+                    ErrorMessages.CategoryNotFound);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Name) &&
+                !string.IsNullOrWhiteSpace(model.Country) &&
+                await destinationService.DestinationExistsAsync(
+                    model.Name,
+                    model.Country))
+            {
+                ModelState.AddModelError(
+                    nameof(model.Name),
+                    ErrorMessages.DestinationExists);
+            }
+
             if (!ModelState.IsValid)
             {
                 model.Categories = await destinationService.GetCategoriesAsync();
@@ -60,6 +82,7 @@ namespace Voyage.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -75,10 +98,31 @@ namespace Voyage.Web.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, DestinationFormViewModel model)
         {
+            if (model.CategoryId > 0 &&
+                !await destinationService.CategoryExistsAsync(model.CategoryId))
+            {
+                ModelState.AddModelError(
+                    nameof(model.CategoryId),
+                    ErrorMessages.CategoryNotFound);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Name) &&
+                !string.IsNullOrWhiteSpace(model.Country) &&
+                await destinationService.DestinationExistsAsync(
+                    model.Name,
+                    model.Country,
+                    id))
+            {
+                ModelState.AddModelError(
+                    nameof(model.Name),
+                    ErrorMessages.DestinationExists);
+            }
+
             if (!ModelState.IsValid)
             {
                 model.Categories = await destinationService.GetCategoriesAsync();
@@ -96,6 +140,7 @@ namespace Voyage.Web.Controllers
             return RedirectToAction(nameof(Details), new { id });
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -109,6 +154,7 @@ namespace Voyage.Web.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]

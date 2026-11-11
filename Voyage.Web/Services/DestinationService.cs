@@ -32,7 +32,6 @@ namespace Voyage.Web.Services
                 })
                 .ToListAsync();
         }
-        
 
         public async Task<DestinationDetailsViewModel?> GetDetailsAsync(int id)
         {
@@ -68,10 +67,10 @@ namespace Voyage.Web.Services
         {
             var destination = new Destination
             {
-                Name = model.Name,
-                Country = model.Country,
-                Description = model.Description,
-                ImageUrl = model.ImageUrl,
+                Name = model.Name.Trim(),
+                Country = model.Country.Trim(),
+                Description = model.Description.Trim(),
+                ImageUrl = model.ImageUrl?.Trim(),
                 CategoryId = model.CategoryId
             };
 
@@ -106,10 +105,10 @@ namespace Voyage.Web.Services
                 return false;
             }
 
-            destination.Name = model.Name;
-            destination.Country = model.Country;
-            destination.Description = model.Description;
-            destination.ImageUrl = model.ImageUrl;
+            destination.Name = model.Name.Trim();
+            destination.Country = model.Country.Trim();
+            destination.Description = model.Description.Trim();
+            destination.ImageUrl = model.ImageUrl?.Trim();
             destination.CategoryId = model.CategoryId;
 
             await dbContext.SaveChangesAsync();
@@ -134,5 +133,26 @@ namespace Voyage.Web.Services
             return true;
         }
 
+        public async Task<bool> CategoryExistsAsync(int categoryId)
+        {
+            return await dbContext.Categories
+                .AnyAsync(c => c.Id == categoryId);
+        }
+
+        public async Task<bool> DestinationExistsAsync(
+            string name,
+            string country,
+            int? excludeId = null)
+        {
+            name = name.Trim();
+            country = country.Trim();
+
+            return await dbContext.Destinations
+                .AnyAsync(d =>
+                    !d.IsDeleted &&
+                    d.Name == name &&
+                    d.Country == country &&
+                    (excludeId == null || d.Id != excludeId));
+        }
     }
 }

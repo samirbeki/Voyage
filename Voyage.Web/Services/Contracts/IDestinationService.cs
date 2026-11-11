@@ -17,5 +17,12 @@ namespace Voyage.Web.Services.Contracts
         Task<bool> EditAsync(int id, DestinationFormViewModel model);
 
         Task<bool> DeleteAsync(int id);
+
+        Task<bool> CategoryExistsAsync(int categoryId);
+
+        Task<bool> DestinationExistsAsync(
+            string name,
+            string country,
+            int? excludeId = null);
     }
 }
