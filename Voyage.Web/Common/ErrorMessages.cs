@@ -37,5 +37,7 @@
 
         public const string DestinationNotFound =
             "One or more of the selected destinations do not exist.";
+        public const string StartDateInPast =
+            "Start date cannot be in the past.";
     }
 }

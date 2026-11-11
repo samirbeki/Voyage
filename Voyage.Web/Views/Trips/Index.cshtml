@@ -17,15 +17,16 @@
 
 @if (!Model.Any())
 {
-    <div class="v-empty">
-        <i class="bi bi-suitcase2"></i>
-        <h3>No trips yet</h3>
-        <p class="v-muted">Plan your first journey and it will appear here.</p>
-
-        <a class="btn btn-accent mt-2" asp-action="Create">
-            Plan a trip
-        </a>
-    </div>
+    <partial name="_EmptyState"
+             model="@(new EmptyStateViewModel
+             {
+                 Icon = "bi-suitcase2",
+                 Title = "No trips yet",
+                 Message = "Plan your first journey and it will appear here.",
+                 ActionText = "Plan a trip",
+                 ActionController = "Trips",
+                 ActionName = "Create"
+             })" />
 }
 else
 {
@@ -33,43 +34,7 @@ else
         @foreach (var trip in Model)
         {
             <div class="col-sm-6 col-lg-4">
-                <div class="v-card position-relative">
-                    <div class="v-card-img">
-                        <img src="@trip.CoverImageUrl"
-                             alt="@trip.Title"
-                             onerror="this.style.display='none'" />
-
-                        <span class="v-card-badge v-badge">
-                            <i class="bi bi-geo-alt"></i>
-                            @trip.DestinationsCount destinations
-                        </span>
-                    </div>
-
-                    <div class="v-card-body">
-                        <h3 class="v-card-title">@trip.Title</h3>
-
-                        <div class="v-card-meta">
-                            <i class="bi bi-calendar-event"></i>
-                            @trip.StartDate.ToString("dd MMM yyyy")
-                            –
-                            @trip.EndDate.ToString("dd MMM yyyy")
-                        </div>
-
-                        <div class="v-card-footer">
-                            <span class="v-chip">
-                                <i class="bi bi-wallet2"></i>
-                                @trip.Budget.ToString("0.00") €
-                            </span>
-
-                            <a class="v-card-link stretched-link"
-                               asp-action="Details"
-                               asp-route-id="@trip.Id">
-                                Open
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <partial name="_TripCard" model="trip" />
             </div>
         }
     </div>

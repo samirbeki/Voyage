@@ -1,0 +1,40 @@
+﻿@model Voyage.Web.ViewModels.Trips.TripAllViewModel
+
+<div class="v-card position-relative">
+    <div class="v-card-img">
+        <img src="@Model.CoverImageUrl"
+             alt="@Model.Title"
+             onerror="this.style.display='none'" />
+
+        <span class="v-card-badge v-badge">
+            <i class="bi bi-geo-alt"></i>
+            @Model.DestinationsCount destinations
+        </span>
+    </div>
+
+    <div class="v-card-body">
+        <h3 class="v-card-title">@Model.Title</h3>
+
+        <div class="v-card-meta">
+            <i class="bi bi-calendar-event"></i>
+            @Model.StartDate.ToString("dd MMM yyyy")
+            –
+            @Model.EndDate.ToString("dd MMM yyyy")
+        </div>
+
+        <div class="v-card-footer">
+            <span class="v-chip">
+                <i class="bi bi-wallet2"></i>
+                @Model.Budget.ToString("0.00") €
+            </span>
+
+            <a class="v-card-link stretched-link"
+               asp-controller="Trips"
+               asp-action="Details"
+               asp-route-id="@Model.Id">
+                Open
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>

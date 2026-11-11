@@ -19,38 +19,7 @@
     @foreach (var destination in Model)
     {
         <div class="col-sm-6 col-lg-4">
-            <div class="v-card position-relative">
-                <div class="v-card-img">
-                    <img src="@destination.ImageUrl"
-                         alt="@destination.Name"
-                         onerror="this.style.display='none'" />
-
-                    <span class="v-card-badge v-badge">
-                        <i class="bi bi-tag"></i>
-                        @destination.CategoryName
-                    </span>
-                </div>
-
-                <div class="v-card-body">
-                    <h3 class="v-card-title">@destination.Name</h3>
-
-                    <div class="v-card-meta">
-                        <i class="bi bi-geo-alt"></i>
-                        @destination.Country
-                    </div>
-
-                    <p class="v-card-text">@destination.Description</p>
-
-                    <div class="v-card-footer">
-                        <a class="v-card-link stretched-link"
-                        asp-action="Details"
-                        asp-route-id="@destination.Id">
-                        View details
-                        <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <partial name="_DestinationCard" model="destination" />
         </div>
     }
 </div>

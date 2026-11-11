@@ -53,6 +53,13 @@ namespace Voyage.Web.Controllers
                     ErrorMessages.DestinationNotFound);
             }
 
+            if (model.StartDate.Date < DateTime.Today)
+            {
+                ModelState.AddModelError(
+                    nameof(model.StartDate),
+                    ErrorMessages.StartDateInPast);
+            }
+
             if (!ModelState.IsValid)
             {
                 model.AvailableDestinations =
@@ -131,11 +138,6 @@ namespace Voyage.Web.Controllers
             return RedirectToAction(nameof(Details), new { id });
         }
 
-        private string GetUserId()
-        {
-            return User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-        }
-
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -162,6 +164,11 @@ namespace Voyage.Web.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         }
     }
 }

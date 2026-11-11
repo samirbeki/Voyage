@@ -1,0 +1,35 @@
+﻿@model Voyage.Web.ViewModels.Destinations.DestinationAllViewModel
+
+<div class="v-card position-relative">
+    <div class="v-card-img">
+        <img src="@Model.ImageUrl"
+             alt="@Model.Name"
+             onerror="this.style.display='none'" />
+
+        <span class="v-card-badge v-badge">
+            <i class="bi bi-tag"></i>
+            @Model.CategoryName
+        </span>
+    </div>
+
+    <div class="v-card-body">
+        <h3 class="v-card-title">@Model.Name</h3>
+
+        <div class="v-card-meta">
+            <i class="bi bi-geo-alt"></i>
+            @Model.Country
+        </div>
+
+        <p class="v-card-text">@Model.Description</p>
+
+        <div class="v-card-footer">
+            <a class="v-card-link stretched-link"
+               asp-controller="Destinations"
+               asp-action="Details"
+               asp-route-id="@Model.Id">
+                View details
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
