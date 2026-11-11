@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Voyage.Web.ViewModels.Trips.TripAllViewModel>
+
+@{
+    ViewData["Title"] = "My Trips";
+}
+
+<div class="v-page-header">
+    <div>
+        <h1 class="v-page-title">My Trips</h1>
+        <p class="v-page-subtitle">All your journeys in one place.</p>
+    </div>
+
+    <a class="btn btn-accent" asp-action="Create">
+        <i class="bi bi-plus-lg"></i> New trip
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="v-empty">
+        <i class="bi bi-suitcase2"></i>
+        <h3>No trips yet</h3>
+        <p class="v-muted">Plan your first journey and it will appear here.</p>
+
+        <a class="btn btn-accent mt-2" asp-action="Create">
+            Plan a trip
+        </a>
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var trip in Model)
+        {
+            <div class="col-sm-6 col-lg-4">
+                <div class="v-card position-relative">
+                    <div class="v-card-img">
+                        <img src="@trip.CoverImageUrl"
+                             alt="@trip.Title"
+                             onerror="this.style.display='none'" />
+
+                        <span class="v-card-badge v-badge">
+                            <i class="bi bi-geo-alt"></i>
+                            @trip.DestinationsCount destinations
+                        </span>
+                    </div>
+
+                    <div class="v-card-body">
+                        <h3 class="v-card-title">@trip.Title</h3>
+
+                        <div class="v-card-meta">
+                            <i class="bi bi-calendar-event"></i>
+                            @trip.StartDate.ToString("dd MMM yyyy")
+                            –
+                            @trip.EndDate.ToString("dd MMM yyyy")
+                        </div>
+
+                        <div class="v-card-footer">
+                            <span class="v-chip">
+                                <i class="bi bi-wallet2"></i>
+                                @trip.Budget.ToString("0.00") €
+                            </span>
+
+                            <a class="v-card-link stretched-link" href="#">
+                                Open
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
