@@ -81,6 +81,56 @@ namespace Voyage.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await tripService.GetForEditAsync(id, GetUserId());
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            model.AvailableDestinations =
+                await tripService.GetDestinationOptionsAsync();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, TripFormViewModel model)
+        {
+            if (model.SelectedDestinationIds.Any()
+                && !await tripService.DestinationsExistAsync(
+                    model.SelectedDestinationIds))
+            {
+                ModelState.AddModelError(
+                    nameof(model.SelectedDestinationIds),
+                    ErrorMessages.DestinationNotFound);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.AvailableDestinations =
+                    await tripService.GetDestinationOptionsAsync();
+
+                return View(model);
+            }
+
+            var success = await tripService.EditAsync(
+                id,
+                model,
+                GetUserId());
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
         private string GetUserId()
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier)!;

@@ -86,6 +86,13 @@
         <div class="v-panel">
             <h2 class="v-panel-title">Actions</h2>
 
+            <a class="btn btn-navy w-100 mb-2"
+               asp-action="Edit"
+               asp-route-id="@Model.Id">
+                <i class="bi bi-pencil"></i>
+                Edit
+            </a>
+
             <a class="btn btn-outline-navy w-100"
                asp-action="Index">
                 <i class="bi bi-arrow-left"></i>

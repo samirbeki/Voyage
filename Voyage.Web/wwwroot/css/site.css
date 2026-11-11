@@ -455,6 +455,11 @@ h1, h2, h3, h4 {
     margin: 0.5rem 0 0.25rem;
 }
 
+.v-cover-overlay > .v-badge {
+    align-self: flex-start;
+    margin-top: 0.6rem;
+}
+
 .v-panel {
     background: var(--voyage-surface);
     border-radius: var(--voyage-radius);

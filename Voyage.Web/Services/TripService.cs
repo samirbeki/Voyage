@@ -132,5 +132,69 @@ namespace Voyage.Web.Services
 
             return trip;
         }
+
+        public async Task<TripFormViewModel?> GetForEditAsync(int id, string userId)
+        {
+            return await dbContext.Trips
+                .AsNoTracking()
+                .Where(t => t.Id == id && t.OwnerId == userId)
+                .Select(t => new TripFormViewModel
+                {
+                    Title = t.Title,
+                    Description = t.Description,
+                    StartDate = t.StartDate,
+                    EndDate = t.EndDate,
+                    Budget = t.Budget,
+                    CoverImageUrl = t.CoverImageUrl,
+
+                    SelectedDestinationIds = t.TripDestinations
+                        .Select(td => td.DestinationId)
+                        .ToList()
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> EditAsync(int id, TripFormViewModel model, string userId)
+        {
+            var trip = await dbContext.Trips
+                .Include(t => t.TripDestinations)
+                .FirstOrDefaultAsync(t => t.Id == id && t.OwnerId == userId);
+
+            if (trip == null)
+            {
+                return false;
+            }
+
+            trip.Title = model.Title.Trim();
+            trip.Description = model.Description?.Trim();
+            trip.StartDate = model.StartDate;
+            trip.EndDate = model.EndDate;
+            trip.Budget = model.Budget;
+            trip.CoverImageUrl = model.CoverImageUrl;
+
+            var selectedIds = model.SelectedDestinationIds.Distinct().ToList();
+
+            var destinationsToRemove = trip.TripDestinations
+                .Where(td => !selectedIds.Contains(td.DestinationId))
+                .ToList();
+
+            dbContext.TripDestinations.RemoveRange(destinationsToRemove);
+
+            foreach (var destinationId in selectedIds)
+            {
+                if (!trip.TripDestinations.Any(
+                    td => td.DestinationId == destinationId))
+                {
+                    trip.TripDestinations.Add(new TripDestination
+                    {
+                        DestinationId = destinationId
+                    });
+                }
+            }
+
+            await dbContext.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
