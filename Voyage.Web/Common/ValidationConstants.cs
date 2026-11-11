@@ -20,5 +20,9 @@
         public const int TripTitleMinLength = 3;
         public const int TripTitleMaxLength = 100;
         public const int TripDescriptionMaxLength = 2000;
+
+        public const string TripBudgetMinValue = "0.01";
+        public const string TripBudgetMaxValue = "1000000";
+        public const int TripMaxDays = 365;
     }
 }

@@ -22,5 +22,20 @@
 
         public const string DestinationExists =
             "A destination with this name already exists in this country.";
+
+        public const string BudgetRange =
+            "{0} must be between {1} and {2}.";
+
+        public const string EndDateBeforeStartDate =
+            "End date cannot be before the start date.";
+
+        public const string TripTooLong =
+            "A trip cannot be longer than 365 days.";
+
+        public const string DestinationsRequired =
+            "Select at least one destination.";
+
+        public const string DestinationNotFound =
+            "One or more of the selected destinations do not exist.";
     }
 }

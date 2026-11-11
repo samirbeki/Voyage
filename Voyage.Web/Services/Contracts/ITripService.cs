@@ -5,5 +5,11 @@ namespace Voyage.Web.Services.Contracts
     public interface ITripService
     {
         Task<IEnumerable<TripAllViewModel>> GetMineAsync(string userId);
+
+        Task<IEnumerable<DestinationOptionViewModel>> GetDestinationOptionsAsync();
+
+        Task<bool> DestinationsExistAsync(IEnumerable<int> destinationIds);
+
+        Task<int> CreateAsync(TripFormViewModel model, string userId);
     }
 }
