@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Rendering
-@model Voyage.Web.ViewModels.Destinations.DestinationFormViewModel
+﻿@model Voyage.Web.ViewModels.Destinations.DestinationFormViewModel
 
 @{
     ViewData["Title"] = "Edit destination";
@@ -9,7 +8,9 @@
     <h1 class="v-page-title mb-1">Edit destination</h1>
     <p class="v-page-subtitle mb-4">Update the details of this destination.</p>
 
-    <form method="post" asp-action="Edit">
+    <form method="post" asp-action="Edit" asp-route-id="@ViewContext.RouteData.Values["id"]">
+        @Html.AntiForgeryToken()
+
         <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
         <div class="mb-3">

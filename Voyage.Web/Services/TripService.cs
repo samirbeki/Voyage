@@ -68,7 +68,7 @@ namespace Voyage.Web.Services
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
                 Budget = model.Budget,
-                CoverImageUrl = model.CoverImageUrl,
+                CoverImageUrl = model.CoverImageUrl?.Trim(),
                 OwnerId = userId,
                 CreatedOn = DateTime.UtcNow
             };
@@ -82,12 +82,10 @@ namespace Voyage.Web.Services
             }
 
             await dbContext.Trips.AddAsync(trip);
-
             await dbContext.SaveChangesAsync();
 
             return trip.Id;
         }
-
 
         public async Task<TripDetailsViewModel?> GetDetailsAsync(int id, string userId)
         {
@@ -104,7 +102,6 @@ namespace Voyage.Web.Services
                     Budget = t.Budget,
                     CoverImageUrl = t.CoverImageUrl,
                     CreatedOn = t.CreatedOn,
-
                     Destinations = t.TripDestinations
                         .Where(td => !td.Destination.IsDeleted)
                         .OrderBy(td => td.Destination.Name)
@@ -146,7 +143,6 @@ namespace Voyage.Web.Services
                     EndDate = t.EndDate,
                     Budget = t.Budget,
                     CoverImageUrl = t.CoverImageUrl,
-
                     SelectedDestinationIds = t.TripDestinations
                         .Select(td => td.DestinationId)
                         .ToList()
@@ -170,7 +166,7 @@ namespace Voyage.Web.Services
             trip.StartDate = model.StartDate;
             trip.EndDate = model.EndDate;
             trip.Budget = model.Budget;
-            trip.CoverImageUrl = model.CoverImageUrl;
+            trip.CoverImageUrl = model.CoverImageUrl?.Trim();
 
             var selectedIds = model.SelectedDestinationIds.Distinct().ToList();
 

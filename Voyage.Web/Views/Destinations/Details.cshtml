@@ -39,26 +39,27 @@
             <h2 class="v-panel-title">Actions</h2>
 
             <div class="v-actions">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a class="btn btn-navy"
+                       asp-action="Edit"
+                       asp-route-id="@Model.Id">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
 
-                <a class="btn btn-navy"
-                   asp-action="Edit"
-                   asp-route-id="@Model.Id">
-                    <i class="bi bi-pencil"></i> Edit
-                </a>
-
-                <a class="btn btn-outline-danger"
-                   asp-action="Delete"
-                   asp-route-id="@Model.Id">
-                    <i class="bi bi-trash"></i> Delete
-                </a>
+                    <a class="btn btn-outline-danger"
+                       asp-action="Delete"
+                       asp-route-id="@Model.Id">
+                        <i class="bi bi-trash"></i> Delete
+                    </a>
+                }
 
                 <a class="btn btn-outline-navy"
                    asp-action="Index">
                     <i class="bi bi-arrow-left"></i>
                     Back to destinations
                 </a>
-
             </div>
         </div>
     </div>
-</div> 
+</div>
