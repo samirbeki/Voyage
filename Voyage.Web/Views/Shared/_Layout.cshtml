@@ -65,23 +65,29 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Trips" ? "active" : "")"
-                               asp-area=""
-                               asp-controller="Trips"
-                               asp-action="Index">
-                                My Trips
-                            </a>
-                        </li>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Trips" ? "active" : "")"
+                                   asp-area=""
+                                   asp-controller="Trips"
+                                   asp-action="Index">
+                                    My Trips
+                                </a>
+                            </li>
+                        }
                     </ul>
 
                     <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2">
-                        <a class="btn btn-accent btn-sm px-3"
-                           asp-area=""
-                           asp-controller="Trips"
-                           asp-action="Create">
-                            <i class="bi bi-plus-lg"></i> New Trip
-                        </a>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <a class="btn btn-accent btn-sm px-3"
+                               asp-area=""
+                               asp-controller="Trips"
+                               asp-action="Create">
+                                <i class="bi bi-plus-lg"></i> New Trip
+                            </a>
+                        }
 
                         <partial name="_LoginPartial" />
                     </div>
@@ -133,7 +139,5 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

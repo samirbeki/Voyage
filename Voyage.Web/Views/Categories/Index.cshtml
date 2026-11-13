@@ -10,9 +10,12 @@
         <p class="v-page-subtitle">Browse destinations by type of trip.</p>
     </div>
 
-    <a class="btn btn-accent" asp-action="Add">
-        <i class="bi bi-plus-lg"></i> Add category
-    </a>
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <a class="btn btn-accent" asp-action="Add">
+            <i class="bi bi-plus-lg"></i> Add category
+        </a>
+    }
 </div>
 
 <div class="row g-4">
@@ -38,21 +41,24 @@
                         @category.DestinationsCount destinations
                     </span>
 
-                    <div class="d-flex gap-1">
-                        <a class="v-icon-btn"
-                           title="Edit"
-                           asp-action="Edit"
-                           asp-route-id="@category.Id">
-                            <i class="bi bi-pencil"></i>
-                        </a>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <div class="d-flex gap-1">
+                            <a class="v-icon-btn"
+                               title="Edit"
+                               asp-action="Edit"
+                               asp-route-id="@category.Id">
+                                <i class="bi bi-pencil"></i>
+                            </a>
 
-                        <a class="v-icon-btn v-icon-btn-danger"
-                           title="Delete"
-                           asp-action="Delete"
-                           asp-route-id="@category.Id">
-                            <i class="bi bi-trash"></i>
-                        </a>
-                    </div>
+                            <a class="v-icon-btn v-icon-btn-danger"
+                               title="Delete"
+                               asp-action="Delete"
+                               asp-route-id="@category.Id">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
