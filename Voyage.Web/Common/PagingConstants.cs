@@ -2,7 +2,7 @@
 {
     public static class PagingConstants
     {
-        public const int DestinationsPerPage = 6;
+        public const int DestinationsPerPage = 12;
         public const int PopularDestinationsCount = 3;
     }
 }
