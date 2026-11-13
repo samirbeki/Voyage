@@ -737,3 +737,99 @@ h1, h2, h3, h4 {
     font-size: .8rem;
     color: #6b7280;
 }
+
+/* ---------- Categories ---------- */
+
+.v-category-card {
+    background: var(--voyage-surface);
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-top: 4px solid var(--voyage-accent);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.v-category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--voyage-shadow-hover);
+}
+
+.v-category-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: rgba(244, 162, 89, 0.15);
+    color: var(--voyage-accent-dark);
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+}
+
+.v-category-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--voyage-navy);
+    margin-bottom: 0.4rem;
+}
+
+.v-category-desc {
+    color: var(--voyage-muted);
+    font-size: 0.95rem;
+    flex-grow: 1;
+    margin-bottom: 1.25rem;
+}
+
+.v-category-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--voyage-border);
+}
+
+.v-category-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--voyage-navy-soft);
+}
+
+.v-category-count .bi {
+    color: var(--voyage-accent-dark);
+}
+
+.v-icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    color: var(--voyage-navy);
+    background: var(--voyage-bg);
+    border: 1px solid var(--voyage-border);
+    text-decoration: none;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.v-icon-btn:hover {
+    background: var(--voyage-navy);
+    border-color: var(--voyage-navy);
+    color: #fff;
+}
+
+.v-icon-btn-danger {
+    color: var(--voyage-danger);
+}
+
+.v-icon-btn-danger:hover {
+    background: var(--voyage-danger);
+    border-color: var(--voyage-danger);
+    color: #fff;
+}
