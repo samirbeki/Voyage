@@ -1194,3 +1194,27 @@ h1, h2, h3, h4 {
     color: var(--voyage-teal);
     font-size: 1.15rem;
 }
+
+/* ---------- Category link to destinations ---------- */
+
+a.v-category-count {
+    text-decoration: none;
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    margin-left: -0.6rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+a.v-category-count:hover {
+    background: rgba(244, 162, 89, 0.15);
+    color: var(--voyage-accent-dark);
+}
+
+a.v-category-count .bi-arrow-right {
+    font-size: 0.85em;
+    transition: transform 0.2s;
+}
+
+a.v-category-count:hover .bi-arrow-right {
+    transform: translateX(3px);
+}

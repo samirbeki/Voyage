@@ -36,10 +36,14 @@
                 </p>
 
                 <div class="v-category-footer">
-                    <span class="v-category-count">
+                    <a class="v-category-count"
+                       asp-controller="Destinations"
+                       asp-action="Index"
+                       asp-route-categoryId="@category.Id">
                         <i class="bi bi-geo-alt"></i>
-                        @category.DestinationsCount destinations
-                    </span>
+                        @category.DestinationsCount @(category.DestinationsCount == 1 ? "destination" : "destinations")
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
 
                     @if (User.Identity?.IsAuthenticated == true)
                     {
