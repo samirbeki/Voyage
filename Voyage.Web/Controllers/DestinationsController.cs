@@ -18,12 +18,14 @@ namespace Voyage.Web.Controllers
         public async Task<IActionResult> Index(
             string? searchTerm,
             int? categoryId,
+            DestinationSorting sorting = DestinationSorting.NameAsc,
             int currentPage = 1)
         {
             var model = await destinationService.GetAllAsync(
                 searchTerm,
                 categoryId,
-                currentPage);
+                currentPage,
+                sorting);
 
             return View(model);
         }

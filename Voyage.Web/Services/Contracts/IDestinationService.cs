@@ -1,4 +1,5 @@
-﻿using Voyage.Web.ViewModels.Destinations;
+﻿using Voyage.Web.Common;
+using Voyage.Web.ViewModels.Destinations;
 
 namespace Voyage.Web.Services.Contracts
 {
@@ -7,7 +8,8 @@ namespace Voyage.Web.Services.Contracts
         Task<DestinationsIndexViewModel> GetAllAsync(
             string? searchTerm,
             int? categoryId,
-            int currentPage);
+            int currentPage,
+            DestinationSorting sorting);
 
         Task<DestinationDetailsViewModel?> GetDetailsAsync(int id);
 

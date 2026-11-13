@@ -19,9 +19,10 @@ namespace Voyage.Web.Services
         public async Task<DestinationsIndexViewModel> GetAllAsync(
             string? searchTerm,
             int? categoryId,
-            int currentPage)
+            int currentPage,
+            DestinationSorting sorting)
         {
-            var query = dbContext.Destinations.AsNoTracking();
+            IQueryable<Destination> query = dbContext.Destinations.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -52,8 +53,16 @@ namespace Voyage.Web.Services
                 currentPage = totalPages;
             }
 
+            query = sorting switch
+            {
+                DestinationSorting.NameDesc => query.OrderByDescending(d => d.Name),
+                DestinationSorting.Popular => query
+                    .OrderByDescending(d => d.TripDestinations.Count)
+                    .ThenBy(d => d.Name),
+                _ => query.OrderBy(d => d.Name)
+            };
+
             var destinations = await query
-                .OrderBy(d => d.Name)
                 .Skip((currentPage - 1) * PagingConstants.DestinationsPerPage)
                 .Take(PagingConstants.DestinationsPerPage)
                 .Select(d => new DestinationAllViewModel
@@ -71,6 +80,7 @@ namespace Voyage.Web.Services
             {
                 SearchTerm = searchTerm,
                 CategoryId = categoryId,
+                Sorting = sorting,
                 CurrentPage = currentPage,
                 TotalPages = totalPages,
                 TotalCount = totalCount,

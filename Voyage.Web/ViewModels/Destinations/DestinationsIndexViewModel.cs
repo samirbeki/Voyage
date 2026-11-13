@@ -1,10 +1,14 @@
-﻿namespace Voyage.Web.ViewModels.Destinations
+﻿using Voyage.Web.Common;
+
+namespace Voyage.Web.ViewModels.Destinations
 {
     public class DestinationsIndexViewModel
     {
         public string? SearchTerm { get; set; }
 
         public int? CategoryId { get; set; }
+
+        public DestinationSorting Sorting { get; set; } = DestinationSorting.NameAsc;
 
         public int CurrentPage { get; set; } = 1;
 
