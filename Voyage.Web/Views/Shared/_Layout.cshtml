@@ -7,7 +7,7 @@
     <script type="importmap"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
@@ -19,12 +19,20 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark v-navbar">
             <div class="container">
-                <a class="navbar-brand v-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand v-brand"
+                   asp-area=""
+                   asp-controller="Home"
+                   asp-action="Index">
                     <i class="bi bi-compass"></i> VOYAGE
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -32,22 +40,46 @@
                     <ul class="navbar-nav ms-lg-4 gap-lg-1">
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")"
-                               asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                               asp-area=""
+                               asp-controller="Home"
+                               asp-action="Index">
+                                Home
+                            </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Destinations" ? "active" : "")"
-                               asp-area="" asp-controller="Destinations" asp-action="Index">Destinations</a>
+                               asp-area=""
+                               asp-controller="Destinations"
+                               asp-action="Index">
+                                Destinations
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Categories" ? "active" : "")"
+                               asp-area=""
+                               asp-controller="Categories"
+                               asp-action="Index">
+                                Categories
+                            </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Trips" ? "active" : "")"
-                               asp-area="" asp-controller="Trips" asp-action="Index">My Trips</a>
+                               asp-area=""
+                               asp-controller="Trips"
+                               asp-action="Index">
+                                My Trips
+                            </a>
                         </li>
                     </ul>
 
                     <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2">
-                        <a class="btn btn-accent btn-sm px-3" asp-area="" asp-controller="Trips" asp-action="Create">
+                        <a class="btn btn-accent btn-sm px-3"
+                           asp-area=""
+                           asp-controller="Trips"
+                           asp-action="Create">
                             <i class="bi bi-plus-lg"></i> New Trip
                         </a>
 
@@ -69,14 +101,31 @@
     <footer class="v-footer">
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
             <div>
-                <span class="v-brand-sm"><i class="bi bi-compass"></i> VOYAGE</span>
+                <span class="v-brand-sm">
+                    <i class="bi bi-compass"></i> VOYAGE
+                </span>
                 <span class="v-footer-tagline">Plan smarter. Travel further.</span>
             </div>
 
             <div class="v-footer-links">
                 &copy; 2026 VOYAGE &middot;
-                <a asp-area="" asp-controller="Destinations" asp-action="Index">Destinations</a> &middot;
-                <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                <a asp-area=""
+                   asp-controller="Destinations"
+                   asp-action="Index">
+                    Destinations
+                </a>
+                &middot;
+                <a asp-area=""
+                   asp-controller="Categories"
+                   asp-action="Index">
+                    Categories
+                </a>
+                &middot;
+                <a asp-area=""
+                   asp-controller="Home"
+                   asp-action="Privacy">
+                    Privacy
+                </a>
             </div>
         </div>
     </footer>
