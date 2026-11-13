@@ -833,3 +833,86 @@ h1, h2, h3, h4 {
     border-color: var(--voyage-danger);
     color: #fff;
 }
+
+/* ---------- Auth (Login / Register) ---------- */
+
+.v-auth {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0 3rem;
+}
+
+.v-auth-card {
+    width: 100%;
+    max-width: 460px;
+    background: var(--voyage-surface);
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    border-top: 4px solid var(--voyage-accent);
+    padding: 2.5rem 2.25rem 2rem;
+}
+
+.v-auth-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 1.25rem;
+    background: rgba(244, 162, 89, 0.15);
+    color: var(--voyage-accent-dark);
+    font-size: 1.6rem;
+}
+
+.v-auth-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--voyage-navy);
+    text-align: center;
+    margin-bottom: 0.35rem;
+}
+
+.v-auth-subtitle {
+    color: var(--voyage-muted);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.v-auth-card .form-control {
+    border-radius: var(--voyage-radius-sm);
+    border-color: var(--voyage-border);
+}
+
+.v-auth-card .form-control:focus {
+    border-color: var(--voyage-accent);
+    box-shadow: 0 0 0 0.2rem rgba(244, 162, 89, 0.2);
+}
+
+.v-auth-card .form-check-input:checked {
+    background-color: var(--voyage-accent);
+    border-color: var(--voyage-accent);
+}
+
+.v-auth-card .alert:empty,
+.v-auth-card .validation-summary-valid {
+    display: none;
+}
+
+.v-auth-switch {
+    text-align: center;
+    color: var(--voyage-muted);
+    margin: 1.5rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--voyage-border);
+}
+
+.v-auth-switch a {
+    color: var(--voyage-accent-dark);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.v-auth-switch a:hover {
+    text-decoration: underline;
+}
