@@ -1025,3 +1025,25 @@ h1, h2, h3, h4 {
     color: var(--voyage-muted);
     margin-bottom: 2rem;
 }
+
+/* ---------- Filter bar ---------- */
+
+.v-filter-bar {
+    background: var(--voyage-surface);
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    padding: 1rem;
+}
+
+.v-filter-bar .form-control,
+.v-filter-bar .form-select {
+    height: 46px;
+}
+
+.v-filter-bar .btn {
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+}

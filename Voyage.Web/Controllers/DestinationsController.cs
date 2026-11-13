@@ -15,11 +15,17 @@ namespace Voyage.Web.Controllers
             this.destinationService = destinationService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string? searchTerm,
+            int? categoryId,
+            int currentPage = 1)
         {
-            var destinations = await destinationService.GetAllAsync();
+            var model = await destinationService.GetAllAsync(
+                searchTerm,
+                categoryId,
+                currentPage);
 
-            return View(destinations);
+            return View(model);
         }
 
         public async Task<IActionResult> Details(int id)

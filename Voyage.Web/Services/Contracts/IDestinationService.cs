@@ -4,7 +4,10 @@ namespace Voyage.Web.Services.Contracts
 {
     public interface IDestinationService
     {
-        Task<IEnumerable<DestinationAllViewModel>> GetAllAsync();
+        Task<DestinationsIndexViewModel> GetAllAsync(
+            string? searchTerm,
+            int? categoryId,
+            int currentPage);
 
         Task<DestinationDetailsViewModel?> GetDetailsAsync(int id);
 

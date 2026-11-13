@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
 using Voyage.Web.Services.Contracts;
@@ -15,12 +16,46 @@ namespace Voyage.Web.Services
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<DestinationAllViewModel>> GetAllAsync()
+        public async Task<DestinationsIndexViewModel> GetAllAsync(
+            string? searchTerm,
+            int? categoryId,
+            int currentPage)
         {
-            return await dbContext.Destinations
-                .AsNoTracking()
-                .Where(d => !d.IsDeleted)
+            var query = dbContext.Destinations.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                searchTerm = searchTerm.Trim();
+
+                query = query.Where(d =>
+                    d.Name.Contains(searchTerm) ||
+                    d.Country.Contains(searchTerm));
+            }
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(d => d.CategoryId == categoryId.Value);
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var totalPages = (int)Math.Ceiling(
+                totalCount / (double)PagingConstants.DestinationsPerPage);
+
+            if (currentPage < 1)
+            {
+                currentPage = 1;
+            }
+
+            if (totalPages > 0 && currentPage > totalPages)
+            {
+                currentPage = totalPages;
+            }
+
+            var destinations = await query
                 .OrderBy(d => d.Name)
+                .Skip((currentPage - 1) * PagingConstants.DestinationsPerPage)
+                .Take(PagingConstants.DestinationsPerPage)
                 .Select(d => new DestinationAllViewModel
                 {
                     Id = d.Id,
@@ -31,6 +66,17 @@ namespace Voyage.Web.Services
                     Description = d.Description
                 })
                 .ToListAsync();
+
+            return new DestinationsIndexViewModel
+            {
+                SearchTerm = searchTerm,
+                CategoryId = categoryId,
+                CurrentPage = currentPage,
+                TotalPages = totalPages,
+                TotalCount = totalCount,
+                Destinations = destinations,
+                Categories = await GetCategoriesAsync()
+            };
         }
 
         public async Task<DestinationDetailsViewModel?> GetDetailsAsync(int id)
