@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using Voyage.Web.Models;
 
 namespace Voyage.Web.Controllers
 {
@@ -19,7 +17,17 @@ namespace Voyage.Web.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("ServerError");
+        }
+
+        public IActionResult HttpError(int statusCode)
+        {
+            if (statusCode == StatusCodes.Status404NotFound)
+            {
+                return View("NotFound");
+            }
+
+            return View("ServerError");
         }
     }
 }

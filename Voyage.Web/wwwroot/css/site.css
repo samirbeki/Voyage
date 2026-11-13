@@ -964,3 +964,64 @@ h1, h2, h3, h4 {
     transform: translateY(-50%);
     padding: 0.75rem;
 }
+
+/* ---------- Error pages (404 / 500) ---------- */
+
+.v-error {
+    position: relative;
+    max-width: 640px;
+    margin: 2rem auto 3rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    background: var(--voyage-surface);
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    overflow: hidden;
+}
+
+.v-error-code {
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 11rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--voyage-navy);
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.v-error-icon {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 1.5rem;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    background: rgba(244, 162, 89, 0.15);
+    color: var(--voyage-accent-dark);
+}
+
+.v-error-icon-danger {
+    background: rgba(220, 38, 38, 0.1);
+    color: var(--voyage-danger);
+}
+
+.v-error-title {
+    position: relative;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    color: var(--voyage-navy);
+    margin-bottom: 0.75rem;
+}
+
+.v-error-text {
+    position: relative;
+    color: var(--voyage-muted);
+    margin-bottom: 2rem;
+}
