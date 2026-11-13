@@ -1,3 +1,5 @@
+@model Voyage.Web.ViewModels.Home.HomeIndexViewModel
+
 @{
     ViewData["Title"] = "Plan smarter. Travel further.";
 }
@@ -51,6 +53,40 @@
                 <p>Set a budget for every trip and always know how much you have left to spend.</p>
             </div>
         </div>
+    </div>
+</section>
+
+<section class="v-stats">
+    <div class="v-stat">
+        <span class="v-stat-number">@Model.DestinationsCount</span>
+        <span class="v-stat-label">Destinations</span>
+    </div>
+    <div class="v-stat">
+        <span class="v-stat-number">@Model.CategoriesCount</span>
+        <span class="v-stat-label">Categories</span>
+    </div>
+    <div class="v-stat">
+        <span class="v-stat-number">@Model.TripsCount</span>
+        <span class="v-stat-label">Trips planned</span>
+    </div>
+</section>
+
+<section class="v-section">
+    <div class="v-section-head d-flex flex-wrap justify-content-between align-items-end gap-3">
+        <div>
+            <h2 class="v-section-title">Popular destinations</h2>
+            <p class="v-muted mb-0">The places travelers add to their trips most often.</p>
+        </div>
+        <a class="btn btn-outline-navy" asp-controller="Destinations" asp-action="Index">View all</a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var destination in Model.PopularDestinations)
+        {
+            <div class="col-md-4">
+                <partial name="_DestinationCard" model="destination" />
+            </div>
+        }
     </div>
 </section>
 

@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
+using Voyage.Web.Services.Contracts;
 
 namespace Voyage.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly IHomeService homeService;
+
+        public HomeController(IHomeService homeService)
         {
-            return View();
+            this.homeService = homeService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            return View(await homeService.GetIndexAsync());
         }
 
         public IActionResult Privacy()
