@@ -1,14 +1,16 @@
 ﻿@model Voyage.Web.ViewModels.Trips.TripAllViewModel
 
-<div class="v-card position-relative">
+<div class="v-card position-relative @(Model.Status == Voyage.Web.Common.TripStatus.Completed ? "v-card-past" : "")">
     <div class="v-card-img">
+        <span class="v-status v-status-@Model.Status.ToString().ToLower()">@Model.Status</span>
+
         <img src="@Model.CoverImageUrl"
              alt="@Model.Title"
              onerror="this.style.display='none'" />
 
         <span class="v-card-badge v-badge">
             <i class="bi bi-geo-alt"></i>
-            @Model.DestinationsCount destinations
+            @Model.DestinationsCount @(Model.DestinationsCount == 1 ? "destination" : "destinations")
         </span>
     </div>
 

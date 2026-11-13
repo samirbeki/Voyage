@@ -30,12 +30,50 @@
 }
 else
 {
-    <div class="row g-4">
-        @foreach (var trip in Model)
-        {
-            <div class="col-sm-6 col-lg-4">
-                <partial name="_TripCard" model="trip" />
+    var upcomingTrips = Model
+        .Where(t => t.Status != Voyage.Web.Common.TripStatus.Completed)
+        .ToList();
+
+    var pastTrips = Model
+        .Where(t => t.Status == Voyage.Web.Common.TripStatus.Completed)
+        .OrderByDescending(t => t.StartDate)
+        .ToList();
+
+    @if (upcomingTrips.Any())
+    {
+        <section class="v-trips-group">
+            <h2 class="v-trips-group-title">
+                Upcoming trips
+                <span class="v-trips-group-count">@upcomingTrips.Count()</span>
+            </h2>
+
+            <div class="row g-4">
+                @foreach (var trip in upcomingTrips)
+                {
+                    <div class="col-sm-6 col-lg-4">
+                        <partial name="_TripCard" model="trip" />
+                    </div>
+                }
             </div>
-        }
-    </div>
+        </section>
+    }
+
+    @if (pastTrips.Any())
+    {
+        <section class="v-trips-group">
+            <h2 class="v-trips-group-title">
+                Past trips
+                <span class="v-trips-group-count">@pastTrips.Count()</span>
+            </h2>
+
+            <div class="row g-4">
+                @foreach (var trip in pastTrips)
+                {
+                    <div class="col-sm-6 col-lg-4">
+                        <partial name="_TripCard" model="trip" />
+                    </div>
+                }
+            </div>
+        </section>
+    }
 }

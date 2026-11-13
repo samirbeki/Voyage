@@ -1,4 +1,6 @@
-﻿namespace Voyage.Web.ViewModels.Trips
+﻿using Voyage.Web.Common;
+
+namespace Voyage.Web.ViewModels.Trips
 {
     public class TripAllViewModel
     {
@@ -15,5 +17,7 @@
         public string? CoverImageUrl { get; set; }
 
         public int DestinationsCount { get; set; }
+
+        public TripStatus Status { get; set; }
     }
 }

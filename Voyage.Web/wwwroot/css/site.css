@@ -1098,3 +1098,77 @@ h1, h2, h3, h4 {
         padding-top: 1rem;
     }
 }
+
+/* ---------- Trip status ---------- */
+
+.v-status {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(11, 31, 58, 0.15);
+}
+
+.v-status::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.v-status-upcoming {
+    background: var(--voyage-navy);
+    color: #fff;
+}
+
+.v-status-ongoing {
+    background: var(--voyage-accent);
+    color: var(--voyage-navy);
+}
+
+.v-status-completed {
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--voyage-muted);
+}
+
+.v-trips-group + .v-trips-group {
+    margin-top: 3rem;
+}
+
+.v-trips-group-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--voyage-font-display);
+    font-size: 1.5rem;
+    color: var(--voyage-navy);
+    margin-bottom: 1.25rem;
+}
+
+.v-trips-group-count {
+    font-family: var(--voyage-font);
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: var(--voyage-border);
+    color: var(--voyage-muted);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+}
+
+.v-card-past {
+    opacity: 0.8;
+}
+
+.v-card-past .v-card-img img {
+    filter: grayscale(35%);
+}

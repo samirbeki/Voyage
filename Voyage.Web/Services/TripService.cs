@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
 using Voyage.Web.Services.Contracts;
@@ -17,6 +18,8 @@ namespace Voyage.Web.Services
 
         public async Task<IEnumerable<TripAllViewModel>> GetMineAsync(string userId)
         {
+            var today = DateTime.Today;
+
             return await dbContext.Trips
                 .AsNoTracking()
                 .Where(t => t.OwnerId == userId)
@@ -28,8 +31,18 @@ namespace Voyage.Web.Services
                     StartDate = t.StartDate,
                     EndDate = t.EndDate,
                     Budget = t.Budget,
-                    CoverImageUrl = t.CoverImageUrl,
-                    DestinationsCount = t.TripDestinations.Count
+                    CoverImageUrl = t.CoverImageUrl == null || t.CoverImageUrl == ""
+                        ? t.TripDestinations
+                            .OrderBy(td => td.Destination.Name)
+                            .Select(td => td.Destination.ImageUrl)
+                            .FirstOrDefault()
+                        : t.CoverImageUrl,
+                    DestinationsCount = t.TripDestinations.Count,
+                    Status = t.EndDate < today
+                        ? TripStatus.Completed
+                        : t.StartDate > today
+                            ? TripStatus.Upcoming
+                            : TripStatus.Ongoing
                 })
                 .ToListAsync();
         }
@@ -100,7 +113,12 @@ namespace Voyage.Web.Services
                     StartDate = t.StartDate,
                     EndDate = t.EndDate,
                     Budget = t.Budget,
-                    CoverImageUrl = t.CoverImageUrl,
+                    CoverImageUrl = t.CoverImageUrl == null || t.CoverImageUrl == ""
+                        ? t.TripDestinations
+                            .OrderBy(td => td.Destination.Name)
+                            .Select(td => td.Destination.ImageUrl)
+                            .FirstOrDefault()
+                        : t.CoverImageUrl,
                     CreatedOn = t.CreatedOn,
                     Destinations = t.TripDestinations
                         .Where(td => !td.Destination.IsDeleted)
