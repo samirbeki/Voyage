@@ -17,14 +17,17 @@ namespace Voyage.Web.ViewModels.Trips
             ErrorMessage = ErrorMessages.MaxLengthField)]
         public string? Description { get; set; }
 
+        [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [DataType(DataType.Date)]
         [Display(Name = "Start date")]
         public DateTime StartDate { get; set; }
 
+        [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [DataType(DataType.Date)]
         [Display(Name = "End date")]
         public DateTime EndDate { get; set; }
 
+        [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [Range(
             typeof(decimal),
             ValidationConstants.TripBudgetMinValue,
