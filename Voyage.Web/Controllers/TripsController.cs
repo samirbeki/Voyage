@@ -69,6 +69,8 @@ namespace Voyage.Web.Controllers
 
             var tripId = await tripService.CreateAsync(model, GetUserId());
 
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.TripCreated;
+
             return RedirectToAction(nameof(Details), new { id = tripId });
         }
 
@@ -134,6 +136,8 @@ namespace Voyage.Web.Controllers
                 return NotFound();
             }
 
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.TripUpdated;
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -161,6 +165,8 @@ namespace Voyage.Web.Controllers
             {
                 return NotFound();
             }
+
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.TripDeleted;
 
             return RedirectToAction(nameof(Index));
         }

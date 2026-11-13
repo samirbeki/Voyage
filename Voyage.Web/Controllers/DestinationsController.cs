@@ -79,6 +79,8 @@ namespace Voyage.Web.Controllers
 
             await destinationService.AddAsync(model);
 
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.DestinationAdded;
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -137,6 +139,8 @@ namespace Voyage.Web.Controllers
                 return NotFound();
             }
 
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.DestinationUpdated;
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -166,6 +170,8 @@ namespace Voyage.Web.Controllers
             {
                 return NotFound();
             }
+
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.DestinationDeleted;
 
             return RedirectToAction(nameof(Index));
         }

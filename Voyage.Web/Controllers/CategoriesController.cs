@@ -49,6 +49,8 @@ namespace Voyage.Web.Controllers
 
             await categoryService.AddAsync(model);
 
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.CategoryAdded;
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -90,6 +92,8 @@ namespace Voyage.Web.Controllers
             {
                 return NotFound();
             }
+
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.CategoryUpdated;
 
             return RedirectToAction(nameof(Index));
         }
@@ -136,6 +140,8 @@ namespace Voyage.Web.Controllers
             {
                 return NotFound();
             }
+
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.CategoryDeleted;
 
             return RedirectToAction(nameof(Index));
         }
