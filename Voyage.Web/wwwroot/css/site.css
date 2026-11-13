@@ -916,3 +916,23 @@ h1, h2, h3, h4 {
 .v-auth-switch a:hover {
     text-decoration: underline;
 }
+
+.v-auth-card .form-floating > .form-control {
+    height: calc(3.5rem + 2px);
+    padding: 1rem 0.9rem;
+}
+
+.v-auth-card .form-floating > .form-control:focus,
+.v-auth-card .form-floating > .form-control:not(:placeholder-shown) {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+}
+
+.v-auth-card .form-floating > .form-control::placeholder {
+    color: transparent;
+}
+
+.v-auth-card .form-floating > label {
+    padding: 1rem 0.9rem;
+    color: var(--voyage-muted);
+}
