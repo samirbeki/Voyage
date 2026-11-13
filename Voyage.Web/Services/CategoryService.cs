@@ -98,6 +98,23 @@ namespace Voyage.Web.Services
                 return false;
             }
 
+            var deletedDestinations = await dbContext.Destinations
+                .IgnoreQueryFilters()
+                .Where(d => d.CategoryId == id && d.IsDeleted)
+                .ToListAsync();
+
+            var deletedIds = deletedDestinations
+                .Select(d => d.Id)
+                .ToList();
+
+            var tripDestinations = await dbContext.TripDestinations
+                .IgnoreQueryFilters()
+                .Where(td => deletedIds.Contains(td.DestinationId))
+                .ToListAsync();
+
+            dbContext.TripDestinations.RemoveRange(tripDestinations);
+            dbContext.Destinations.RemoveRange(deletedDestinations);
+
             dbContext.Categories.Remove(category);
             await dbContext.SaveChangesAsync();
 
@@ -116,7 +133,6 @@ namespace Voyage.Web.Services
         public async Task<bool> HasDestinationsAsync(int id)
         {
             return await dbContext.Destinations
-                .IgnoreQueryFilters()
                 .AnyAsync(d => d.CategoryId == id);
         }
     }
