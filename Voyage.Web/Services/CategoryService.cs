@@ -116,6 +116,7 @@ namespace Voyage.Web.Services
         public async Task<bool> HasDestinationsAsync(int id)
         {
             return await dbContext.Destinations
+                .IgnoreQueryFilters()
                 .AnyAsync(d => d.CategoryId == id);
         }
     }

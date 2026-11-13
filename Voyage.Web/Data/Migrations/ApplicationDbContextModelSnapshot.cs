@@ -243,6 +243,9 @@ namespace Voyage.Web.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Categories");
 
                     b.HasData(
@@ -580,7 +583,12 @@ namespace Voyage.Web.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Trips");
+                    b.ToTable("Trips", t =>
+                        {
+                            t.HasCheckConstraint("CK_Trips_Budget", "[Budget] > 0");
+
+                            t.HasCheckConstraint("CK_Trips_EndDate", "[EndDate] >= [StartDate]");
+                        });
                 });
 
             modelBuilder.Entity("Voyage.Web.Data.Entities.TripDestination", b =>
@@ -654,7 +662,7 @@ namespace Voyage.Web.Data.Migrations
                     b.HasOne("Voyage.Web.Data.Entities.Category", "Category")
                         .WithMany("Destinations")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
