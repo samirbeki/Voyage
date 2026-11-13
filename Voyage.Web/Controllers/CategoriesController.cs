@@ -6,7 +6,7 @@ using Voyage.Web.ViewModels.Categories;
 
 namespace Voyage.Web.Controllers
 {
-    public class CategoriesController : Controller
+    public class CategoriesController : BaseController
     {
         private readonly ICategoryService categoryService;
 

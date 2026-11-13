@@ -6,7 +6,7 @@ using Voyage.Web.ViewModels.Destinations;
 
 namespace Voyage.Web.Controllers
 {
-    public class DestinationsController : Controller
+    public class DestinationsController : BaseController
     {
         private readonly IDestinationService destinationService;
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Trips;
@@ -8,7 +7,7 @@ using Voyage.Web.ViewModels.Trips;
 namespace Voyage.Web.Controllers
 {
     [Authorize]
-    public class TripsController : Controller
+    public class TripsController : BaseController
     {
         private readonly ITripService tripService;
 
@@ -164,11 +163,6 @@ namespace Voyage.Web.Controllers
             }
 
             return RedirectToAction(nameof(Index));
-        }
-
-        private string GetUserId()
-        {
-            return User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         }
     }
 }
