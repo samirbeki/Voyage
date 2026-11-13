@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "About";
+}
+
+<div class="v-page-header">
+    <div>
+        <h1 class="v-page-title">About VOYAGE</h1>
+        <p class="v-page-subtitle">A simple travel planner for your next journey.</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-lg-7">
+        <div class="v-panel h-100 mb-0">
+            <h2 class="v-panel-title">What is VOYAGE?</h2>
+            <p class="v-muted">
+                VOYAGE is a web application that helps travelers discover destinations
+                and organize their trips in one place. You can browse handpicked places
+                by category, search and filter them, and build your own trips with dates,
+                a budget and the destinations you want to visit.
+            </p>
+            <p class="v-muted mb-0">
+                Every trip belongs to its owner, so your plans stay private and only you
+                can edit or delete them.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="v-panel h-100 mb-0">
+            <h2 class="v-panel-title">Built with</h2>
+            <ul class="v-about-list">
+                <li><i class="bi bi-check2-circle"></i> ASP.NET Core MVC (.NET 10)</li>
+                <li><i class="bi bi-check2-circle"></i> Entity Framework Core &amp; SQL Server</li>
+                <li><i class="bi bi-check2-circle"></i> ASP.NET Core Identity</li>
+                <li><i class="bi bi-check2-circle"></i> Bootstrap 5 &amp; Bootstrap Icons</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<section class="v-section pt-0">
+    <div class="v-section-head text-center">
+        <h2 class="v-section-title">How it works</h2>
+        <p class="v-muted">Three steps from an idea to a planned trip.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="v-feature">
+                <div class="v-feature-icon"><i class="bi bi-search"></i></div>
+                <h3>1. Explore</h3>
+                <p>Browse destinations, filter them by category and sort them by name or popularity.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="v-feature">
+                <div class="v-feature-icon"><i class="bi bi-person-plus"></i></div>
+                <h3>2. Create an account</h3>
+                <p>Register in seconds to unlock trip planning and manage your own content.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="v-feature">
+                <div class="v-feature-icon"><i class="bi bi-suitcase2"></i></div>
+                <h3>3. Plan your trip</h3>
+                <p>Pick dates, set a budget and choose destinations. Your trips are grouped into upcoming and past.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="v-cta">
+    <div>
+        <h2>Ready to start planning?</h2>
+        <p>Explore the destinations and find your next adventure.</p>
+    </div>
+    <a class="btn btn-accent btn-lg px-4" asp-controller="Destinations" asp-action="Index">Explore destinations</a>
+</section>

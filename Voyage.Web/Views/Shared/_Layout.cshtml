@@ -39,7 +39,7 @@
                 <div class="navbar-collapse collapse justify-content-between">
                     <ul class="navbar-nav ms-lg-4 gap-lg-1">
                         <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")"
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")"
                                asp-area=""
                                asp-controller="Home"
                                asp-action="Index">
@@ -130,8 +130,8 @@
                 &middot;
                 <a asp-area=""
                    asp-controller="Home"
-                   asp-action="Privacy">
-                    Privacy
+                   asp-action="About">
+                    About
                 </a>
             </div>
         </div>

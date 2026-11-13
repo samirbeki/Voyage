@@ -17,7 +17,7 @@ namespace Voyage.Web.Controllers
             return View(await homeService.GetIndexAsync());
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }
