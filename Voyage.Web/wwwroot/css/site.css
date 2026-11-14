@@ -1199,9 +1199,10 @@ h1, h2, h3, h4 {
 
 a.v-category-count {
     text-decoration: none;
+    white-space: nowrap;
     border-radius: 999px;
-    padding: 0.2rem 0.6rem;
-    margin-left: -0.6rem;
+    padding: 0.2rem 0.45rem;
+    margin-left: -0.45rem;
     transition: background 0.2s, color 0.2s;
 }
 
