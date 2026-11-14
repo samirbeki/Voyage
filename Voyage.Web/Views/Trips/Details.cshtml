@@ -5,6 +5,8 @@
 }
 
 <div class="v-cover">
+    <span class="v-status v-status-@Model.Status.ToString().ToLower()">@Model.Status</span>
+
     <img src="@Model.CoverImageUrl"
          alt="@Model.Title"
          onerror="this.style.display='none'" />
@@ -69,6 +71,27 @@
     </div>
 
     <div class="col-lg-4">
+        <div class="v-countdown v-countdown-@Model.Status.ToString().ToLower()">
+            @if (Model.Status == Voyage.Web.Common.TripStatus.Upcoming)
+            {
+                <i class="bi bi-hourglass-split v-countdown-icon"></i>
+                <span class="v-countdown-number">@Model.DaysUntilStart</span>
+                <span class="v-countdown-label">@(Model.DaysUntilStart == 1 ? "day to go" : "days to go")</span>
+            }
+            else if (Model.Status == Voyage.Web.Common.TripStatus.Ongoing)
+            {
+                <i class="bi bi-geo-alt-fill v-countdown-icon"></i>
+                <span class="v-countdown-number">@Model.CurrentDay</span>
+                <span class="v-countdown-label">of @Model.DaysCount days</span>
+            }
+            else
+            {
+                <i class="bi bi-check2-circle v-countdown-icon"></i>
+                <span class="v-countdown-number">@Model.DaysSinceEnd</span>
+                <span class="v-countdown-label">@(Model.DaysSinceEnd == 1 ? "day ago" : "days ago")</span>
+            }
+        </div>
+
         <div class="v-panel mb-4">
             <h2 class="v-panel-title">Budget</h2>
 

@@ -1,4 +1,6 @@
-﻿namespace Voyage.Web.ViewModels.Trips
+﻿using Voyage.Web.Common;
+
+namespace Voyage.Web.ViewModels.Trips
 {
     public class TripDetailsViewModel
     {
@@ -21,6 +23,14 @@
         public int DaysCount { get; set; }
 
         public decimal BudgetPerDay { get; set; }
+
+        public TripStatus Status { get; set; }
+
+        public int DaysUntilStart { get; set; }
+
+        public int CurrentDay { get; set; }
+
+        public int DaysSinceEnd { get; set; }
 
         public IEnumerable<TripDestinationViewModel> Destinations { get; set; }
             = new List<TripDestinationViewModel>();

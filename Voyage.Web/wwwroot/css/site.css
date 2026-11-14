@@ -1218,3 +1218,53 @@ a.v-category-count .bi-arrow-right {
 a.v-category-count:hover .bi-arrow-right {
     transform: translateX(3px);
 }
+
+/* ---------- Trip countdown ---------- */
+
+.v-countdown {
+    border-radius: var(--voyage-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    box-shadow: var(--voyage-shadow);
+}
+
+.v-countdown-upcoming {
+    background: var(--voyage-navy);
+    color: #fff;
+}
+
+.v-countdown-ongoing {
+    background: var(--voyage-accent);
+    color: var(--voyage-navy);
+}
+
+.v-countdown-completed {
+    background: var(--voyage-surface);
+    color: var(--voyage-muted);
+}
+
+.v-countdown-icon {
+    font-size: 1.4rem;
+    opacity: 0.8;
+}
+
+.v-countdown-number {
+    display: block;
+    font-family: var(--voyage-font-display);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0.25rem 0;
+}
+
+.v-countdown-upcoming .v-countdown-number {
+    color: var(--voyage-accent);
+}
+
+.v-countdown-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}

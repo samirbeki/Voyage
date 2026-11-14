@@ -145,6 +145,24 @@ namespace Voyage.Web.Services
                 trip.Budget / trip.DaysCount,
                 2);
 
+            var today = DateTime.Today;
+
+            if (trip.EndDate < today)
+            {
+                trip.Status = TripStatus.Completed;
+                trip.DaysSinceEnd = (today - trip.EndDate).Days;
+            }
+            else if (trip.StartDate > today)
+            {
+                trip.Status = TripStatus.Upcoming;
+                trip.DaysUntilStart = (trip.StartDate - today).Days;
+            }
+            else
+            {
+                trip.Status = TripStatus.Ongoing;
+                trip.CurrentDay = (today - trip.StartDate).Days + 1;
+            }
+
             return trip;
         }
 
