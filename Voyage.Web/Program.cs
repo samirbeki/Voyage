@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Services;
 using Voyage.Web.Services.Contracts;
@@ -18,7 +19,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
+        _ => ErrorMessages.ValueRequired);
+
+    options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor(
+        (value, field) => ErrorMessages.InvalidValue);
+});
 
 builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<ITripService, TripService>();

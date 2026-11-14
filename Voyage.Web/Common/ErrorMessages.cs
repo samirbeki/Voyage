@@ -5,6 +5,12 @@
         public const string RequiredField =
             "{0} is required.";
 
+        public const string ValueRequired =
+            "This field is required.";
+
+        public const string InvalidValue =
+            "Please enter a valid value.";
+
         public const string StringLengthRange =
             "{0} must be between {2} and {1} characters.";
 
@@ -37,13 +43,14 @@
 
         public const string DestinationNotFound =
             "One or more of the selected destinations do not exist.";
+
         public const string StartDateInPast =
             "Start date cannot be in the past.";
 
-        public const string CategoryExists = 
+        public const string CategoryExists =
             "A category with this name already exists.";
 
-        public const string CategoryHasDestinations = 
+        public const string CategoryHasDestinations =
             "This category cannot be deleted because it has destinations.";
     }
 }
