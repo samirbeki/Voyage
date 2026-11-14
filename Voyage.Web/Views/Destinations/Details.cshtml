@@ -39,6 +39,13 @@
             <h2 class="v-panel-title">Actions</h2>
 
             <div class="v-actions">
+                <a class="btn btn-accent"
+                   asp-controller="Trips"
+                   asp-action="Create"
+                   asp-route-destinationId="@Model.Id">
+                    <i class="bi bi-suitcase2"></i> Plan a trip here
+                </a>
+
                 @if (User.Identity?.IsAuthenticated == true)
                 {
                     <a class="btn btn-navy"

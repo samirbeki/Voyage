@@ -26,7 +26,7 @@ namespace Voyage.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int? destinationId)
         {
             var model = new TripFormViewModel
             {
@@ -35,6 +35,12 @@ namespace Voyage.Web.Controllers
                 AvailableDestinations =
                     await tripService.GetDestinationOptionsAsync()
             };
+
+            if (destinationId.HasValue
+                && model.AvailableDestinations.Any(d => d.Id == destinationId))
+            {
+                model.SelectedDestinationIds.Add(destinationId.Value);
+            }
 
             return View(model);
         }

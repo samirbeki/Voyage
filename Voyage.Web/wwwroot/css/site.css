@@ -1268,3 +1268,11 @@ a.v-category-count:hover .bi-arrow-right {
     letter-spacing: 0.06em;
     text-transform: uppercase;
 }
+
+/* ---------- Primary action (Plan a trip here) ---------- */
+
+.v-actions > .btn-accent:first-child {
+    flex-basis: 100%;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+}
