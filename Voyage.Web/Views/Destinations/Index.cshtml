@@ -39,9 +39,9 @@
 
         <div class="col-md-2">
             <select name="sorting" class="form-select">
-                <option value="NameAsc" selected="@(Model.Sorting == Voyage.Web.Common.DestinationSorting.NameAsc)">Name A–Z</option>
-                <option value="NameDesc" selected="@(Model.Sorting == Voyage.Web.Common.DestinationSorting.NameDesc)">Name Z–A</option>
-                <option value="Popular" selected="@(Model.Sorting == Voyage.Web.Common.DestinationSorting.Popular)">Most popular</option>
+                <option value="NameAsc" selected="@(Model.Sorting == DestinationSorting.NameAsc)">Name A–Z</option>
+                <option value="NameDesc" selected="@(Model.Sorting == DestinationSorting.NameDesc)">Name Z–A</option>
+                <option value="Popular" selected="@(Model.Sorting == DestinationSorting.Popular)">Most popular</option>
             </select>
         </div>
 
@@ -60,7 +60,7 @@
 
 @if (!Model.Destinations.Any())
 {
-    <partial name="_EmptyState" model='new Voyage.Web.ViewModels.Shared.EmptyStateViewModel
+    <partial name="_EmptyState" model='new EmptyStateViewModel
     {
         Icon = "bi-search",
         Title = "No destinations found",

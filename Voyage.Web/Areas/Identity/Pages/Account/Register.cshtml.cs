@@ -99,7 +99,6 @@ public class RegisterModel : PageModel
         public string? ConfirmPassword { get; set; }
     }
 
-
     public async Task OnGetAsync(string? returnUrl = null)
     {
         ReturnUrl = returnUrl;

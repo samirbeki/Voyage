@@ -1271,8 +1271,98 @@ a.v-category-count:hover .bi-arrow-right {
 
 /* ---------- Primary action (Plan a trip here) ---------- */
 
-.v-actions > .btn-accent:first-child {
-    flex-basis: 100%;
-    padding-top: 0.6rem;
-    padding-bottom: 0.6rem;
+.v-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+
+.v-actions > .btn {
+    width: 100%;
+}
+
+.v-actions > .btn-accent {
+    grid-column: 1 / -1;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    font-size: 1.05rem;
+}
+
+.v-actions > .btn-outline-navy {
+    grid-column: 1 / -1;
+    border: none;
+    background: none;
+    color: var(--voyage-muted);
+    font-weight: 600;
+    padding-top: 0.4rem;
+}
+
+.v-actions > .btn-outline-navy:hover,
+.v-actions > .btn-outline-navy:focus {
+    background: none;
+    color: var(--voyage-navy);
+}
+
+.v-actions > .btn-outline-navy:hover .bi-arrow-left {
+    transform: translateX(-3px);
+}
+
+.v-actions > .btn-outline-navy .bi-arrow-left {
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+/* ---------- Account pages (Identity) ---------- */
+
+.v-main > h1 {
+    font-family: var(--voyage-font-display);
+    font-size: 2.2rem;
+    color: var(--voyage-navy);
+    margin-bottom: 0.25rem;
+}
+
+.v-main > h1 + div > h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--voyage-muted);
+    margin-bottom: 1.25rem;
+}
+
+.v-main h3 {
+    font-family: var(--voyage-font-display);
+    color: var(--voyage-navy);
+}
+
+.nav-pills .nav-link {
+    color: var(--voyage-navy);
+    border-radius: 0.6rem;
+    font-weight: 500;
+}
+
+.nav-pills .nav-link:hover {
+    background: rgba(11, 31, 58, 0.06);
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    background: var(--voyage-navy);
+    color: #fff;
+}
+
+.btn-primary {
+    background: var(--voyage-navy);
+    border-color: var(--voyage-navy);
+    border-radius: 0.6rem;
+    font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: var(--voyage-accent);
+    border-color: var(--voyage-accent);
+    color: var(--voyage-navy);
+}
+
+.form-floating > .form-control::placeholder {
+    color: transparent;
 }

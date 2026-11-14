@@ -31,11 +31,11 @@
 else
 {
     var upcomingTrips = Model
-        .Where(t => t.Status != Voyage.Web.Common.TripStatus.Completed)
+        .Where(t => t.Status != TripStatus.Completed)
         .ToList();
 
     var pastTrips = Model
-        .Where(t => t.Status == Voyage.Web.Common.TripStatus.Completed)
+        .Where(t => t.Status == TripStatus.Completed)
         .OrderByDescending(t => t.StartDate)
         .ToList();
 
