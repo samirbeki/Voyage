@@ -70,3 +70,30 @@
         </div>
     </div>
 </div>
+
+@if (Model.SimilarDestinations.Any())
+{
+    <section class="v-section">
+        <div class="v-section-head d-flex flex-wrap justify-content-between align-items-end gap-3">
+            <div>
+                <h2 class="v-section-title">More in @Model.CategoryName</h2>
+                <p class="v-muted mb-0">Other places you might like.</p>
+            </div>
+
+            <a class="btn btn-outline-navy"
+               asp-action="Index"
+               asp-route-categoryId="@Model.CategoryId">
+                View all
+            </a>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var destination in Model.SimilarDestinations)
+            {
+                <div class="col-md-4">
+                    <partial name="_DestinationCard" model="destination" />
+                </div>
+            }
+        </div>
+    </section>
+}

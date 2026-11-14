@@ -91,7 +91,7 @@ namespace Voyage.Web.Services
 
         public async Task<DestinationDetailsViewModel?> GetDetailsAsync(int id)
         {
-            return await dbContext.Destinations
+            var destination = await dbContext.Destinations
                 .AsNoTracking()
                 .Where(d => d.Id == id && !d.IsDeleted)
                 .Select(d => new DestinationDetailsViewModel
@@ -101,9 +101,35 @@ namespace Voyage.Web.Services
                     Country = d.Country,
                     ImageUrl = d.ImageUrl,
                     CategoryName = d.Category.Name,
+                    CategoryId = d.CategoryId,
                     Description = d.Description
                 })
                 .FirstOrDefaultAsync();
+
+            if (destination == null)
+            {
+                return null;
+            }
+
+            destination.SimilarDestinations = await dbContext.Destinations
+                .AsNoTracking()
+                .Where(d =>
+                    d.CategoryId == destination.CategoryId &&
+                    d.Id != destination.Id)
+                .OrderBy(d => d.Name)
+                .Take(PagingConstants.SimilarDestinationsCount)
+                .Select(d => new DestinationAllViewModel
+                {
+                    Id = d.Id,
+                    Name = d.Name,
+                    Country = d.Country,
+                    ImageUrl = d.ImageUrl,
+                    CategoryName = d.Category.Name,
+                    Description = d.Description
+                })
+                .ToListAsync();
+
+            return destination;
         }
 
         public async Task<IEnumerable<CategoryOptionViewModel>> GetCategoriesAsync()

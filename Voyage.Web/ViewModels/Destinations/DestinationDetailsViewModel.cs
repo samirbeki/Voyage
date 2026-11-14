@@ -13,5 +13,9 @@
         public string CategoryName { get; set; } = null!;
 
         public string Description { get; set; } = null!;
+
+        public int CategoryId { get; set; }
+
+        public IEnumerable<DestinationAllViewModel> SimilarDestinations { get; set; } = new List<DestinationAllViewModel>();
     }
 }
