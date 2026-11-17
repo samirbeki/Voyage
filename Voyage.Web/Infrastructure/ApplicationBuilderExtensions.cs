@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -62,6 +63,23 @@ namespace Voyage.Web.Infrastructure
             if (!await userManager.IsInRoleAsync(admin, RoleConstants.Administrator))
             {
                 await userManager.AddToRoleAsync(admin, RoleConstants.Administrator);
+            }
+
+            await AssignUserRoleToUsersWithoutRoleAsync(userManager);
+        }
+
+        private static async Task AssignUserRoleToUsersWithoutRoleAsync(UserManager<IdentityUser> userManager)
+        {
+            var users = await userManager.Users.ToListAsync();
+
+            foreach (var user in users)
+            {
+                var roles = await userManager.GetRolesAsync(user);
+
+                if (roles.Count == 0)
+                {
+                    await userManager.AddToRoleAsync(user, RoleConstants.User);
+                }
             }
         }
     }
