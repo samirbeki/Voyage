@@ -1,0 +1,63 @@
+﻿@model Voyage.Web.ViewModels.Expenses.ExpenseFormViewModel
+@using Voyage.Web.Common
+
+@{
+    ViewData["Title"] = "Add expense";
+}
+
+<div class="v-form-card">
+    <h1 class="v-page-title mb-1">Add expense</h1>
+    <p class="v-page-subtitle mb-4">
+        For <strong>@Model.TripTitle</strong>,
+        @Model.TripStartDate.ToString("dd MMM yyyy") – @Model.TripEndDate.ToString("dd MMM yyyy")
+    </p>
+
+    <form method="post" asp-action="Add">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <input type="hidden" asp-for="TripId" />
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Title"></label>
+            <input class="form-control" asp-for="Title" placeholder="e.g. Hotel in Rome" />
+            <span class="text-danger" asp-validation-for="Title"></span>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label" asp-for="Amount"></label>
+                <div class="input-group">
+                    <input class="form-control" asp-for="Amount" />
+                    <span class="input-group-text">€</span>
+                </div>
+                <span class="text-danger" asp-validation-for="Amount"></span>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="Category"></label>
+                <select class="form-select" asp-for="Category"
+                        asp-items="Html.GetEnumSelectList<ExpenseCategory>()"></select>
+                <span class="text-danger" asp-validation-for="Category"></span>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label" asp-for="Date"></label>
+            <input class="form-control" asp-for="Date"
+                   min="@Model.TripStartDate.ToString("yyyy-MM-dd")"
+                   max="@Model.TripEndDate.ToString("yyyy-MM-dd")" />
+            <span class="text-danger" asp-validation-for="Date"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-accent px-4">
+                <i class="bi bi-check-lg"></i> Add expense
+            </button>
+            <a class="btn btn-outline-navy"
+               asp-controller="Trips" asp-action="Details" asp-route-id="@Model.TripId">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

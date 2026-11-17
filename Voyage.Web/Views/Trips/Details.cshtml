@@ -117,6 +117,14 @@
                     Edit
                 </a>
 
+                <a class="btn btn-outline-navy"
+                   asp-controller="Expenses"
+                   asp-action="Add"
+                   asp-route-tripId="@Model.Id">
+                    <i class="bi bi-plus-lg"></i>
+                    Add expense
+                </a>
+
                 <a class="btn btn-outline-danger"
                    asp-action="Delete"
                    asp-route-id="@Model.Id">
