@@ -1,8 +1,8 @@
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Voyage.Web.Common;
 using Voyage.Web.Data;
+using Voyage.Web.Infrastructure;
 using Voyage.Web.Services;
 using Voyage.Web.Services.Contracts;
 
@@ -36,6 +36,8 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IHomeService, HomeService>();
 
 var app = builder.Build();
+
+await app.SeedRolesAndAdminAsync();
 
 if (app.Environment.IsDevelopment())
 {
