@@ -1367,3 +1367,51 @@ a.v-category-count:hover .bi-arrow-right {
 .form-floating > .form-control::placeholder {
     color: transparent;
 }
+
+/* ---------- Admin area ---------- */
+
+.v-admin-card {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    height: 100%;
+    padding: 1.75rem;
+    background: var(--voyage-surface);
+    border: 1px solid var(--voyage-border);
+    border-top: 4px solid var(--voyage-accent);
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    color: var(--voyage-text);
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.v-admin-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--voyage-shadow-hover);
+    color: var(--voyage-text);
+}
+
+.v-admin-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: .5rem;
+    border-radius: 14px;
+    background: rgba(244, 162, 89, .15);
+    color: var(--voyage-accent-dark);
+    font-size: 1.5rem;
+}
+
+.v-admin-card-title {
+    font-family: var(--voyage-font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--voyage-navy);
+}
+
+.v-admin-card-text {
+    color: var(--voyage-muted);
+}

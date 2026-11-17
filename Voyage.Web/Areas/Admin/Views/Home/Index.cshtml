@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+}
+
+<section class="v-section">
+    <div class="v-page-header">
+        <div>
+            <h1 class="v-page-title">Administration</h1>
+            <p class="v-page-subtitle">Manage the content of VOYAGE.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <a class="v-admin-card" asp-area="Admin" asp-controller="Destinations" asp-action="Index">
+                <span class="v-admin-card-icon"><i class="bi bi-geo-alt"></i></span>
+                <span class="v-admin-card-title">Destinations</span>
+                <span class="v-admin-card-text">Add, edit and delete destinations.</span>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a class="v-admin-card" asp-area="Admin" asp-controller="Categories" asp-action="Index">
+                <span class="v-admin-card-icon"><i class="bi bi-tags"></i></span>
+                <span class="v-admin-card-title">Categories</span>
+                <span class="v-admin-card-text">Add, edit and delete categories.</span>
+            </a>
+        </div>
+    </div>
+</section>
