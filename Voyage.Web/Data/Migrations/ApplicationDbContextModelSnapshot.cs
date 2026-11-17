@@ -17,7 +17,7 @@ namespace Voyage.Web.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.14")
+                .HasAnnotation("ProductVersion", "10.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -541,6 +541,42 @@ namespace Voyage.Web.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Voyage.Web.Data.Entities.Expense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("TripId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TripId");
+
+                    b.ToTable("Expenses", t =>
+                        {
+                            t.HasCheckConstraint("CK_Expenses_Amount", "[Amount] > 0");
+                        });
+                });
+
             modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
                 {
                     b.Property<int>("Id")
@@ -668,6 +704,17 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Voyage.Web.Data.Entities.Expense", b =>
+                {
+                    b.HasOne("Voyage.Web.Data.Entities.Trip", "Trip")
+                        .WithMany("Expenses")
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trip");
+                });
+
             modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Owner")
@@ -710,6 +757,8 @@ namespace Voyage.Web.Data.Migrations
 
             modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
                 {
+                    b.Navigation("Expenses");
+
                     b.Navigation("TripDestinations");
                 });
 #pragma warning restore 612, 618

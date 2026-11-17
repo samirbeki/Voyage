@@ -13,5 +13,9 @@
         public const string TripCreated = "Trip created successfully.";
         public const string TripUpdated = "Trip updated successfully.";
         public const string TripDeleted = "Trip deleted successfully.";
+
+        public const string ExpenseAdded = "Expense added successfully.";
+        public const string ExpenseUpdated = "Expense updated successfully.";
+        public const string ExpenseDeleted = "Expense deleted successfully.";
     }
 }

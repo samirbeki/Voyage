@@ -52,5 +52,14 @@
 
         public const string CategoryHasDestinations =
             "This category cannot be deleted because it has destinations.";
+
+        public const string ExpenseTitleLength =
+            "Title must be between 2 and 100 characters.";
+
+        public const string ExpenseAmountRange =
+            "Amount must be between 0.01 and 1000000.";
+
+        public const string ExpenseDateOutsideTrip =
+            "The date must be between the start and end date of the trip.";
     }
 }

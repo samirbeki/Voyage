@@ -24,5 +24,10 @@
         public const string TripBudgetMinValue = "0.01";
         public const string TripBudgetMaxValue = "1000000";
         public const int TripMaxDays = 365;
+
+        public const int ExpenseTitleMinLength = 2;
+        public const int ExpenseTitleMaxLength = 100;
+        public const string ExpenseAmountMin = "0.01";
+        public const string ExpenseAmountMax = "1000000";
     }
 }
