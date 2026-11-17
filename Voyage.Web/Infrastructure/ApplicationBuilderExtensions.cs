@@ -17,6 +17,13 @@ namespace Voyage.Web.Infrastructure
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
+            await SeedRolesAsync(roleManager);
+            await SeedAdministratorAsync(userManager, configuration);
+            await AssignUserRoleToUsersWithoutRoleAsync(userManager);
+        }
+
+        private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
+        {
             var roles = new[]
             {
                 RoleConstants.Administrator,
@@ -32,7 +39,12 @@ namespace Voyage.Web.Infrastructure
                     await roleManager.CreateAsync(new IdentityRole(role));
                 }
             }
+        }
 
+        private static async Task SeedAdministratorAsync(
+            UserManager<IdentityUser> userManager,
+            IConfiguration configuration)
+        {
             var email = configuration["AdminUser:Email"];
             var password = configuration["AdminUser:Password"];
 
@@ -64,8 +76,6 @@ namespace Voyage.Web.Infrastructure
             {
                 await userManager.AddToRoleAsync(admin, RoleConstants.Administrator);
             }
-
-            await AssignUserRoleToUsersWithoutRoleAsync(userManager);
         }
 
         private static async Task AssignUserRoleToUsersWithoutRoleAsync(UserManager<IdentityUser> userManager)
