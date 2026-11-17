@@ -34,6 +34,7 @@ builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<ITripService, TripService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IHomeService, HomeService>();
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
 
 var app = builder.Build();
 
