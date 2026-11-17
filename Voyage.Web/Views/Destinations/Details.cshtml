@@ -46,15 +46,19 @@
                     <i class="bi bi-suitcase2"></i> Plan a trip here
                 </a>
 
-                @if (User.Identity?.IsAuthenticated == true)
+                @if (User.IsInRole(RoleConstants.Administrator))
                 {
                     <a class="btn btn-navy"
+                       asp-area="Admin"
+                       asp-controller="Destinations"
                        asp-action="Edit"
                        asp-route-id="@Model.Id">
                         <i class="bi bi-pencil"></i> Edit
                     </a>
 
                     <a class="btn btn-outline-danger"
+                       asp-area="Admin"
+                       asp-controller="Destinations"
                        asp-action="Delete"
                        asp-route-id="@Model.Id">
                         <i class="bi bi-trash"></i> Delete

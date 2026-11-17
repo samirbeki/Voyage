@@ -1,0 +1,127 @@
+﻿@using Voyage.Web.ViewModels.Shared
+
+@model Voyage.Web.ViewModels.Destinations.DestinationsIndexViewModel
+
+@{
+    ViewData["Title"] = "Manage destinations";
+}
+
+<section class="v-section">
+    <div class="v-page-header">
+        <div>
+            <h1 class="v-page-title">Manage destinations</h1>
+            <p class="v-page-subtitle">Add, edit and delete destinations.</p>
+        </div>
+
+        <a class="btn btn-accent" asp-area="Admin" asp-controller="Destinations" asp-action="Add">
+            <i class="bi bi-plus-lg"></i> Add destination
+        </a>
+    </div>
+
+    <form method="get" asp-area="Admin" asp-controller="Destinations" asp-action="Index" class="v-filter-bar mb-4">
+        <div class="row g-2 align-items-center">
+            <div class="col-md-4">
+                <input type="text"
+                       name="searchTerm"
+                       value="@Model.SearchTerm"
+                       class="form-control"
+                       placeholder="Search by name or country..." />
+            </div>
+
+            <div class="col-md-3">
+                <select name="categoryId" class="form-select">
+                    <option value="">All categories</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id" selected="@(Model.CategoryId == category.Id)">
+                            @category.Name
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <select name="sorting" class="form-select">
+                    <option value="NameAsc" selected="@(Model.Sorting == DestinationSorting.NameAsc)">Name A–Z</option>
+                    <option value="NameDesc" selected="@(Model.Sorting == DestinationSorting.NameDesc)">Name Z–A</option>
+                    <option value="Popular" selected="@(Model.Sorting == DestinationSorting.Popular)">Most popular</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-accent flex-fill">
+                    <i class="bi bi-search"></i> Search
+                </button>
+                <a asp-area="Admin" asp-controller="Destinations" asp-action="Index" class="btn btn-outline-navy">Clear</a>
+            </div>
+        </div>
+    </form>
+
+    <p class="v-muted mb-3">
+        @Model.TotalCount @(Model.TotalCount == 1 ? "destination" : "destinations") found
+    </p>
+
+    @if (!Model.Destinations.Any())
+    {
+        <partial name="_EmptyState" model='new EmptyStateViewModel
+                 {
+                     Icon = "bi-search",
+                     Title = "No destinations found",
+                     Message = "Try a different search or category."
+                 }' />
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Country</th>
+                        <th>Category</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var destination in Model.Destinations)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    @if (!string.IsNullOrWhiteSpace(destination.ImageUrl))
+                                    {
+                                        <img src="@destination.ImageUrl"
+                                             alt="@destination.Name"
+                                             class="rounded"
+                                             style="width: 56px; height: 56px; object-fit: cover;" />
+                                    }
+
+                                    <span class="fw-semibold">@destination.Name</span>
+                                </div>
+                            </td>
+                            <td>@destination.Country</td>
+                            <td>@destination.CategoryName</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-navy"
+                                   asp-area="Admin"
+                                   asp-controller="Destinations"
+                                   asp-action="Edit"
+                                   asp-route-id="@destination.Id">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </a>
+
+                                <a class="btn btn-sm btn-outline-danger"
+                                   asp-area="Admin"
+                                   asp-controller="Destinations"
+                                   asp-action="Delete"
+                                   asp-route-id="@destination.Id">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

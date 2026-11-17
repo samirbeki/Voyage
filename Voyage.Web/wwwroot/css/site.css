@@ -1415,3 +1415,65 @@ a.v-category-count:hover .bi-arrow-right {
 .v-admin-card-text {
     color: var(--voyage-muted);
 }
+
+.v-admin-table-wrap {
+    background: var(--voyage-surface);
+    border: 1px solid var(--voyage-border);
+    border-radius: var(--voyage-radius);
+    box-shadow: var(--voyage-shadow);
+    overflow-x: auto;
+}
+
+.v-admin-table thead th {
+    background: var(--voyage-bg);
+    color: var(--voyage-muted);
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--voyage-border);
+    padding: .9rem 1.25rem;
+    white-space: nowrap;
+}
+
+.v-admin-table tbody td {
+    padding: .85rem 1.25rem;
+    border-color: var(--voyage-border);
+}
+
+.v-admin-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.v-admin-table tbody tr:hover td {
+    background: rgba(244, 162, 89, .05);
+}
+
+.v-admin-table .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .35rem .75rem;
+    border-radius: var(--voyage-radius-sm);
+    white-space: nowrap;
+}
+
+.v-admin-thumb {
+    width: 56px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: var(--voyage-border);
+    flex-shrink: 0;
+}
+
+.v-admin-badge {
+    display: inline-block;
+    padding: .25rem .65rem;
+    border-radius: 999px;
+    background: rgba(42, 157, 143, .12);
+    color: var(--voyage-teal);
+    font-size: .8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}

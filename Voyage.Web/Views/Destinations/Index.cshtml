@@ -10,9 +10,12 @@
         <p class="v-page-subtitle">Discover places for your next journey.</p>
     </div>
 
-    @if (User.Identity?.IsAuthenticated == true)
+    @if (User.IsInRole(RoleConstants.Administrator))
     {
-        <a class="btn btn-accent" asp-action="Add">
+        <a class="btn btn-accent"
+           asp-area="Admin"
+           asp-controller="Destinations"
+           asp-action="Add">
             <i class="bi bi-plus-lg"></i> Add destination
         </a>
     }
