@@ -24,8 +24,11 @@
 <form method="get" asp-action="Index" class="v-filter-bar mb-4">
     <div class="row g-2 align-items-center">
         <div class="col-md-4">
-            <input type="text" name="searchTerm" value="@Model.SearchTerm"
-                   class="form-control" placeholder="Search by name or country..." />
+            <input type="text"
+                   name="searchTerm"
+                   value="@Model.SearchTerm"
+                   class="form-control"
+                   placeholder="Search by name or country..." />
         </div>
 
         <div class="col-md-3">
