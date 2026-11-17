@@ -1,4 +1,5 @@
 ﻿using Voyage.Web.Common;
+using Voyage.Web.ViewModels.Expenses;
 
 namespace Voyage.Web.ViewModels.Trips
 {
@@ -34,5 +35,14 @@ namespace Voyage.Web.ViewModels.Trips
 
         public IEnumerable<TripDestinationViewModel> Destinations { get; set; }
             = new List<TripDestinationViewModel>();
+
+        public IEnumerable<ExpenseViewModel> Expenses { get; set; }
+            = new List<ExpenseViewModel>();
+
+        public decimal TotalSpent { get; set; }
+
+        public decimal RemainingBudget { get; set; }
+
+        public int SpentPercent { get; set; }
     }
 }

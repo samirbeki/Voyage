@@ -3,6 +3,7 @@ using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
 using Voyage.Web.Services.Contracts;
+using Voyage.Web.ViewModels.Expenses;
 using Voyage.Web.ViewModels.Trips;
 
 namespace Voyage.Web.Services
@@ -130,6 +131,18 @@ namespace Voyage.Web.Services
                             Country = td.Destination.Country,
                             ImageUrl = td.Destination.ImageUrl
                         })
+                        .ToList(),
+                    Expenses = t.Expenses
+                        .OrderByDescending(e => e.Date)
+                        .Select(e => new ExpenseViewModel
+                        {
+                            Id = e.Id,
+                            TripId = e.TripId,
+                            Title = e.Title,
+                            Amount = e.Amount,
+                            Category = e.Category,
+                            Date = e.Date
+                        })
                         .ToList()
                 })
                 .FirstOrDefaultAsync();
@@ -144,6 +157,14 @@ namespace Voyage.Web.Services
             trip.BudgetPerDay = Math.Round(
                 trip.Budget / trip.DaysCount,
                 2);
+
+            trip.TotalSpent = trip.Expenses.Sum(e => e.Amount);
+
+            trip.RemainingBudget = trip.Budget - trip.TotalSpent;
+
+            trip.SpentPercent = trip.Budget > 0
+                ? (int)Math.Min(trip.TotalSpent / trip.Budget * 100, 100m)
+                : 0;
 
             var today = DateTime.Today;
 
