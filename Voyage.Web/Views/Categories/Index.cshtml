@@ -10,9 +10,12 @@
         <p class="v-page-subtitle">Browse destinations by type of trip.</p>
     </div>
 
-    @if (User.Identity?.IsAuthenticated == true)
+    @if (User.IsInRole(RoleConstants.Administrator))
     {
-        <a class="btn btn-accent" asp-action="Add">
+        <a class="btn btn-accent"
+           asp-area="Admin"
+           asp-controller="Categories"
+           asp-action="Add">
             <i class="bi bi-plus-lg"></i> Add category
         </a>
     }
@@ -37,6 +40,7 @@
 
                 <div class="v-category-footer">
                     <a class="v-category-count"
+                       asp-area=""
                        asp-controller="Destinations"
                        asp-action="Index"
                        asp-route-categoryId="@category.Id">
@@ -45,11 +49,13 @@
                         <i class="bi bi-arrow-right"></i>
                     </a>
 
-                    @if (User.Identity?.IsAuthenticated == true)
+                    @if (User.IsInRole(RoleConstants.Administrator))
                     {
                         <div class="d-flex gap-1">
                             <a class="v-icon-btn"
                                title="Edit"
+                               asp-area="Admin"
+                               asp-controller="Categories"
                                asp-action="Edit"
                                asp-route-id="@category.Id">
                                 <i class="bi bi-pencil"></i>
@@ -57,6 +63,8 @@
 
                             <a class="v-icon-btn v-icon-btn-danger"
                                title="Delete"
+                               asp-area="Admin"
+                               asp-controller="Categories"
                                asp-action="Delete"
                                asp-route-id="@category.Id">
                                 <i class="bi bi-trash"></i>
