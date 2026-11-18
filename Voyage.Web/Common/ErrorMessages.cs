@@ -70,5 +70,8 @@
 
         public const string ReviewAlreadyExists =
             "You have already reviewed this destination.";
+
+        public const string ReviewCouldNotBeSaved =
+            "Your review could not be saved. Please check the form.";
     }
 }

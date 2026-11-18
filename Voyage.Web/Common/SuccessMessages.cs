@@ -17,5 +17,7 @@
         public const string ExpenseAdded = "Expense added successfully.";
         public const string ExpenseUpdated = "Expense updated successfully.";
         public const string ExpenseDeleted = "Expense deleted successfully.";
+
+        public const string ReviewCreated = "Your review was published.";
     }
 }

@@ -7,10 +7,14 @@ namespace Voyage.Web.Controllers
     public class DestinationsController : BaseController
     {
         private readonly IDestinationService destinationService;
+        private readonly IReviewService reviewService;
 
-        public DestinationsController(IDestinationService destinationService)
+        public DestinationsController(
+            IDestinationService destinationService,
+            IReviewService reviewService)
         {
             this.destinationService = destinationService;
+            this.reviewService = reviewService;
         }
 
         public async Task<IActionResult> Index(
@@ -36,6 +40,22 @@ namespace Voyage.Web.Controllers
             {
                 return NotFound();
             }
+
+            string? userId = User.Identity?.IsAuthenticated == true
+                ? GetUserId()
+                : null;
+
+            bool canSeeHidden = User.IsInRole(RoleConstants.Moderator)
+                             || User.IsInRole(RoleConstants.Administrator);
+
+            destination.Reviews = await reviewService.GetForDestinationAsync(
+                id, userId, canSeeHidden);
+
+            destination.RatingSummary =
+                await reviewService.GetRatingSummaryAsync(id);
+
+            destination.CanReview = userId != null
+                && !await reviewService.HasUserReviewedAsync(id, userId);
 
             return View(destination);
         }

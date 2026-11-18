@@ -1,0 +1,40 @@
+﻿@model ReviewFormModel
+
+@{
+    int destinationId = (int)ViewData["DestinationId"]!;
+}
+
+<form asp-controller="Reviews"
+      asp-action="Create"
+      asp-area=""
+      asp-route-destinationId="@destinationId"
+      method="post"
+      class="review-form">
+
+    <div class="mb-3">
+        <label asp-for="Rating" class="form-label">Rating</label>
+        <select asp-for="Rating" class="form-select">
+            @for (int rating = ValidationConstants.ReviewRatingMax;
+                 rating >= ValidationConstants.ReviewRatingMin;
+                 rating--)
+            {
+                <option value="@rating">
+                    @rating / @ValidationConstants.ReviewRatingMax
+                </option>
+            }
+        </select>
+        <span asp-validation-for="Rating" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Comment" class="form-label">Your review</label>
+        <textarea asp-for="Comment"
+                  class="form-control"
+                  rows="4"></textarea>
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Publish review
+    </button>
+</form>

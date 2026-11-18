@@ -101,3 +101,41 @@
         </div>
     </section>
 }
+
+<section id="reviews" class="v-section reviews-section">
+    <div class="reviews-heading">
+        <h2 class="v-section-title">Reviews</h2>
+
+        @if (Model.RatingSummary.Count > 0)
+        {
+            <span class="rating-summary">
+                ★ @Model.RatingSummary.Average.ToString("0.0")
+                <small>(@Model.RatingSummary.Count)</small>
+            </span>
+        }
+    </div>
+
+    @if (Model.CanReview)
+    {
+        <partial name="_ReviewForm"
+                 model="Model.ReviewForm"
+                 view-data='new ViewDataDictionary(ViewData) { { "DestinationId", Model.Id } }' />
+    }
+    else if (User.Identity?.IsAuthenticated != true)
+    {
+        <p class="text-muted">
+            <a asp-area="Identity"
+               asp-page="/Account/Login"
+               asp-route-returnUrl="@($"{Context.Request.Path}#reviews")">
+                Log in
+            </a>
+            to write a review.
+        </p>
+    }
+
+    <partial name="_ReviewList" model="Model.Reviews" />
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
