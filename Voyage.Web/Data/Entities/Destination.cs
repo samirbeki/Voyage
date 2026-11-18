@@ -31,6 +31,10 @@ namespace Voyage.Web.Data.Entities
 
         public Category Category { get; set; } = null!;
 
-        public ICollection<TripDestination> TripDestinations { get; set; } = new HashSet<TripDestination>();
+        public ICollection<TripDestination> TripDestinations { get; set; }
+            = new HashSet<TripDestination>();
+
+        public ICollection<Review> Reviews { get; set; }
+            = new HashSet<Review>();
     }
 }

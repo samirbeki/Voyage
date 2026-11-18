@@ -17,6 +17,8 @@ namespace Voyage.Web.Data
 
         public DbSet<Expense> Expenses { get; set; } = null!;
 
+        public DbSet<Review> Reviews { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

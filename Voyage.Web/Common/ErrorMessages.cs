@@ -61,5 +61,14 @@
 
         public const string ExpenseDateOutsideTrip =
             "The date must be between the start and end date of the trip.";
+
+        public const string ReviewRatingRange =
+            "Rating must be between {1} and {2}.";
+
+        public const string ReviewCommentLength =
+            "Comment must be between {2} and {1} characters.";
+
+        public const string ReviewAlreadyExists =
+            "You have already reviewed this destination.";
     }
 }

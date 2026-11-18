@@ -29,5 +29,10 @@
         public const int ExpenseTitleMaxLength = 100;
         public const string ExpenseAmountMin = "0.01";
         public const string ExpenseAmountMax = "1000000";
+
+        public const int ReviewRatingMin = 1;
+        public const int ReviewRatingMax = 5;
+        public const int ReviewCommentMinLength = 10;
+        public const int ReviewCommentMaxLength = 1000;
     }
 }
