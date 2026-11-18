@@ -78,5 +78,108 @@ namespace Voyage.Web.Controllers
                 "Trips",
                 new { id = model.TripId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await expenseService.GetForEditAsync(
+                id,
+                GetUserId());
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(
+            int id,
+            ExpenseFormViewModel model)
+        {
+            if (!await expenseService.IsDateWithinTripAsync(
+                model.TripId,
+                model.Date))
+            {
+                ModelState.AddModelError(
+                    nameof(model.Date),
+                    ErrorMessages.ExpenseDateOutsideTrip);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var form = await expenseService.GetForEditAsync(
+                    id,
+                    GetUserId());
+
+                if (form == null)
+                {
+                    return NotFound();
+                }
+
+                model.TripTitle = form.TripTitle;
+                model.TripStartDate = form.TripStartDate;
+                model.TripEndDate = form.TripEndDate;
+
+                return View(model);
+            }
+
+            var success = await expenseService.EditAsync(
+                id,
+                model,
+                GetUserId());
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.ExpenseUpdated;
+
+            return RedirectToAction(
+                "Details",
+                "Trips",
+                new { id = model.TripId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var model = await expenseService.GetForDeleteAsync(
+                id,
+                GetUserId());
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var tripId = await expenseService.DeleteAsync(
+                id,
+                GetUserId());
+
+            if (tripId == null)
+            {
+                return NotFound();
+            }
+
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.ExpenseDeleted;
+
+            return RedirectToAction(
+                "Details",
+                "Trips",
+                new { id = tripId });
+        }
     }
 }
