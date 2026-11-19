@@ -6,15 +6,36 @@ namespace Voyage.Web.Controllers
     public class HomeController : BaseController
     {
         private readonly IHomeService homeService;
+        private readonly IFavoriteService favoriteService;
 
-        public HomeController(IHomeService homeService)
+        public HomeController(
+            IHomeService homeService,
+            IFavoriteService favoriteService)
         {
             this.homeService = homeService;
+            this.favoriteService = favoriteService;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await homeService.GetIndexAsync());
+            var model = await homeService.GetIndexAsync();
+
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                string userId = GetUserId();
+
+                var destinationIds = model.PopularDestinations.Select(d => d.Id);
+
+                var favoriteIds = await favoriteService
+                    .GetFavoriteDestinationIdsAsync(userId, destinationIds);
+
+                foreach (var destination in model.PopularDestinations)
+                {
+                    destination.IsFavorite = favoriteIds.Contains(destination.Id);
+                }
+            }
+
+            return View(model);
         }
 
         public IActionResult About()

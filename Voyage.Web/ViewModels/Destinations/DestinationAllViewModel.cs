@@ -17,5 +17,7 @@
         public double? AverageRating { get; set; }
 
         public int ReviewsCount { get; set; }
+
+        public bool IsFavorite { get; set; }
     }
 }

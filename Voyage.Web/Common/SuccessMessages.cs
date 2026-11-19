@@ -25,5 +25,8 @@
         public const string ReviewHidden = "The review is now hidden.";
         public const string ReviewShown = "The review is visible again.";
         public const string ReviewDeletedByModerator = "The review was deleted.";
+
+        public const string FavoriteAdded = "Destination saved to your favorites.";
+        public const string FavoriteRemoved = "Destination removed from your favorites.";
     }
 }

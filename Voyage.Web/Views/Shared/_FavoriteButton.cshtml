@@ -1,0 +1,50 @@
+﻿@model FavoriteButtonViewModel
+@{
+    string returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+    string label = Model.IsFavorite
+        ? $"Remove {Model.DestinationName} from favorites"
+        : $"Add {Model.DestinationName} to favorites";
+
+    string cssClass = $"favorite-btn{(Model.IsFavorite ? " is-favorite" : "")}{(Model.Compact ? " favorite-btn-compact" : "")}";
+}
+
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <form asp-area=""
+          asp-controller="Favorites"
+          asp-action="@(Model.IsFavorite ? "Remove" : "Add")"
+          asp-route-destinationId="@Model.DestinationId"
+          method="post"
+          class="favorite-form">
+        <input type="hidden" name="returnUrl" value="@returnUrl" />
+
+        <button type="submit"
+                class="@cssClass"
+                aria-pressed="@(Model.IsFavorite ? "true" : "false")"
+                aria-label="@label"
+                title="@label">
+            <span class="favorite-icon" aria-hidden="true">@(Model.IsFavorite ? "♥" : "♡")</span>
+
+            @if (!Model.Compact)
+            {
+                <span class="favorite-label">@(Model.IsFavorite ? "Saved" : "Save")</span>
+            }
+        </button>
+    </form>
+}
+else
+{
+    <a asp-area="Identity"
+       asp-page="/Account/Login"
+       asp-route-returnUrl="@returnUrl"
+       class="@cssClass"
+       aria-label="Log in to save @Model.DestinationName"
+       title="Log in to save this destination">
+        <span class="favorite-icon" aria-hidden="true">♡</span>
+
+        @if (!Model.Compact)
+        {
+            <span class="favorite-label">Save</span>
+        }
+    </a>
+}

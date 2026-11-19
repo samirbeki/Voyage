@@ -27,5 +27,7 @@ namespace Voyage.Web.ViewModels.Destinations
         public bool CanReview { get; set; }
 
         public ReviewFormModel ReviewForm { get; set; } = new();
+
+        public bool IsFavorite { get; set; }
     }
 }
