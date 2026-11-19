@@ -62,6 +62,7 @@ builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IExpenseService, ExpenseService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+builder.Services.AddScoped<IPackingService, PackingService>();
 
 var app = builder.Build();
 

@@ -47,6 +47,9 @@
         public const string StartDateInPast =
             "Start date cannot be in the past.";
 
+        public const string TripNotFound =
+            "The trip does not exist.";
+
         public const string CategoryExists =
             "A category with this name already exists.";
 
@@ -100,5 +103,8 @@
 
         public const string PackingItemNotFound =
             "The packing item does not exist.";
+
+        public const string PackingItemNameRequired =
+            "Item name is required.";
     }
 }
