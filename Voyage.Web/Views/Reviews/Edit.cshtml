@@ -1,0 +1,53 @@
+﻿@model ReviewEditViewModel
+@using Voyage.Web.Common
+
+@{
+    ViewData["Title"] = "Edit review";
+}
+
+<div class="v-form-card">
+    <h1 class="v-page-title mb-1">Edit review</h1>
+    <p class="v-page-subtitle mb-4">
+        For <strong>@Model.DestinationName</strong>
+    </p>
+
+    <form method="post" asp-action="Edit" asp-route-id="@Model.Id">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <input type="hidden" asp-for="DestinationId" />
+        <input type="hidden" asp-for="DestinationName" />
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Rating"></label>
+            <select class="form-select" asp-for="Rating">
+                @for (int i = ValidationConstants.ReviewRatingMax;
+                    i >= ValidationConstants.ReviewRatingMin; i--)
+                {
+                    <option value="@i">@i ★</option>
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="Rating"></span>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label" asp-for="Comment"></label>
+            <textarea class="form-control" asp-for="Comment" rows="5"></textarea>
+            <span class="text-danger" asp-validation-for="Comment"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-accent px-4">
+                <i class="bi bi-check-lg"></i> Save changes
+            </button>
+            <a class="btn btn-outline-navy"
+               asp-controller="Destinations"
+               asp-action="Details"
+               asp-route-id="@Model.DestinationId"
+               asp-fragment="reviews">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

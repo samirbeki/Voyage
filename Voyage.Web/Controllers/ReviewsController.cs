@@ -49,6 +49,78 @@ namespace Voyage.Web.Controllers
             return RedirectToDetails(destinationId);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await reviewService.GetForEditAsync(id, GetUserId());
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(
+            int id, ReviewEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var destinationId = await reviewService.EditAsync(
+                id,
+                model,
+                GetUserId());
+
+            if (destinationId == null)
+            {
+                return NotFound();
+            }
+
+            TempData[TempDataKeys.SuccessMessage] =
+                SuccessMessages.ReviewUpdated;
+
+            return RedirectToDetails(destinationId.Value);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var model = await reviewService.GetForEditAsync(id, GetUserId());
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var destinationId = await reviewService.DeleteAsync(
+                id,
+                GetUserId());
+
+            if (destinationId == null)
+            {
+                return NotFound();
+            }
+
+            TempData[TempDataKeys.SuccessMessage] =
+                SuccessMessages.ReviewDeleted;
+
+            return RedirectToDetails(destinationId.Value);
+        }
+
         private IActionResult RedirectToDetails(int destinationId)
         {
             return RedirectToAction(

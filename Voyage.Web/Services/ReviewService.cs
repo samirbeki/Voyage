@@ -89,20 +89,23 @@ namespace Voyage.Web.Services
             return true;
         }
 
-        public async Task<ReviewFormModel?> GetForEditAsync(int id, string userId)
+        public async Task<ReviewEditViewModel?> GetForEditAsync(int id, string userId)
         {
             return await dbContext.Reviews
                 .AsNoTracking()
                 .Where(r => r.Id == id && r.AuthorId == userId)
-                .Select(r => new ReviewFormModel
+                .Select(r => new ReviewEditViewModel
                 {
+                    Id = r.Id,
+                    DestinationId = r.DestinationId,
+                    DestinationName = r.Destination.Name,
                     Rating = r.Rating,
                     Comment = r.Comment
                 })
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> EditAsync(
+        public async Task<int?> EditAsync(
             int id, ReviewFormModel model, string userId)
         {
             var review = await dbContext.Reviews
@@ -111,7 +114,7 @@ namespace Voyage.Web.Services
 
             if (review == null)
             {
-                return false;
+                return null;
             }
 
             review.Rating = model.Rating;
@@ -120,10 +123,10 @@ namespace Voyage.Web.Services
 
             await dbContext.SaveChangesAsync();
 
-            return true;
+            return review.DestinationId;
         }
 
-        public async Task<bool> DeleteAsync(int id, string userId)
+        public async Task<int?> DeleteAsync(int id, string userId)
         {
             var review = await dbContext.Reviews
                 .FirstOrDefaultAsync(r =>
@@ -131,14 +134,14 @@ namespace Voyage.Web.Services
 
             if (review == null)
             {
-                return false;
+                return null;
             }
 
             review.IsDeleted = true;
 
             await dbContext.SaveChangesAsync();
 
-            return true;
+            return review.DestinationId;
         }
     }
 }

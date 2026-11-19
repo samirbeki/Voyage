@@ -13,10 +13,10 @@ namespace Voyage.Web.Services.Contracts
 
         Task<bool> CreateAsync(int destinationId, ReviewFormModel model, string userId);
 
-        Task<ReviewFormModel?> GetForEditAsync(int id, string userId);
+        Task<ReviewEditViewModel?> GetForEditAsync(int id, string userId);
 
-        Task<bool> EditAsync(int id, ReviewFormModel model, string userId);
+        Task<int?> EditAsync(int id, ReviewFormModel model, string userId);
 
-        Task<bool> DeleteAsync(int id, string userId);
+        Task<int?> DeleteAsync(int id, string userId);
     }
 }

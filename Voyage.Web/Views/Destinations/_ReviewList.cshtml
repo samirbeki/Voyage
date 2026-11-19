@@ -38,6 +38,21 @@ else
                 </div>
 
                 <p class="review-comment">@review.Comment</p>
+
+                @if (review.IsMine)
+                {
+                    <div class="review-actions">
+                        <a asp-controller="Reviews"
+                           asp-action="Edit"
+                           asp-route-id="@review.Id"
+                           class="btn btn-sm btn-outline-primary">Edit</a>
+
+                        <a asp-controller="Reviews"
+                           asp-action="Delete"
+                           asp-route-id="@review.Id"
+                           class="btn btn-sm btn-outline-danger">Delete</a>
+                    </div>
+                }
             </li>
         }
     </ul>
