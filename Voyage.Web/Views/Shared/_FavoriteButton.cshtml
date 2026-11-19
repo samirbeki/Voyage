@@ -15,7 +15,11 @@
           asp-action="@(Model.IsFavorite ? "Remove" : "Add")"
           asp-route-destinationId="@Model.DestinationId"
           method="post"
-          class="favorite-form">
+          class="favorite-form"
+          data-destination-id="@Model.DestinationId"
+          data-destination-name="@Model.DestinationName"
+          data-add-url="@Url.Action("Add", "Favorites", new { area = "", destinationId = Model.DestinationId })"
+          data-remove-url="@Url.Action("Remove", "Favorites", new { area = "", destinationId = Model.DestinationId })">
         <input type="hidden" name="returnUrl" value="@returnUrl" />
 
         <button type="submit"

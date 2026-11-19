@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Favorites;
@@ -31,57 +32,80 @@ namespace Voyage.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(int destinationId, string? returnUrl)
+        [EnableRateLimiting("favorites")]
+        public Task<IActionResult> Add(int destinationId, string? returnUrl)
+            => Toggle(destinationId, returnUrl, add: true);
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [EnableRateLimiting("favorites")]
+        public Task<IActionResult> Remove(int destinationId, string? returnUrl)
+            => Toggle(destinationId, returnUrl, add: false);
+
+        private async Task<IActionResult> Toggle(
+            int destinationId,
+            string? returnUrl,
+            bool add)
         {
-            var result = await favoriteService.AddAsync(destinationId, GetUserId());
+            string userId = GetUserId();
+
+            var result = add
+                ? await favoriteService.AddAsync(destinationId, userId)
+                : await favoriteService.RemoveAsync(destinationId, userId);
 
             if (result == FavoriteResult.DestinationNotFound)
             {
                 return NotFound();
             }
 
-            SetResultMessage(result, SuccessMessages.FavoriteAdded);
+            var (message, isError) = GetResultMessage(result, add);
 
-            return RedirectBack(returnUrl, destinationId);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Remove(int destinationId, string? returnUrl)
-        {
-            var result = await favoriteService.RemoveAsync(destinationId, GetUserId());
-
-            SetResultMessage(result, SuccessMessages.FavoriteRemoved);
-
-            return RedirectBack(returnUrl, destinationId);
-        }
-
-        private void SetResultMessage(FavoriteResult result, string successMessage)
-        {
-            switch (result)
+            if (IsAjaxRequest())
             {
-                case FavoriteResult.Success:
-                    TempData[TempDataKeys.SuccessMessage] = successMessage;
-                    break;
+                int count = await favoriteService.GetCountForDestinationAsync(destinationId);
 
-                case FavoriteResult.AlreadyExists:
-                    TempData[TempDataKeys.ErrorMessage] =
-                        ErrorMessages.FavoriteAlreadyExists;
-                    break;
+                var response = new FavoriteToggleResponse
+                {
+                    Success = !isError,
+                    IsFavorite = await favoriteService.IsFavoriteAsync(destinationId, userId),
+                    Count = count,
+                    CountText = FavoriteTexts.SavedBy(count),
+                    Message = message
+                };
 
-                case FavoriteResult.NotInFavorites:
-                    TempData[TempDataKeys.ErrorMessage] =
-                        ErrorMessages.FavoriteNotFound;
-                    break;
-
-                case FavoriteResult.LimitReached:
-                    TempData[TempDataKeys.ErrorMessage] =
-                        string.Format(
-                            ErrorMessages.FavoritesLimitReached,
-                            ValidationConstants.FavoritesMaxPerUser);
-                    break;
+                return result == FavoriteResult.LimitReached
+                    ? Conflict(response)
+                    : Ok(response);
             }
+
+            TempData[isError
+                ? TempDataKeys.ErrorMessage
+                : TempDataKeys.SuccessMessage] = message;
+
+            return RedirectBack(returnUrl, destinationId);
         }
+
+        private static (string Message, bool IsError) GetResultMessage(
+            FavoriteResult result,
+            bool add)
+            => result switch
+            {
+                FavoriteResult.Success =>
+                    (add ? SuccessMessages.FavoriteAdded : SuccessMessages.FavoriteRemoved, false),
+
+                FavoriteResult.AlreadyExists =>
+                    (ErrorMessages.FavoriteAlreadyExists, true),
+
+                FavoriteResult.NotInFavorites =>
+                    (ErrorMessages.FavoriteNotFound, true),
+
+                FavoriteResult.LimitReached =>
+                    (string.Format(
+                        ErrorMessages.FavoritesLimitReached,
+                        ValidationConstants.FavoritesMaxPerUser), true),
+
+                _ => throw new ArgumentOutOfRangeException(nameof(result))
+            };
 
         private IActionResult RedirectBack(string? returnUrl, int destinationId)
         {

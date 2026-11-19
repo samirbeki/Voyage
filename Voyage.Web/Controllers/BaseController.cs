@@ -9,5 +9,10 @@ namespace Voyage.Web.Controllers
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         }
+
+        protected bool IsAjaxRequest()
+        {
+            return Request.Headers.XRequestedWith == "XMLHttpRequest";
+        }
     }
 }

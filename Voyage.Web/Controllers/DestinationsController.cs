@@ -59,6 +59,9 @@ namespace Voyage.Web.Controllers
                 return NotFound();
             }
 
+            destination.FavoritesCount =
+                await favoriteService.GetCountForDestinationAsync(id);
+
             string? userId = User.Identity?.IsAuthenticated == true
                 ? GetUserId()
                 : null;

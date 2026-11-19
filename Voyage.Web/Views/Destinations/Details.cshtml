@@ -1,4 +1,5 @@
 ﻿@model Voyage.Web.ViewModels.Destinations.DestinationDetailsViewModel
+
 @{
     ViewData["Title"] = Model.Name;
 }
@@ -46,7 +47,12 @@
                              IsFavorite = Model.IsFavorite
                          }" />
 
-<a class="btn btn-accent"
+<p class="favorite-count"
+                   data-favorite-count-for="@Model.Id">
+                    @FavoriteTexts.SavedBy(Model.FavoritesCount)
+                </p>
+
+                <a class="btn btn-accent"
                    asp-controller="Trips"
                    asp-action="Create"
                    asp-route-destinationId="@Model.Id">

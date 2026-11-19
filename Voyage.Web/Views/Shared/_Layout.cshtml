@@ -136,6 +136,10 @@
     <div class="container">
         <main role="main" class="v-main">
             <partial name="_SuccessMessage" />
+            <div id="client-status"
+                 class="client-status"
+                 aria-live="polite"
+                 aria-atomic="true"></div>
             @RenderBody()
         </main>
     </div>
@@ -175,6 +179,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/favorites.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
