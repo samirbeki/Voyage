@@ -65,19 +65,7 @@ namespace Voyage.Web.Services
             var destinations = await query
                 .Skip((currentPage - 1) * PagingConstants.DestinationsPerPage)
                 .Take(PagingConstants.DestinationsPerPage)
-                .Select(d => new DestinationAllViewModel
-                {
-                    Id = d.Id,
-                    Name = d.Name,
-                    Country = d.Country,
-                    ImageUrl = d.ImageUrl,
-                    CategoryName = d.Category.Name,
-                    Description = d.Description,
-                    ReviewsCount = d.Reviews.Count(r => !r.IsHidden),
-                    AverageRating = d.Reviews
-                        .Where(r => !r.IsHidden)
-                        .Average(r => (double?)r.Rating)
-                })
+                .Select(DestinationProjections.ToCard)
                 .ToListAsync();
 
             return new DestinationsIndexViewModel
@@ -122,19 +110,7 @@ namespace Voyage.Web.Services
                     d.Id != destination.Id)
                 .OrderBy(d => d.Name)
                 .Take(PagingConstants.SimilarDestinationsCount)
-                .Select(d => new DestinationAllViewModel
-                {
-                    Id = d.Id,
-                    Name = d.Name,
-                    Country = d.Country,
-                    ImageUrl = d.ImageUrl,
-                    CategoryName = d.Category.Name,
-                    Description = d.Description,
-                    ReviewsCount = d.Reviews.Count(r => !r.IsHidden),
-                    AverageRating = d.Reviews
-                        .Where(r => !r.IsHidden)
-                        .Average(r => (double?)r.Rating)
-                })
+                .Select(DestinationProjections.ToCard)
                 .ToListAsync();
 
             return destination;

@@ -4,6 +4,7 @@ using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
 using Voyage.Web.Services.Contracts;
+using Voyage.Web.ViewModels.Favorites;
 
 namespace Voyage.Web.Services
 {
@@ -123,6 +124,89 @@ namespace Voyage.Web.Services
 
             return await dbContext.Favorites
                 .CountAsync(f => f.UserId == userId);
+        }
+
+        public async Task<FavoritesPageViewModel> GetMineAsync(
+            string userId, FavoritesQueryModel query)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(userId);
+
+            query ??= new FavoritesQueryModel();
+
+            var search = query.Search?.Trim();
+
+            IQueryable<Favorite> favorites = dbContext.Favorites
+                .AsNoTracking()
+                .Where(f => f.UserId == userId);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                favorites = favorites.Where(f =>
+                    f.Destination.Name.Contains(search) ||
+                    f.Destination.Country.Contains(search));
+            }
+
+            var sorting = Enum.IsDefined(query.Sorting)
+                ? query.Sorting
+                : FavoritesSorting.Recent;
+
+            favorites = sorting switch
+            {
+                FavoritesSorting.Oldest => favorites
+                    .OrderBy(f => f.AddedOn)
+                    .ThenBy(f => f.Destination.Name),
+
+                FavoritesSorting.Name => favorites
+                    .OrderBy(f => f.Destination.Name),
+
+                FavoritesSorting.Rating => favorites
+                    .OrderByDescending(f =>
+                        f.Destination.Reviews
+                            .Where(r => !r.IsHidden)
+                            .Average(r => (double?)r.Rating) ?? 0)
+                    .ThenBy(f => f.Destination.Name),
+
+                _ => favorites
+                    .OrderByDescending(f => f.AddedOn)
+                    .ThenBy(f => f.Destination.Name)
+            };
+
+            var resultsCount = await favorites.CountAsync();
+
+            var totalPages = Math.Max(
+                1,
+                (int)Math.Ceiling(
+                    resultsCount / (double)ValidationConstants.FavoritesPageSize));
+
+            var currentPage = Math.Clamp(query.Page, 1, totalPages);
+
+            var destinations = await favorites
+                .Skip((currentPage - 1) * ValidationConstants.FavoritesPageSize)
+                .Take(ValidationConstants.FavoritesPageSize)
+                .Select(f => f.Destination)
+                .Select(DestinationProjections.ToCard)
+                .ToListAsync();
+
+            foreach (var destination in destinations)
+            {
+                destination.IsFavorite = true;
+            }
+
+            var totalSaved = string.IsNullOrWhiteSpace(search)
+                ? resultsCount
+                : await GetUserFavoritesCountAsync(userId);
+
+            return new FavoritesPageViewModel
+            {
+                Destinations = destinations,
+                Search = search,
+                Sorting = sorting,
+                CurrentPage = currentPage,
+                TotalPages = totalPages,
+                ResultsCount = resultsCount,
+                TotalSaved = totalSaved,
+                MaxFavorites = ValidationConstants.FavoritesMaxPerUser
+            };
         }
     }
 }

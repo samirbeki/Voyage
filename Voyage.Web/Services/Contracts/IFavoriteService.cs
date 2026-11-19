@@ -1,4 +1,5 @@
 ﻿using Voyage.Web.Common;
+using Voyage.Web.ViewModels.Favorites;
 
 namespace Voyage.Web.Services.Contracts
 {
@@ -16,5 +17,8 @@ namespace Voyage.Web.Services.Contracts
         Task<int> GetCountForDestinationAsync(int destinationId);
 
         Task<int> GetUserFavoritesCountAsync(string userId);
+
+        Task<FavoritesPageViewModel> GetMineAsync(
+            string userId, FavoritesQueryModel query);
     }
 }

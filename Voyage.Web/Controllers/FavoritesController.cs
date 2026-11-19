@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
+using Voyage.Web.ViewModels.Favorites;
 
 namespace Voyage.Web.Controllers
 {
@@ -13,6 +14,19 @@ namespace Voyage.Web.Controllers
         public FavoritesController(IFavoriteService favoriteService)
         {
             this.favoriteService = favoriteService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery] FavoritesQueryModel query)
+        {
+            if (!ModelState.IsValid)
+            {
+                query = new FavoritesQueryModel();
+            }
+
+            var model = await favoriteService.GetMineAsync(GetUserId(), query);
+
+            return View(model);
         }
 
         [HttpPost]

@@ -39,5 +39,7 @@
 
         public const int FavoritesMaxPerUser = 100;
         public const int FavoritesPageSize = 9;
+
+        public const int SearchMaxLength = 100;
     }
 }

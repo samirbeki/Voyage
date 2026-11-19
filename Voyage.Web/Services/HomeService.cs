@@ -2,7 +2,6 @@
 using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Services.Contracts;
-using Voyage.Web.ViewModels.Destinations;
 using Voyage.Web.ViewModels.Home;
 
 namespace Voyage.Web.Services
@@ -29,19 +28,7 @@ namespace Voyage.Web.Services
                 .OrderByDescending(d => d.TripDestinations.Count)
                 .ThenBy(d => d.Name)
                 .Take(PagingConstants.PopularDestinationsCount)
-                .Select(d => new DestinationAllViewModel
-                {
-                    Id = d.Id,
-                    Name = d.Name,
-                    Country = d.Country,
-                    ImageUrl = d.ImageUrl,
-                    CategoryName = d.Category.Name,
-                    Description = d.Description,
-                    ReviewsCount = d.Reviews.Count(r => !r.IsHidden),
-                    AverageRating = d.Reviews
-                        .Where(r => !r.IsHidden)
-                        .Average(r => (double?)r.Rating)
-                })
+                .Select(DestinationProjections.ToCard)
                 .ToListAsync();
 
             return new HomeIndexViewModel

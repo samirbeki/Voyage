@@ -76,6 +76,15 @@
                                     My Trips
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Favorites" && ViewContext.RouteData.Values["area"] == null ? "active" : "")"
+                                   asp-area=""
+                                   asp-controller="Favorites"
+                                   asp-action="Index">
+                                    <i class="bi bi-heart"></i> Favorites
+                                </a>
+                            </li>
                         }
 
                         @if (User.IsInRole(RoleConstants.Moderator) ||
