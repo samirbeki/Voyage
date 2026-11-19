@@ -40,6 +40,12 @@
         public const int FavoritesMaxPerUser = 100;
         public const int FavoritesPageSize = 9;
 
+        public const int PackingItemNameMinLength = 2;
+        public const int PackingItemNameMaxLength = 100;
+        public const int PackingItemQuantityMin = 1;
+        public const int PackingItemQuantityMax = 99;
+        public const int PackingItemsMaxPerTrip = 200;
+
         public const int SearchMaxLength = 100;
     }
 }

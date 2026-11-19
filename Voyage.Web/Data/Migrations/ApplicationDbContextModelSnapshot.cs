@@ -597,6 +597,53 @@ namespace Voyage.Web.Data.Migrations
                     b.ToTable("Favorites");
                 });
 
+            modelBuilder.Entity("Voyage.Web.Data.Entities.PackingItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<bool>("IsPacked")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Quantity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
+                    b.Property<int>("TripId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TripId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("PackingItems", t =>
+                        {
+                            t.HasCheckConstraint("CK_PackingItem_Category", "[Category] BETWEEN 0 AND 5");
+
+                            t.HasCheckConstraint("CK_PackingItem_Quantity", "[Quantity] BETWEEN 1 AND 99");
+                        });
+                });
+
             modelBuilder.Entity("Voyage.Web.Data.Entities.Review", b =>
                 {
                     b.Property<int>("Id")
@@ -805,6 +852,17 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Voyage.Web.Data.Entities.PackingItem", b =>
+                {
+                    b.HasOne("Voyage.Web.Data.Entities.Trip", "Trip")
+                        .WithMany("PackingItems")
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Trip");
+                });
+
             modelBuilder.Entity("Voyage.Web.Data.Entities.Review", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Author")
@@ -871,6 +929,8 @@ namespace Voyage.Web.Data.Migrations
             modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
                 {
                     b.Navigation("Expenses");
+
+                    b.Navigation("PackingItems");
 
                     b.Navigation("TripDestinations");
                 });

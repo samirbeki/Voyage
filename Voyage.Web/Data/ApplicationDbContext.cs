@@ -21,6 +21,8 @@ namespace Voyage.Web.Data
 
         public DbSet<Favorite> Favorites { get; set; } = null!;
 
+        public DbSet<PackingItem> PackingItems { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

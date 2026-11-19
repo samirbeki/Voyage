@@ -82,5 +82,23 @@
 
         public const string FavoritesLimitReached =
             "You can save up to {0} favorite destinations. Remove one to add another.";
+
+        public const string PackingItemNameLength =
+            "Item name must be between {2} and {1} characters.";
+
+        public const string PackingItemQuantityRange =
+            "Quantity must be between {1} and {2}.";
+
+        public const string PackingItemCategoryInvalid =
+            "Please select a valid category.";
+
+        public const string PackingItemDuplicate =
+            "This item is already in your packing list.";
+
+        public const string PackingItemsLimitReached =
+            "A trip can have up to {0} packing items.";
+
+        public const string PackingItemNotFound =
+            "The packing item does not exist.";
     }
 }

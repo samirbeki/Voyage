@@ -41,5 +41,8 @@ namespace Voyage.Web.Data.Entities
 
         public ICollection<Expense> Expenses { get; set; }
             = new HashSet<Expense>();
+
+        public ICollection<PackingItem> PackingItems { get; set; }
+            = new HashSet<PackingItem>();
     }
 }
