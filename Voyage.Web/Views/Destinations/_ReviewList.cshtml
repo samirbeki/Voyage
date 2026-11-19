@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<ReviewViewModel>
-
 @if (!Model.Any())
 {
     <partial name="_EmptyState" model="@(new EmptyStateViewModel
@@ -17,28 +16,22 @@ else
             <li class="review-item @(review.IsHidden ? "review-hidden" : "")">
                 <div class="review-header">
                     <span class="review-author">@review.AuthorName</span>
-
                     <span class="review-rating" title="@review.Rating / 5">
-                        @(new string('★', review.Rating))@(new string('☆', ValidationConstants.ReviewRatingMax - review.Rating))
+                        <partial name="_RatingStars" model="(double)review.Rating" />
                     </span>
-
                     <span class="review-date">
                         @review.CreatedOn.ToLocalTime().ToString("dd MMM yyyy")
-
                         @if (review.IsEdited)
                         {
                             <em>(edited)</em>
                         }
                     </span>
-
                     @if (review.IsHidden)
                     {
                         <span class="badge bg-secondary">Hidden</span>
                     }
                 </div>
-
                 <p class="review-comment">@review.Comment</p>
-
                 @if (review.IsMine)
                 {
                     <div class="review-actions">
@@ -46,7 +39,6 @@ else
                            asp-action="Edit"
                            asp-route-id="@review.Id"
                            class="btn btn-sm btn-outline-primary">Edit</a>
-
                         <a asp-controller="Reviews"
                            asp-action="Delete"
                            asp-route-id="@review.Id"

@@ -1,0 +1,12 @@
+﻿@model double
+@{
+    int max = ValidationConstants.ReviewRatingMax;
+    int filled = (int)Math.Round(Model, MidpointRounding.AwayFromZero);
+}
+<span class="rating-stars" title="@Model.ToString("0.0") out of @max"
+      aria-label="@Model.ToString("0.0") out of @max stars">
+    @for (int i = 1; i <= max; i++)
+    {
+        <span class="@(i <= filled ? "star-filled" : "star-empty")" aria-hidden="true">★</span>
+    }
+</span>

@@ -72,7 +72,11 @@ namespace Voyage.Web.Services
                     Country = d.Country,
                     ImageUrl = d.ImageUrl,
                     CategoryName = d.Category.Name,
-                    Description = d.Description
+                    Description = d.Description,
+                    ReviewsCount = d.Reviews.Count(r => !r.IsHidden),
+                    AverageRating = d.Reviews
+                        .Where(r => !r.IsHidden)
+                        .Average(r => (double?)r.Rating)
                 })
                 .ToListAsync();
 
@@ -125,7 +129,11 @@ namespace Voyage.Web.Services
                     Country = d.Country,
                     ImageUrl = d.ImageUrl,
                     CategoryName = d.Category.Name,
-                    Description = d.Description
+                    Description = d.Description,
+                    ReviewsCount = d.Reviews.Count(r => !r.IsHidden),
+                    AverageRating = d.Reviews
+                        .Where(r => !r.IsHidden)
+                        .Average(r => (double?)r.Rating)
                 })
                 .ToListAsync();
 

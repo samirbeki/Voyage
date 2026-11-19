@@ -1,8 +1,44 @@
 ﻿@model ReviewFormModel
-
 @{
     int destinationId = (int)ViewData["DestinationId"]!;
 }
+
+<style>
+    .review-stars {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .review-star-label {
+        cursor: pointer;
+        font-size: 2rem;
+        color: #c5c5c5;
+        transition: color 0.2s ease, transform 0.2s ease;
+        line-height: 1;
+    }
+
+    .review-star-label:hover {
+        transform: scale(1.15);
+    }
+
+    .review-star-label.is-active {
+        color: #f5b301;
+    }
+
+    .review-star-input {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+    }
+
+    .review-star-input:focus-visible + .review-star-label {
+        outline: 2px solid #f5b301;
+        outline-offset: 4px;
+        border-radius: 3px;
+    }
+</style>
 
 <form asp-controller="Reviews"
       asp-action="Create"
@@ -13,16 +49,28 @@
 
     <div class="mb-3">
         <label asp-for="Rating" class="form-label">Rating</label>
-        <select asp-for="Rating" class="form-select">
-            @for (int rating = ValidationConstants.ReviewRatingMax;
-                 rating >= ValidationConstants.ReviewRatingMin;
-                 rating--)
+
+        <div class="review-stars" role="radiogroup" aria-label="Choose a rating">
+            @for (int rating = ValidationConstants.ReviewRatingMin;
+                  rating <= ValidationConstants.ReviewRatingMax;
+                  rating++)
             {
-                <option value="@rating">
-                    @rating / @ValidationConstants.ReviewRatingMax
-                </option>
+                <input type="radio"
+                       name="Rating"
+                       id="review-rating-@rating"
+                       value="@rating"
+                       class="review-star-input"
+                       required />
+
+                <label for="review-rating-@rating"
+                       class="review-star-label"
+                       title="@rating / @ValidationConstants.ReviewRatingMax"
+                       aria-label="@rating out of @ValidationConstants.ReviewRatingMax">
+                    ★
+                </label>
             }
-        </select>
+        </div>
+
         <span asp-validation-for="Rating" class="text-danger"></span>
     </div>
 
@@ -38,3 +86,33 @@
         Publish review
     </button>
 </form>
+
+<script>
+    document.querySelectorAll(".review-form").forEach(form => {
+        const inputs = form.querySelectorAll(".review-star-input");
+        const labels = form.querySelectorAll(".review-star-label");
+
+        function updateStars(selectedRating) {
+            labels.forEach((label, index) => {
+                label.classList.toggle("is-active", index < selectedRating);
+            });
+        }
+
+        inputs.forEach((input, index) => {
+            input.addEventListener("change", () => {
+                updateStars(Number(input.value));
+            });
+
+            labels[index].addEventListener("mouseenter", () => {
+                updateStars(Number(input.value));
+            });
+        });
+
+        const starsContainer = form.querySelector(".review-stars");
+
+        starsContainer.addEventListener("mouseleave", () => {
+            const selected = form.querySelector(".review-star-input:checked");
+            updateStars(selected ? Number(selected.value) : 0);
+        });
+    });
+</script>

@@ -1,14 +1,11 @@
 ﻿@model Voyage.Web.ViewModels.Destinations.DestinationDetailsViewModel
-
 @{
     ViewData["Title"] = Model.Name;
 }
-
 <div class="v-cover">
     <img src="@Model.ImageUrl"
          alt="@Model.Name"
          onerror="this.style.display='none'" />
-
     <div class="v-cover-overlay">
         <div>
             <span class="v-badge">
@@ -16,16 +13,13 @@
                 @Model.CategoryName
             </span>
         </div>
-
         <h1>@Model.Name</h1>
-
         <div>
             <i class="bi bi-geo-alt"></i>
             @Model.Country
         </div>
     </div>
 </div>
-
 <div class="row g-4">
     <div class="col-lg-8">
         <div class="v-panel">
@@ -33,11 +27,9 @@
             <p class="mb-0">@Model.Description</p>
         </div>
     </div>
-
     <div class="col-lg-4">
         <div class="v-panel">
             <h2 class="v-panel-title">Actions</h2>
-
             <div class="v-actions">
                 <a class="btn btn-accent"
                    asp-controller="Trips"
@@ -45,7 +37,6 @@
                    asp-route-destinationId="@Model.Id">
                     <i class="bi bi-suitcase2"></i> Plan a trip here
                 </a>
-
                 @if (User.IsInRole(RoleConstants.Administrator))
                 {
                     <a class="btn btn-navy"
@@ -55,7 +46,6 @@
                        asp-route-id="@Model.Id">
                         <i class="bi bi-pencil"></i> Edit
                     </a>
-
                     <a class="btn btn-outline-danger"
                        asp-area="Admin"
                        asp-controller="Destinations"
@@ -64,7 +54,6 @@
                         <i class="bi bi-trash"></i> Delete
                     </a>
                 }
-
                 <a class="btn btn-outline-navy"
                    asp-action="Index">
                     <i class="bi bi-arrow-left"></i>
@@ -74,7 +63,6 @@
         </div>
     </div>
 </div>
-
 @if (Model.SimilarDestinations.Any())
 {
     <section class="v-section">
@@ -83,14 +71,12 @@
                 <h2 class="v-section-title">More in @Model.CategoryName</h2>
                 <p class="v-muted mb-0">Other places you might like.</p>
             </div>
-
             <a class="btn btn-outline-navy"
                asp-action="Index"
                asp-route-categoryId="@Model.CategoryId">
                 View all
             </a>
         </div>
-
         <div class="row g-4">
             @foreach (var destination in Model.SimilarDestinations)
             {
@@ -101,20 +87,18 @@
         </div>
     </section>
 }
-
 <section id="reviews" class="v-section reviews-section">
     <div class="reviews-heading">
         <h2 class="v-section-title">Reviews</h2>
-
         @if (Model.RatingSummary.Count > 0)
         {
             <span class="rating-summary">
-                ★ @Model.RatingSummary.Average.ToString("0.0")
-                <small>(@Model.RatingSummary.Count)</small>
+                <partial name="_RatingStars" model="Model.RatingSummary.Average" />
+                <span class="rating-value">@Model.RatingSummary.Average.ToString("0.0")</span>
+                <small class="text-muted">(@Model.RatingSummary.Count)</small>
             </span>
         }
     </div>
-
     @if (Model.CanReview)
     {
         <partial name="_ReviewForm"
@@ -132,10 +116,8 @@
             to write a review.
         </p>
     }
-
     <partial name="_ReviewList" model="Model.Reviews" />
 </section>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

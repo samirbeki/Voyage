@@ -13,5 +13,9 @@
         public string CategoryName { get; set; } = null!;
 
         public string Description { get; set; } = null!;
+
+        public double? AverageRating { get; set; }
+
+        public int ReviewsCount { get; set; }
     }
 }
