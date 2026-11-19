@@ -21,5 +21,9 @@
         public const string ReviewCreated = "Your review was published.";
         public const string ReviewUpdated = "Your review was updated.";
         public const string ReviewDeleted = "Your review was deleted.";
+
+        public const string ReviewHidden = "The review is now hidden.";
+        public const string ReviewShown = "The review is visible again.";
+        public const string ReviewDeletedByModerator = "The review was deleted.";
     }
 }

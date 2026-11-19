@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
 using Voyage.Web.Services.Contracts;
@@ -142,6 +143,97 @@ namespace Voyage.Web.Services
             await dbContext.SaveChangesAsync();
 
             return review.DestinationId;
+        }
+
+        public async Task<ModerationReviewsPageViewModel> GetForModerationAsync(
+            string status, int page)
+        {
+            status = status?.ToLowerInvariant() switch
+            {
+                "visible" => "visible",
+                "hidden" => "hidden",
+                _ => "all"
+            };
+
+            var reviewsQuery = dbContext.Reviews
+                .AsNoTracking();
+
+            if (status == "visible")
+            {
+                reviewsQuery = reviewsQuery.Where(r => !r.IsHidden);
+            }
+            else if (status == "hidden")
+            {
+                reviewsQuery = reviewsQuery.Where(r => r.IsHidden);
+            }
+
+            int totalCount = await reviewsQuery.CountAsync();
+
+            int totalPages = Math.Max(
+                1,
+                (int)Math.Ceiling(
+                    totalCount / (double)ValidationConstants.ModerationReviewsPageSize));
+
+            page = Math.Clamp(page, 1, totalPages);
+
+            var reviews = await reviewsQuery
+                .OrderByDescending(r => r.CreatedOn)
+                .Skip((page - 1) * ValidationConstants.ModerationReviewsPageSize)
+                .Take(ValidationConstants.ModerationReviewsPageSize)
+                .Select(r => new ModerationReviewViewModel
+                {
+                    Id = r.Id,
+                    DestinationId = r.DestinationId,
+                    DestinationName = r.Destination.Name,
+                    AuthorName = r.Author.UserName!,
+                    Rating = r.Rating,
+                    Comment = r.Comment,
+                    CreatedOn = r.CreatedOn,
+                    IsHidden = r.IsHidden
+                })
+                .ToListAsync();
+
+            return new ModerationReviewsPageViewModel
+            {
+                Reviews = reviews,
+                Status = status,
+                CurrentPage = page,
+                TotalPages = totalPages
+            };
+        }
+
+        public async Task<bool> SetHiddenAsync(int id, bool isHidden)
+        {
+            var review = await dbContext.Reviews
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (review == null)
+            {
+                return false;
+            }
+
+            review.IsHidden = isHidden;
+
+            await dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> DeleteByModeratorAsync(int id)
+        {
+            var review = await dbContext.Reviews
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (review == null)
+            {
+                return false;
+            }
+
+            review.IsDeleted = true;
+
+            await dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

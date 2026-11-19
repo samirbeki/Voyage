@@ -18,5 +18,12 @@ namespace Voyage.Web.Services.Contracts
         Task<int?> EditAsync(int id, ReviewFormModel model, string userId);
 
         Task<int?> DeleteAsync(int id, string userId);
+
+        Task<ModerationReviewsPageViewModel> GetForModerationAsync(
+            string status, int page);
+
+        Task<bool> SetHiddenAsync(int id, bool isHidden);
+
+        Task<bool> DeleteByModeratorAsync(int id);
     }
 }

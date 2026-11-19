@@ -34,5 +34,7 @@
         public const int ReviewRatingMax = 5;
         public const int ReviewCommentMinLength = 10;
         public const int ReviewCommentMaxLength = 1000;
+
+        public const int ModerationReviewsPageSize = 10;
     }
 }

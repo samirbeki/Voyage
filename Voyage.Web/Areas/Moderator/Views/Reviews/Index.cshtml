@@ -1,0 +1,175 @@
+﻿@model ModerationReviewsPageViewModel
+
+@{
+    ViewData["Title"] = "Review Moderation";
+}
+
+<section class="v-section">
+    <div class="v-page-header">
+        <div>
+            <h1>Review Moderation</h1>
+            <p class="v-muted">Manage reviews submitted by users.</p>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 mb-4">
+        <a asp-action="Index"
+           asp-route-status="all"
+           class="btn @(Model.Status == "all" ? "btn-accent" : "btn-outline-secondary")">
+            All
+        </a>
+
+        <a asp-action="Index"
+           asp-route-status="visible"
+           class="btn @(Model.Status == "visible" ? "btn-accent" : "btn-outline-secondary")">
+            Visible
+        </a>
+
+        <a asp-action="Index"
+           asp-route-status="hidden"
+           class="btn @(Model.Status == "hidden" ? "btn-accent" : "btn-outline-secondary")">
+            Hidden
+        </a>
+    </div>
+
+    @if (!Model.Reviews.Any())
+    {
+        <partial name="_EmptyState" model="@(new EmptyStateViewModel
+                 {
+                     Icon = "bi-chat-square-text",
+                     Title = "No reviews found",
+                     Message = "There are no reviews matching this filter."
+                 })" />
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Author</th>
+                        <th>Rating</th>
+                        <th>Comment</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-area=""
+                                   asp-controller="Destinations"
+                                   asp-action="Details"
+                                   asp-route-id="@review.DestinationId"
+                                   asp-fragment="reviews">
+                                    @review.DestinationName
+                                </a>
+                            </td>
+                            <td>@review.AuthorName</td>
+                            <td>
+                                <span class="text-warning">
+                                    @(new string('★', review.Rating))@(new string('☆', ValidationConstants.ReviewRatingMax - review.Rating))
+                                </span>
+                                <span class="text-muted">(@review.Rating/5)</span>
+                            </td>
+                            <td>
+                                @(review.Comment.Length > 100
+                                    ? review.Comment.Substring(0, 100) + "..."
+                                    : review.Comment)
+                            </td>
+                            <td>@review.CreatedOn.ToLocalTime().ToString("dd MMM yyyy")</td>
+                            <td>
+                                @if (review.IsHidden)
+                                {
+                                    <span class="badge bg-secondary">Hidden</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Visible</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-end flex-wrap gap-2">
+                                    @if (review.IsHidden)
+                                    {
+                                        <form asp-action="Show" method="post">
+                                            <input type="hidden" name="id" value="@review.Id" />
+                                            <input type="hidden" name="status" value="@Model.Status" />
+                                            <input type="hidden" name="page" value="@Model.CurrentPage" />
+                                            <button type="submit" class="btn btn-sm btn-outline-success">
+                                                Show
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="Hide" method="post">
+                                            <input type="hidden" name="id" value="@review.Id" />
+                                            <input type="hidden" name="status" value="@Model.Status" />
+                                            <input type="hidden" name="page" value="@Model.CurrentPage" />
+                                            <button type="submit" class="btn btn-sm btn-outline-warning">
+                                                Hide
+                                            </button>
+                                        </form>
+                                    }
+
+                                    <form asp-action="Delete"
+                                          method="post"
+                                          onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                        <input type="hidden" name="id" value="@review.Id" />
+                                        <input type="hidden" name="status" value="@Model.Status" />
+                                        <input type="hidden" name="page" value="@Model.CurrentPage" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.TotalPages > 1)
+        {
+            <nav aria-label="Review moderation pages">
+                <ul class="pagination justify-content-center mt-4">
+                    <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-status="@Model.Status"
+                           asp-route-page="@(Model.CurrentPage - 1)">
+                            Previous
+                        </a>
+                    </li>
+
+                    @for (int pageNumber = 1; pageNumber <= Model.TotalPages; pageNumber++)
+                    {
+                        <li class="page-item @(pageNumber == Model.CurrentPage ? "active" : "")">
+                            <a class="page-link"
+                               asp-action="Index"
+                               asp-route-status="@Model.Status"
+                               asp-route-page="@pageNumber">
+                                @pageNumber
+                            </a>
+                        </li>
+                    }
+
+                    <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-status="@Model.Status"
+                           asp-route-page="@(Model.CurrentPage + 1)">
+                            Next
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
+    }
+</section>

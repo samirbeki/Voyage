@@ -78,6 +78,19 @@
                             </li>
                         }
 
+                        @if (User.IsInRole(RoleConstants.Moderator) ||
+                             User.IsInRole(RoleConstants.Administrator))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["area"]?.ToString() == "Moderator" ? "active" : "")"
+                                   asp-area="Moderator"
+                                   asp-controller="Reviews"
+                                   asp-action="Index">
+                                    <i class="bi bi-shield-check"></i> Moderation
+                                </a>
+                            </li>
+                        }
+
                         @if (User.IsInRole(RoleConstants.Administrator))
                         {
                             <li class="nav-item">

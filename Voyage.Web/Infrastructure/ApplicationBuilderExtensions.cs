@@ -19,6 +19,7 @@ namespace Voyage.Web.Infrastructure
 
             await SeedRolesAsync(roleManager);
             await SeedAdministratorAsync(userManager, configuration);
+            await SeedModeratorAsync(userManager, configuration);
             await AssignUserRoleToUsersWithoutRoleAsync(userManager);
         }
 
@@ -78,7 +79,45 @@ namespace Voyage.Web.Infrastructure
             }
         }
 
-        private static async Task AssignUserRoleToUsersWithoutRoleAsync(UserManager<IdentityUser> userManager)
+        private static async Task SeedModeratorAsync(
+            UserManager<IdentityUser> userManager,
+            IConfiguration configuration)
+        {
+            var email = configuration["ModeratorUser:Email"];
+            var password = configuration["ModeratorUser:Password"];
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                return;
+            }
+
+            var moderator = await userManager.FindByEmailAsync(email);
+
+            if (moderator == null)
+            {
+                moderator = new IdentityUser
+                {
+                    UserName = email,
+                    Email = email,
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(moderator, password);
+
+                if (!result.Succeeded)
+                {
+                    return;
+                }
+            }
+
+            if (!await userManager.IsInRoleAsync(moderator, RoleConstants.Moderator))
+            {
+                await userManager.AddToRoleAsync(moderator, RoleConstants.Moderator);
+            }
+        }
+
+        private static async Task AssignUserRoleToUsersWithoutRoleAsync(
+            UserManager<IdentityUser> userManager)
         {
             var users = await userManager.Users.ToListAsync();
 
