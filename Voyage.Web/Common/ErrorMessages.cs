@@ -73,5 +73,14 @@
 
         public const string ReviewCouldNotBeSaved =
             "Your review could not be saved. Please check the form.";
+
+        public const string FavoriteAlreadyExists =
+            "This destination is already in your favorites.";
+
+        public const string FavoriteNotFound =
+            "This destination is not in your favorites.";
+
+        public const string FavoritesLimitReached =
+            "You can save up to {0} favorite destinations. Remove one to add another.";
     }
 }

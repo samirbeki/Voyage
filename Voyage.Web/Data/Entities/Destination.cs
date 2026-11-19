@@ -36,5 +36,8 @@ namespace Voyage.Web.Data.Entities
 
         public ICollection<Review> Reviews { get; set; }
             = new HashSet<Review>();
+
+        public ICollection<Favorite> Favorites { get; set; }
+            = new HashSet<Favorite>();
     }
 }

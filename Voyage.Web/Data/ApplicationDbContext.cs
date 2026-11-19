@@ -19,6 +19,8 @@ namespace Voyage.Web.Data
 
         public DbSet<Review> Reviews { get; set; } = null!;
 
+        public DbSet<Favorite> Favorites { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

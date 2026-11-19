@@ -36,5 +36,8 @@
         public const int ReviewCommentMaxLength = 1000;
 
         public const int ModerationReviewsPageSize = 10;
+
+        public const int FavoritesMaxPerUser = 100;
+        public const int FavoritesPageSize = 9;
     }
 }

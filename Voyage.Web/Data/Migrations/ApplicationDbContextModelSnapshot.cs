@@ -577,6 +577,26 @@ namespace Voyage.Web.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Voyage.Web.Data.Entities.Favorite", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("DestinationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AddedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.HasKey("UserId", "DestinationId");
+
+                    b.HasIndex("DestinationId");
+
+                    b.ToTable("Favorites");
+                });
+
             modelBuilder.Entity("Voyage.Web.Data.Entities.Review", b =>
                 {
                     b.Property<int>("Id")
@@ -766,6 +786,25 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("Trip");
                 });
 
+            modelBuilder.Entity("Voyage.Web.Data.Entities.Favorite", b =>
+                {
+                    b.HasOne("Voyage.Web.Data.Entities.Destination", "Destination")
+                        .WithMany("Favorites")
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Destination");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Voyage.Web.Data.Entities.Review", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Author")
@@ -822,6 +861,8 @@ namespace Voyage.Web.Data.Migrations
 
             modelBuilder.Entity("Voyage.Web.Data.Entities.Destination", b =>
                 {
+                    b.Navigation("Favorites");
+
                     b.Navigation("Reviews");
 
                     b.Navigation("TripDestinations");
