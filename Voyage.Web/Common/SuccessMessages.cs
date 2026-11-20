@@ -30,5 +30,7 @@
         public const string FavoriteRemoved = "Destination removed from your favorites.";
 
         public const string PackingItemAdded = "\"{0}\" was added to your packing list.";
+        public const string PackingItemUpdated = "\"{0}\" was updated.";
+        public const string PackingItemDeleted = "The item was removed from your packing list.";
     }
 }

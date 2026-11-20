@@ -58,7 +58,7 @@ namespace Voyage.Web.Controllers
             switch (result)
             {
                 case PackingResult.Success:
-                    TempData["SuccessMessage"] = string.Format(
+                    TempData[TempDataKeys.SuccessMessage] = string.Format(
                         SuccessMessages.PackingItemAdded,
                         form.Name.Trim());
 
@@ -97,6 +97,144 @@ namespace Voyage.Web.Controllers
             }
 
             return await RedisplayAsync(tripId, form);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Toggle(int id)
+        {
+            var result = await packingService.TogglePackedAsync(
+                id,
+                GetUserId());
+
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+
+            if (IsAjaxRequest())
+            {
+                var progress = await packingService.GetProgressAsync(
+                    result.TripId);
+
+                return Ok(new PackingToggleResponse
+                {
+                    ItemId = id,
+                    IsPacked = result.IsPacked,
+                    Packed = progress.Packed,
+                    Total = progress.Total,
+                    Percent = progress.Percent,
+                    IsComplete = progress.IsComplete
+                });
+            }
+
+            return RedirectToAction(
+                nameof(Index),
+                "Packing",
+                new { tripId = result.TripId },
+                $"item-{id}");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await packingService.GetForEditAsync(
+                id,
+                GetUserId());
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(
+            int id,
+            PackingItemEditViewModel model)
+        {
+            string userId = GetUserId();
+
+            var current = await packingService.GetForEditAsync(
+                id,
+                userId);
+
+            if (current == null)
+            {
+                return NotFound();
+            }
+
+            model.Id = id;
+            model.TripId = current.TripId;
+            model.TripName = current.TripName;
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await packingService.EditAsync(
+                id,
+                model,
+                userId);
+
+            switch (result.Result)
+            {
+                case PackingResult.Success:
+                    TempData[TempDataKeys.SuccessMessage] =
+                        string.Format(
+                            SuccessMessages.PackingItemUpdated,
+                            model.Name.Trim());
+
+                    return RedirectToAction(
+                        nameof(Index),
+                        "Packing",
+                        new { tripId = result.TripId },
+                        $"item-{id}");
+
+                case PackingResult.ItemNotFound:
+                    return NotFound();
+
+                case PackingResult.Duplicate:
+                    ModelState.AddModelError(
+                        nameof(model.Name),
+                        ErrorMessages.PackingItemDuplicate);
+                    break;
+
+                case PackingResult.InvalidCategory:
+                    ModelState.AddModelError(
+                        nameof(model.Category),
+                        ErrorMessages.PackingItemCategoryInvalid);
+                    break;
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await packingService.DeleteAsync(
+                id,
+                GetUserId());
+
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+
+            TempData[TempDataKeys.SuccessMessage] =
+                SuccessMessages.PackingItemDeleted;
+
+            return RedirectToAction(
+                nameof(Index),
+                "Packing",
+                new { tripId = result.TripId },
+                "add-item");
         }
 
         private async Task<IActionResult> RedisplayAsync(

@@ -1,38 +1,80 @@
 ﻿@model Voyage.Web.ViewModels.Packing.PackingCategoryGroupViewModel
 
-<div class="v-panel mb-3">
+<div class="v-panel mb-3 packing-group">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="v-panel-title mb-0">
             @Model.Category.GetDisplayName()
         </h3>
 
-        <span class="v-muted small">
-            @Model.PackedCount / @Model.TotalCount packed
+        <span class="v-muted small" data-group-count>
+            @Model.PackedCount/@Model.TotalCount
         </span>
     </div>
 
     <ul class="list-unstyled mb-0">
         @foreach (var item in Model.Items)
         {
-            <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
-                <div class="d-flex align-items-center gap-2">
-                    @if (item.IsPacked)
-                    {
-                        <i class="bi bi-check-circle-fill text-success"></i>
-                        <span class="text-decoration-line-through text-muted">
-                            @item.Name
-                        </span>
-                    }
-                    else
-                    {
-                        <i class="bi bi-circle text-muted"></i>
-                        <span>@item.Name</span>
-                    }
-                </div>
+            var toggleLabel = item.IsPacked
+                ? $"Mark {item.Name} as not packed"
+                : $"Mark {item.Name} as packed";
 
-                <span class="badge bg-light text-dark">
-                    × @item.Quantity
-                </span>
+            <li id="item-@item.Id"
+                class="packing-item @(item.IsPacked ? "is-packed" : string.Empty)"
+                data-item-id="@item.Id">
+
+                <div class="d-flex justify-content-between align-items-center gap-2 py-2 border-bottom">
+                    <form asp-controller="Packing"
+                          asp-action="Toggle"
+                          asp-route-id="@item.Id"
+                          method="post"
+                          class="packing-toggle-form flex-grow-1">
+
+                        <button type="submit"
+                                class="btn btn-link text-start text-decoration-none p-0 d-flex align-items-center gap-2"
+                                aria-label="@toggleLabel"
+                                aria-pressed="@item.IsPacked"
+                                data-item-name="@item.Name">
+
+                            <span class="packing-check" aria-hidden="true">
+                                @(item.IsPacked ? "☑" : "☐")
+                            </span>
+
+                            <span class="packing-name">
+                                @item.Name
+                            </span>
+
+                            @if (item.Quantity > 1)
+                            {
+                                <span class="v-muted small">
+                                    × @item.Quantity
+                                </span>
+                            }
+                        </button>
+                    </form>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <a asp-controller="Packing"
+                           asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class="btn btn-sm btn-outline-secondary">
+                            Edit
+                        </a>
+
+                        <form asp-controller="Packing"
+                              asp-action="Delete"
+                              asp-route-id="@item.Id"
+                              method="post"
+                              class="d-inline"
+                              data-confirm="Remove &quot;@item.Name&quot; from your packing list?"
+                              onsubmit="return confirm(this.dataset.confirm);">
+
+                            <button type="submit"
+                                    class="btn btn-sm btn-outline-danger">
+                                Remove
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </li>
         }
     </ul>

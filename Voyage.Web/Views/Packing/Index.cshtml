@@ -5,6 +5,13 @@
     ViewData["TripId"] = Model.TripId;
 
     var daysUntilStart = (Model.StartDate.Date - DateTime.Today).Days;
+
+    var emptyState = new EmptyStateViewModel
+    {
+        Icon = "bi-suitcase",
+        Title = "Your packing list is empty",
+        Message = "Start adding the things you need for your trip."
+    };
 }
 
 <div class="mb-4">
@@ -59,7 +66,7 @@
             }
             else
             {
-                <partial name="_PackingItemForm" model="Model.NewItem" />
+                <partial name="_PackingItemForm" for="NewItem" />
             }
         </div>
     </div>
@@ -73,28 +80,23 @@
             </span>
         </div>
 
-        @if (!Model.Groups.Any())
-        {
-            <partial name="_EmptyState" model='new Voyage.Web.ViewModels.Shared.EmptyStateViewModel
-                     {
-                         Icon = "bi-suitcase",
-                         Title = "Your packing list is empty",
-                         Message = "Start adding the things you need for your trip.",
-                         ActionText = "Add your first item",
-                         ActionController = "Packing",
-                         ActionName = "Index"
-                     }' />
-        }
-        else
-        {
-            @foreach (var group in Model.Groups)
+        <div data-packing-list>
+            @if (!Model.Groups.Any())
             {
-                <partial name="_PackingGroup" model="group" />
+                <partial name="_EmptyState" model="emptyState" />
             }
-        }
+            else
+            {
+                @foreach (var group in Model.Groups)
+                {
+                    <partial name="_PackingGroup" model="group" />
+                }
+            }
+        </div>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/packing.js" asp-append-version="true"></script>
 }
