@@ -28,5 +28,7 @@
 
         public const string FavoriteAdded = "Destination saved to your favorites.";
         public const string FavoriteRemoved = "Destination removed from your favorites.";
+
+        public const string PackingItemAdded = "\"{0}\" was added to your packing list.";
     }
 }

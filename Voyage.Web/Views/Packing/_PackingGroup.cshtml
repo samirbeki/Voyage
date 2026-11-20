@@ -1,0 +1,39 @@
+﻿@model Voyage.Web.ViewModels.Packing.PackingCategoryGroupViewModel
+
+<div class="v-panel mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="v-panel-title mb-0">
+            @Model.Category.GetDisplayName()
+        </h3>
+
+        <span class="v-muted small">
+            @Model.PackedCount / @Model.TotalCount packed
+        </span>
+    </div>
+
+    <ul class="list-unstyled mb-0">
+        @foreach (var item in Model.Items)
+        {
+            <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                <div class="d-flex align-items-center gap-2">
+                    @if (item.IsPacked)
+                    {
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span class="text-decoration-line-through text-muted">
+                            @item.Name
+                        </span>
+                    }
+                    else
+                    {
+                        <i class="bi bi-circle text-muted"></i>
+                        <span>@item.Name</span>
+                    }
+                </div>
+
+                <span class="badge bg-light text-dark">
+                    × @item.Quantity
+                </span>
+            </li>
+        }
+    </ul>
+</div>

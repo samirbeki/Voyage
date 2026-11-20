@@ -1,0 +1,100 @@
+﻿@model Voyage.Web.ViewModels.Packing.PackingListViewModel
+
+@{
+    ViewData["Title"] = "Packing List";
+    ViewData["TripId"] = Model.TripId;
+
+    var daysUntilStart = (Model.StartDate.Date - DateTime.Today).Days;
+}
+
+<div class="mb-4">
+    <div class="v-muted small mb-2">
+        <a asp-controller="Trips" asp-action="Index">My Trips</a>
+        <i class="bi bi-chevron-right mx-1"></i>
+        <a asp-controller="Trips"
+           asp-action="Details"
+           asp-route-id="@Model.TripId">
+            @Model.TripName
+        </a>
+        <i class="bi bi-chevron-right mx-1"></i>
+        Packing List
+    </div>
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+        <div>
+            <h1 class="v-page-title">Packing List</h1>
+            <p class="v-page-subtitle mb-0">
+                Prepare everything you need for @Model.TripName.
+            </p>
+        </div>
+
+        @if (daysUntilStart > 0)
+        {
+            <span class="badge bg-light text-dark p-2">
+                <i class="bi bi-calendar-event"></i>
+                @daysUntilStart @(daysUntilStart == 1 ? "day" : "days") until departure
+            </span>
+        }
+        else if (daysUntilStart == 0)
+        {
+            <span class="badge bg-success p-2">
+                Departure day!
+            </span>
+        }
+    </div>
+</div>
+
+<partial name="_PackingProgress" model="Model.Progress" />
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="v-panel" id="add-item">
+            <h2 class="v-panel-title">Add an item</h2>
+
+            @if (Model.Progress.Total >= Model.MaxItems)
+            {
+                <div class="alert alert-warning mb-0">
+                    You have reached the maximum of @Model.MaxItems items for this trip.
+                </div>
+            }
+            else
+            {
+                <partial name="_PackingItemForm" model="Model.NewItem" />
+            }
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="v-panel-title mb-0">Your items</h2>
+
+            <span class="v-muted small">
+                @Model.Progress.Total / @Model.MaxItems items
+            </span>
+        </div>
+
+        @if (!Model.Groups.Any())
+        {
+            <partial name="_EmptyState" model='new Voyage.Web.ViewModels.Shared.EmptyStateViewModel
+                     {
+                         Icon = "bi-suitcase",
+                         Title = "Your packing list is empty",
+                         Message = "Start adding the things you need for your trip.",
+                         ActionText = "Add your first item",
+                         ActionController = "Packing",
+                         ActionName = "Index"
+                     }' />
+        }
+        else
+        {
+            @foreach (var group in Model.Groups)
+            {
+                <partial name="_PackingGroup" model="group" />
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
