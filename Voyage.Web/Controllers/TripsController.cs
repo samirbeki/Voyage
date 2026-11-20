@@ -10,10 +10,14 @@ namespace Voyage.Web.Controllers
     public class TripsController : BaseController
     {
         private readonly ITripService tripService;
+        private readonly IPackingService packingService;
 
-        public TripsController(ITripService tripService)
+        public TripsController(
+            ITripService tripService,
+            IPackingService packingService)
         {
             this.tripService = tripService;
+            this.packingService = packingService;
         }
 
         public async Task<IActionResult> Index()
@@ -91,6 +95,9 @@ namespace Voyage.Web.Controllers
             {
                 return NotFound();
             }
+
+            model.PackingProgress =
+                await packingService.GetProgressAsync(id);
 
             return View(model);
         }

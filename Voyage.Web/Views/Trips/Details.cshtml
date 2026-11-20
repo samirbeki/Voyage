@@ -175,6 +175,57 @@
             </div>
         </div>
 
+        <div class="v-panel mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="v-panel-title mb-0">Packing Progress</h2>
+                <span class="v-badge">
+                    @Model.PackingProgress.Percent%
+                </span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-2">
+                <span class="v-muted">Packed items</span>
+                <strong>
+                    @Model.PackingProgress.Packed / @Model.PackingProgress.Total
+                </strong>
+            </div>
+
+            <div class="v-budget-bar mb-2">
+                <div class="v-budget-bar-fill"
+                     style="width: @Model.PackingProgress.Percent%"></div>
+            </div>
+
+            @if (Model.PackingProgress.Total == 0)
+            {
+                <p class="v-muted mb-0">
+                    Your packing list is empty. Add items to start tracking your progress.
+                </p>
+            }
+            else if (Model.PackingProgress.IsComplete)
+            {
+                <p class="text-success mb-0">
+                    <i class="bi bi-check-circle-fill"></i>
+                    Everything is packed. You're ready to go!
+                </p>
+            }
+            else
+            {
+                <p class="v-muted mb-0">
+                    @(
+                        Model.PackingProgress.Total - Model.PackingProgress.Packed
+                    ) item(s) left to pack.
+                </p>
+            }
+
+            <a class="btn btn-outline-navy btn-sm w-100 mt-3"
+               asp-controller="Packing"
+               asp-action="Index"
+               asp-route-tripId="@Model.Id">
+                <i class="bi bi-suitcase"></i>
+                Open Packing List
+            </a>
+        </div>
+
         <div class="v-panel">
             <h2 class="v-panel-title">Actions</h2>
 

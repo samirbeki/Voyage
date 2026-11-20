@@ -266,6 +266,115 @@ namespace Voyage.Web.Services
             };
         }
 
+        public async Task<PackingBulkResult> AddEssentialsAsync(
+            int tripId,
+            string userId)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(userId);
+
+            var trip = await dbContext.Trips
+                .AsNoTracking()
+                .Where(t => t.Id == tripId && t.OwnerId == userId)
+                .Select(t => new
+                {
+                    t.StartDate,
+                    t.EndDate
+                })
+                .FirstOrDefaultAsync();
+
+            if (trip == null)
+            {
+                return PackingBulkResult.Fail(PackingResult.TripNotFound);
+            }
+
+            var existingNames = (await dbContext.PackingItems
+                    .Where(p => p.TripId == tripId)
+                    .Select(p => p.Name)
+                    .ToListAsync())
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            int capacity = ValidationConstants.PackingItemsMaxPerTrip
+                - existingNames.Count;
+
+            if (capacity <= 0)
+            {
+                return PackingBulkResult.Fail(PackingResult.LimitReached);
+            }
+
+            int tripDays = (trip.EndDate.Date - trip.StartDate.Date).Days + 1;
+
+            var missing = PackingTemplates.GetEssentials(tripDays)
+                .Where(t => !existingNames.Contains(t.Name))
+                .ToList();
+
+            var toAdd = missing.Take(capacity).ToList();
+
+            if (toAdd.Count == 0)
+            {
+                return new PackingBulkResult
+                {
+                    Result = PackingResult.Success,
+                    Affected = 0
+                };
+            }
+
+            var now = DateTime.UtcNow;
+
+            await dbContext.PackingItems.AddRangeAsync(
+                toAdd.Select(t => new PackingItem
+                {
+                    TripId = tripId,
+                    Name = t.Name,
+                    Category = t.Category,
+                    Quantity = t.Quantity,
+                    IsPacked = false,
+                    CreatedOn = now
+                }));
+
+            try
+            {
+                await dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+                when (ex.InnerException is SqlException { Number: 2627 or 2601 })
+            {
+                dbContext.ChangeTracker.Clear();
+
+                return PackingBulkResult.Fail(PackingResult.Duplicate);
+            }
+
+            return new PackingBulkResult
+            {
+                Result = PackingResult.Success,
+                Affected = toAdd.Count,
+                NotAddedDueToLimit = missing.Count - toAdd.Count
+            };
+        }
+
+        public async Task<PackingBulkResult> UnpackAllAsync(
+            int tripId,
+            string userId)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(userId);
+
+            if (!await IsTripOwnerAsync(tripId, userId))
+            {
+                return PackingBulkResult.Fail(PackingResult.TripNotFound);
+            }
+
+            int affected = await dbContext.PackingItems
+                .Where(p => p.TripId == tripId && p.IsPacked)
+                .ExecuteUpdateAsync(s => s.SetProperty(
+                    p => p.IsPacked,
+                    false));
+
+            return new PackingBulkResult
+            {
+                Result = PackingResult.Success,
+                Affected = affected
+            };
+        }
+
         private async Task<bool> IsTripOwnerAsync(int tripId, string userId)
         {
             return await dbContext.Trips

@@ -24,5 +24,9 @@ namespace Voyage.Web.Services.Contracts
         Task<PackingOperationResult> DeleteAsync(int id, string userId);
 
         Task<PackingOperationResult> TogglePackedAsync(int id, string userId);
+
+        Task<PackingBulkResult> AddEssentialsAsync(int tripId, string userId);
+
+        Task<PackingBulkResult> UnpackAllAsync(int tripId, string userId);
     }
 }

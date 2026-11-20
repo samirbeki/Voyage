@@ -1,5 +1,6 @@
 ﻿using Voyage.Web.Common;
 using Voyage.Web.ViewModels.Expenses;
+using Voyage.Web.ViewModels.Packing;
 
 namespace Voyage.Web.ViewModels.Trips
 {
@@ -44,5 +45,7 @@ namespace Voyage.Web.ViewModels.Trips
         public decimal RemainingBudget { get; set; }
 
         public int SpentPercent { get; set; }
+
+        public PackingProgressViewModel PackingProgress { get; set; } = new();
     }
 }

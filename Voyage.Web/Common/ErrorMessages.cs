@@ -106,5 +106,11 @@
 
         public const string PackingItemNameRequired =
             "Item name is required.";
+
+        public const string EssentialsPartiallyAdded =
+            "{0} item(s) added. {1} could not be added because a trip can have up to {2} items.";
+
+        public const string PackingConcurrentChange =
+            "Your packing list was changed at the same time. Please try again.";
     }
 }

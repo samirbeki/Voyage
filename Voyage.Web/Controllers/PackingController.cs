@@ -237,6 +237,84 @@ namespace Voyage.Web.Controllers
                 "add-item");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddEssentials(int tripId)
+        {
+            var result = await packingService.AddEssentialsAsync(
+                tripId,
+                GetUserId());
+
+            switch (result.Result)
+            {
+                case PackingResult.TripNotFound:
+                    return NotFound();
+
+                case PackingResult.LimitReached:
+                    TempData[TempDataKeys.ErrorMessage] =
+                        string.Format(
+                            ErrorMessages.PackingItemsLimitReached,
+                            ValidationConstants.PackingItemsMaxPerTrip);
+                    break;
+
+                case PackingResult.Duplicate:
+                    TempData[TempDataKeys.ErrorMessage] =
+                        ErrorMessages.PackingConcurrentChange;
+                    break;
+
+                case PackingResult.Success when result.Affected == 0:
+                    TempData[TempDataKeys.SuccessMessage] =
+                        SuccessMessages.EssentialsAlreadyAdded;
+                    break;
+
+                case PackingResult.Success when result.NotAddedDueToLimit > 0:
+                    TempData[TempDataKeys.ErrorMessage] =
+                        string.Format(
+                            ErrorMessages.EssentialsPartiallyAdded,
+                            result.Affected,
+                            result.NotAddedDueToLimit,
+                            ValidationConstants.PackingItemsMaxPerTrip);
+                    break;
+
+                case PackingResult.Success:
+                    TempData[TempDataKeys.SuccessMessage] =
+                        string.Format(
+                            SuccessMessages.EssentialsAdded,
+                            result.Affected);
+                    break;
+            }
+
+            return RedirectToAction(
+                nameof(Index),
+                "Packing",
+                new { tripId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UnpackAll(int tripId)
+        {
+            var result = await packingService.UnpackAllAsync(
+                tripId,
+                GetUserId());
+
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+
+            TempData[TempDataKeys.SuccessMessage] = result.Affected == 0
+                ? SuccessMessages.PackingNothingToUnpack
+                : string.Format(
+                    SuccessMessages.PackingUnpackedAll,
+                    result.Affected);
+
+            return RedirectToAction(
+                nameof(Index),
+                "Packing",
+                new { tripId });
+        }
+
         private async Task<IActionResult> RedisplayAsync(
             int tripId,
             PackingItemFormModel form)
