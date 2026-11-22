@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="Voyage.Web/Voyage.Web.csproj" />
+  <Folder Name="/src/">
+    <Project Path="src/Voyage.Web/Voyage.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
 </Solution>
