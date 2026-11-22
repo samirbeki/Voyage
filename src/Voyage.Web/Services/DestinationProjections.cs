@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Voyage.Web.Data.Entities;
+using Voyage.Data.Models;
 using Voyage.Web.ViewModels.Destinations;
 
 namespace Voyage.Web.Services

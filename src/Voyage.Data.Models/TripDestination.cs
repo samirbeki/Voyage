@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Voyage.Web.Data.Entities
+namespace Voyage.Data.Models
 {
     [PrimaryKey(nameof(TripId), nameof(DestinationId))]
     public class TripDestination

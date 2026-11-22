@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Voyage.Common\Voyage.Common.csproj" />
+    <ProjectReference Include="..\Voyage.Data.Models\Voyage.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

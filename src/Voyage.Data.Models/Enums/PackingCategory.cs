@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Voyage.Web.Common
+namespace Voyage.Data.Models.Enums
 {
     public enum PackingCategory
     {

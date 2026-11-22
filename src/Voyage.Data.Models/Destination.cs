@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Voyage.Common.Constants.Validation;
 
-namespace Voyage.Web.Data.Entities
+namespace Voyage.Data.Models
 {
     public class Destination
     {

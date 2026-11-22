@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace Voyage.Web.Data.Entities
+namespace Voyage.Data.Models
 {
     public class Favorite
     {

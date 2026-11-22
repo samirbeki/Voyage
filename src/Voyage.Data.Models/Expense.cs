@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Voyage.Common.Constants.Validation;
-using Voyage.Web.Common;
+using Voyage.Data.Models.Enums;
 
-namespace Voyage.Web.Data.Entities
+namespace Voyage.Data.Models
 {
     public class Expense
     {

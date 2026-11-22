@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Voyage.Common.Utilities;
+using Voyage.Data.Models;
 using Voyage.Web.Data;
-using Voyage.Web.Data.Entities;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Expenses;
 

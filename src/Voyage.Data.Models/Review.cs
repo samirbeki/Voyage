@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Voyage.Common.Constants.Validation;
 using Voyage.Common.Messages;
 
-namespace Voyage.Web.Data.Entities
+namespace Voyage.Data.Models
 {
     public class Review
     {

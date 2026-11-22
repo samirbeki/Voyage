@@ -224,7 +224,7 @@ namespace Voyage.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Category", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -299,7 +299,7 @@ namespace Voyage.Web.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Destination", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Destination", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -541,7 +541,7 @@ namespace Voyage.Web.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Expense", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Expense", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -577,7 +577,7 @@ namespace Voyage.Web.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Favorite", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Favorite", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -597,7 +597,7 @@ namespace Voyage.Web.Data.Migrations
                     b.ToTable("Favorites");
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.PackingItem", b =>
+            modelBuilder.Entity("Voyage.Data.Models.PackingItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -644,7 +644,7 @@ namespace Voyage.Web.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Review", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -695,7 +695,7 @@ namespace Voyage.Web.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Trip", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -745,7 +745,7 @@ namespace Voyage.Web.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.TripDestination", b =>
+            modelBuilder.Entity("Voyage.Data.Models.TripDestination", b =>
                 {
                     b.Property<int>("TripId")
                         .HasColumnType("int");
@@ -811,9 +811,9 @@ namespace Voyage.Web.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Destination", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Destination", b =>
                 {
-                    b.HasOne("Voyage.Web.Data.Entities.Category", "Category")
+                    b.HasOne("Voyage.Data.Models.Category", "Category")
                         .WithMany("Destinations")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -822,9 +822,9 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Expense", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Expense", b =>
                 {
-                    b.HasOne("Voyage.Web.Data.Entities.Trip", "Trip")
+                    b.HasOne("Voyage.Data.Models.Trip", "Trip")
                         .WithMany("Expenses")
                         .HasForeignKey("TripId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -833,9 +833,9 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("Trip");
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Favorite", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Favorite", b =>
                 {
-                    b.HasOne("Voyage.Web.Data.Entities.Destination", "Destination")
+                    b.HasOne("Voyage.Data.Models.Destination", "Destination")
                         .WithMany("Favorites")
                         .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -852,9 +852,9 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.PackingItem", b =>
+            modelBuilder.Entity("Voyage.Data.Models.PackingItem", b =>
                 {
-                    b.HasOne("Voyage.Web.Data.Entities.Trip", "Trip")
+                    b.HasOne("Voyage.Data.Models.Trip", "Trip")
                         .WithMany("PackingItems")
                         .HasForeignKey("TripId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -863,7 +863,7 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("Trip");
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Review", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Review", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Author")
                         .WithMany()
@@ -871,7 +871,7 @@ namespace Voyage.Web.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Voyage.Web.Data.Entities.Destination", "Destination")
+                    b.HasOne("Voyage.Data.Models.Destination", "Destination")
                         .WithMany("Reviews")
                         .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -882,7 +882,7 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("Destination");
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Trip", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Owner")
                         .WithMany()
@@ -893,15 +893,15 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.TripDestination", b =>
+            modelBuilder.Entity("Voyage.Data.Models.TripDestination", b =>
                 {
-                    b.HasOne("Voyage.Web.Data.Entities.Destination", "Destination")
+                    b.HasOne("Voyage.Data.Models.Destination", "Destination")
                         .WithMany("TripDestinations")
                         .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Voyage.Web.Data.Entities.Trip", "Trip")
+                    b.HasOne("Voyage.Data.Models.Trip", "Trip")
                         .WithMany("TripDestinations")
                         .HasForeignKey("TripId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -912,12 +912,12 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("Trip");
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Category", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Category", b =>
                 {
                     b.Navigation("Destinations");
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Destination", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Destination", b =>
                 {
                     b.Navigation("Favorites");
 
@@ -926,7 +926,7 @@ namespace Voyage.Web.Data.Migrations
                     b.Navigation("TripDestinations");
                 });
 
-            modelBuilder.Entity("Voyage.Web.Data.Entities.Trip", b =>
+            modelBuilder.Entity("Voyage.Data.Models.Trip", b =>
                 {
                     b.Navigation("Expenses");
 

@@ -1,4 +1,4 @@
-﻿namespace Voyage.Web.Common
+﻿namespace Voyage.Data.Models.Enums
 {
     public enum ExpenseCategory
     {

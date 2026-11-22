@@ -1,4 +1,4 @@
-﻿using Voyage.Web.Common;
+﻿using Voyage.Data.Models.Enums;
 
 namespace Voyage.Web.ViewModels.Expenses
 {

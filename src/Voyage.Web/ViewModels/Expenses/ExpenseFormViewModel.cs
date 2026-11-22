@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Voyage.Common.Constants.Validation;
 using Voyage.Common.Messages;
-using Voyage.Web.Common;
+using Voyage.Data.Models.Enums;
 
 namespace Voyage.Web.ViewModels.Expenses
 {

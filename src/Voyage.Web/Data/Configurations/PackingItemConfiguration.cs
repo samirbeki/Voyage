@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Voyage.Common.Constants.Validation;
-using Voyage.Web.Data.Entities;
+using Voyage.Data.Models;
 
 namespace Voyage.Web.Data.Configurations
 {

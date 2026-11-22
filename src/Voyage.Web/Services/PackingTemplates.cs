@@ -1,5 +1,5 @@
 ﻿using Voyage.Common.Constants.Validation;
-using Voyage.Web.Common;
+using Voyage.Data.Models.Enums;
 
 namespace Voyage.Web.Services
 {

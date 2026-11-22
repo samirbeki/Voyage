@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Voyage.Common.Constants;
 using Voyage.Common.Constants.Validation;
 using Voyage.Common.Messages;
+using Voyage.Data.Models.Enums;
 using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Packing;

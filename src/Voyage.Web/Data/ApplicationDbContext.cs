@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Voyage.Web.Data.Entities;
+using Voyage.Data.Models;
 
 namespace Voyage.Web.Data
 {

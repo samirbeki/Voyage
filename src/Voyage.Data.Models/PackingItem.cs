@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Voyage.Common.Constants.Validation;
-using Voyage.Web.Common;
+using Voyage.Data.Models.Enums;
 
-namespace Voyage.Web.Data.Entities
+namespace Voyage.Data.Models
 {
     public class PackingItem
     {

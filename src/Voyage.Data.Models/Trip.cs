@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Voyage.Common.Constants.Validation;
 
-namespace Voyage.Web.Data.Entities
+namespace Voyage.Data.Models
 {
     public class Trip
     {
