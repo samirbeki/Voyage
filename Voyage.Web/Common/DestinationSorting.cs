@@ -4,6 +4,7 @@
     {
         NameAsc,
         NameDesc,
-        Popular
+        Popular,
+        HighestRated
     }
 }

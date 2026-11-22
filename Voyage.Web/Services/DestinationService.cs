@@ -59,6 +59,12 @@ namespace Voyage.Web.Services
                 DestinationSorting.Popular => query
                     .OrderByDescending(d => d.TripDestinations.Count)
                     .ThenBy(d => d.Name),
+                DestinationSorting.HighestRated => query
+                    .OrderByDescending(d => d.Reviews
+                        .Where(r => !r.IsHidden)
+                        .Average(r => (double?)r.Rating) ?? 0)
+                    .ThenByDescending(d => d.Reviews.Count(r => !r.IsHidden))
+                    .ThenBy(d => d.Name),
                 _ => query.OrderBy(d => d.Name)
             };
 
