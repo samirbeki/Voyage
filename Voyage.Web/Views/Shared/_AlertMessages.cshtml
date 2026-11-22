@@ -1,0 +1,22 @@
+﻿@{
+    var successMessage = TempData[TempDataKeys.SuccessMessage] as string;
+    var errorMessage = TempData[TempDataKeys.ErrorMessage] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="v-alert alert alert-dismissible fade show" role="status">
+        <i class="bi bi-check-circle-fill"></i>
+        <span>@successMessage</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="v-alert v-alert-danger alert alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>@errorMessage</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}

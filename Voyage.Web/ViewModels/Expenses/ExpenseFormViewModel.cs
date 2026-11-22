@@ -19,7 +19,7 @@ namespace Voyage.Web.ViewModels.Expenses
             ValidationConstants.ExpenseAmountMax,
             ErrorMessage = ErrorMessages.ExpenseAmountRange)]
         [Display(Name = "Amount")]
-        public decimal Amount { get; set; }
+        public decimal? Amount { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         public ExpenseCategory Category { get; set; }

@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Infrastructure;
+using Voyage.Web.Infrastructure.Identity;
+using Voyage.Web.Infrastructure.ModelBinding;
 using Voyage.Web.Services;
 using Voyage.Web.Services.Contracts;
 
@@ -22,15 +24,45 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddUserManager<VoyageUserManager>();
 
 builder.Services.AddControllersWithViews(options =>
 {
+    options.ModelBinderProviders.Insert(0, new TrimmingModelBinderProvider());
+
     options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
         _ => ErrorMessages.ValueRequired);
 
     options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor(
         (value, field) => ErrorMessages.InvalidValue);
+
+    options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(
+        _ => ErrorMessages.InvalidValue);
+
+    options.ModelBindingMessageProvider.SetNonPropertyAttemptedValueIsInvalidAccessor(
+        _ => ErrorMessages.InvalidValue);
+
+    options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(
+        _ => ErrorMessages.InvalidValue);
+
+    options.ModelBindingMessageProvider.SetNonPropertyUnknownValueIsInvalidAccessor(
+        () => ErrorMessages.InvalidValue);
+
+    options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(
+        _ => ErrorMessages.InvalidValue);
+
+    options.ModelBindingMessageProvider.SetNonPropertyValueMustBeANumberAccessor(
+        () => ErrorMessages.InvalidValue);
+
+    options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(
+        _ => ErrorMessages.ValueRequired);
+
+    options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(
+        () => ErrorMessages.ValueRequired);
+
+    options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(
+        () => ErrorMessages.ValueRequired);
 });
 
 builder.Services.AddRateLimiter(options =>

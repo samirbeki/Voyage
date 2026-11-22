@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
+using Voyage.Web.Extensions;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Favorites;
 
@@ -26,6 +27,9 @@ namespace Voyage.Web.Services
             {
                 return FavoriteResult.DestinationNotFound;
             }
+
+            await using var transaction = await dbContext.Database
+                .BeginLockedTransactionAsync($"favorites:{userId}");
 
             if (await IsFavoriteAsync(destinationId, userId))
             {
@@ -56,6 +60,11 @@ namespace Voyage.Web.Services
             {
                 dbContext.Entry(favorite).State = EntityState.Detached;
                 return FavoriteResult.AlreadyExists;
+            }
+
+            if (transaction != null)
+            {
+                await transaction.CommitAsync();
             }
 
             return FavoriteResult.Success;

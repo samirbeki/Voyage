@@ -19,7 +19,7 @@
 
     <div class="mb-4">
         <div class="review-rating mb-2">
-            @(new string('★', Model.Rating))@(new string('☆', ValidationConstants.ReviewRatingMax - Model.Rating))
+            @(new string('★', Model.Rating ?? 0))@(new string('☆', ValidationConstants.ReviewRatingMax - (Model.Rating ?? 0)))
         </div>
         <p class="review-comment">@Model.Comment</p>
     </div>

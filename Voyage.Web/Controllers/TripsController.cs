@@ -69,6 +69,11 @@ namespace Voyage.Web.Controllers
                     ErrorMessages.StartDateInPast);
             }
 
+            ValidateMoney(
+                nameof(model.Budget),
+                model.Budget,
+                ErrorMessages.TripBudgetDecimals);
+
             if (!ModelState.IsValid)
             {
                 model.AvailableDestinations =
@@ -120,7 +125,7 @@ namespace Voyage.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, TripFormViewModel model)
+        public async Task<IActionResult> Edit([FromRoute] int id, TripFormViewModel model)
         {
             if (model.SelectedDestinationIds.Any()
                 && !await tripService.DestinationsExistAsync(
@@ -130,6 +135,21 @@ namespace Voyage.Web.Controllers
                     nameof(model.SelectedDestinationIds),
                     ErrorMessages.DestinationNotFound);
             }
+
+            if (await tripService.HasExpensesOutsideAsync(
+                id,
+                model.StartDate,
+                model.EndDate))
+            {
+                ModelState.AddModelError(
+                    nameof(model.EndDate),
+                    ErrorMessages.TripDatesExcludeExpenses);
+            }
+
+            ValidateMoney(
+                nameof(model.Budget),
+                model.Budget,
+                ErrorMessages.TripBudgetDecimals);
 
             if (!ModelState.IsValid)
             {
@@ -170,7 +190,7 @@ namespace Voyage.Web.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed([FromRoute] int id)
         {
             var success = await tripService.DeleteAsync(id, GetUserId());
 

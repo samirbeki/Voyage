@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
 using Voyage.Web.Services.Contracts;
@@ -62,7 +63,7 @@ namespace Voyage.Web.Services
         {
             var category = new Category
             {
-                Name = model.Name.Trim(),
+                Name = TextNormalizer.SingleLine(model.Name),
                 Description = model.Description?.Trim()
             };
 
@@ -80,7 +81,7 @@ namespace Voyage.Web.Services
                 return false;
             }
 
-            category.Name = model.Name.Trim();
+            category.Name = TextNormalizer.SingleLine(model.Name);
             category.Description = model.Description?.Trim();
 
             await dbContext.SaveChangesAsync();
@@ -112,6 +113,18 @@ namespace Voyage.Web.Services
                 .Where(td => deletedIds.Contains(td.DestinationId))
                 .ToListAsync();
 
+            var reviews = await dbContext.Reviews
+                .IgnoreQueryFilters()
+                .Where(r => deletedIds.Contains(r.DestinationId))
+                .ToListAsync();
+
+            var favorites = await dbContext.Favorites
+                .IgnoreQueryFilters()
+                .Where(f => deletedIds.Contains(f.DestinationId))
+                .ToListAsync();
+
+            dbContext.Reviews.RemoveRange(reviews);
+            dbContext.Favorites.RemoveRange(favorites);
             dbContext.TripDestinations.RemoveRange(tripDestinations);
             dbContext.Destinations.RemoveRange(deletedDestinations);
 
@@ -123,7 +136,7 @@ namespace Voyage.Web.Services
 
         public async Task<bool> ExistsByNameAsync(string name, int? excludeId = null)
         {
-            name = name.Trim();
+            name = TextNormalizer.SingleLine(name);
 
             return await dbContext.Categories
                 .AnyAsync(c => c.Name == name

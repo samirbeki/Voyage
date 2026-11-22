@@ -77,11 +77,11 @@ namespace Voyage.Web.Services
         {
             var trip = new Trip
             {
-                Title = model.Title.Trim(),
+                Title = TextNormalizer.SingleLine(model.Title),
                 Description = model.Description?.Trim(),
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
-                Budget = model.Budget,
+                Budget = model.Budget!.Value,
                 CoverImageUrl = model.CoverImageUrl?.Trim(),
                 OwnerId = userId,
                 CreatedOn = DateTime.UtcNow
@@ -134,6 +134,7 @@ namespace Voyage.Web.Services
                         .ToList(),
                     Expenses = t.Expenses
                         .OrderByDescending(e => e.Date)
+                        .ThenByDescending(e => e.Id)
                         .Select(e => new ExpenseViewModel
                         {
                             Id = e.Id,
@@ -218,11 +219,11 @@ namespace Voyage.Web.Services
                 return false;
             }
 
-            trip.Title = model.Title.Trim();
+            trip.Title = TextNormalizer.SingleLine(model.Title);
             trip.Description = model.Description?.Trim();
             trip.StartDate = model.StartDate;
             trip.EndDate = model.EndDate;
-            trip.Budget = model.Budget;
+            trip.Budget = model.Budget!.Value;
             trip.CoverImageUrl = model.CoverImageUrl?.Trim();
 
             var selectedIds = model.SelectedDestinationIds.Distinct().ToList();
@@ -250,6 +251,20 @@ namespace Voyage.Web.Services
             return true;
         }
 
+        public async Task<bool> HasExpensesOutsideAsync(
+            int tripId,
+            DateTime startDate,
+            DateTime endDate)
+        {
+            var start = startDate.Date;
+            var end = endDate.Date;
+
+            return await dbContext.Expenses
+                .AnyAsync(e =>
+                    e.TripId == tripId &&
+                    (e.Date < start || e.Date > end));
+        }
+
         public async Task<bool> DeleteAsync(int id, string userId)
         {
             var trip = await dbContext.Trips
@@ -261,6 +276,11 @@ namespace Voyage.Web.Services
                 return false;
             }
 
+            var packingItems = await dbContext.PackingItems
+                .Where(p => p.TripId == id)
+                .ToListAsync();
+
+            dbContext.PackingItems.RemoveRange(packingItems);
             dbContext.Trips.Remove(trip);
 
             await dbContext.SaveChangesAsync();

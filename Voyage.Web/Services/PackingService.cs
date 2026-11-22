@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
+using Voyage.Web.Extensions;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Packing;
 
@@ -118,6 +119,9 @@ namespace Voyage.Web.Services
 
             var normalizedName = NormalizeName(model.Name);
 
+            await using var transaction = await dbContext.Database
+                .BeginLockedTransactionAsync(TripLockResource(tripId));
+
             if (await IsDuplicateAsync(tripId, normalizedName))
             {
                 return PackingResult.Duplicate;
@@ -144,6 +148,11 @@ namespace Voyage.Web.Services
             await dbContext.PackingItems.AddAsync(item);
 
             var saved = await TrySaveAsync(item);
+
+            if (saved && transaction != null)
+            {
+                await transaction.CommitAsync();
+            }
 
             return saved
                 ? PackingResult.Success
@@ -287,6 +296,9 @@ namespace Voyage.Web.Services
                 return PackingBulkResult.Fail(PackingResult.TripNotFound);
             }
 
+            await using var transaction = await dbContext.Database
+                .BeginLockedTransactionAsync(TripLockResource(tripId));
+
             var existingNames = (await dbContext.PackingItems
                     .Where(p => p.TripId == tripId)
                     .Select(p => p.Name)
@@ -343,6 +355,11 @@ namespace Voyage.Web.Services
                 return PackingBulkResult.Fail(PackingResult.Duplicate);
             }
 
+            if (transaction != null)
+            {
+                await transaction.CommitAsync();
+            }
+
             return new PackingBulkResult
             {
                 Result = PackingResult.Success,
@@ -373,6 +390,11 @@ namespace Voyage.Web.Services
                 Result = PackingResult.Success,
                 Affected = affected
             };
+        }
+
+        private static string TripLockResource(int tripId)
+        {
+            return $"packing-trip:{tripId}";
         }
 
         private async Task<bool> IsTripOwnerAsync(int tripId, string userId)

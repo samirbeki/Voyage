@@ -101,7 +101,7 @@ namespace Voyage.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Toggle(int id)
+        public async Task<IActionResult> Toggle([FromRoute] int id)
         {
             var result = await packingService.TogglePackedAsync(
                 id,
@@ -153,7 +153,7 @@ namespace Voyage.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
-            int id,
+            [FromRoute] int id,
             PackingItemEditViewModel model)
         {
             string userId = GetUserId();
@@ -216,7 +216,7 @@ namespace Voyage.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var result = await packingService.DeleteAsync(
                 id,

@@ -22,6 +22,11 @@ namespace Voyage.Web.Controllers
             int destinationId,
             ReviewFormModel model)
         {
+            if (!await reviewService.DestinationExistsAsync(destinationId))
+            {
+                return NotFound();
+            }
+
             if (!ModelState.IsValid)
             {
                 TempData[TempDataKeys.ErrorMessage] =
@@ -65,8 +70,19 @@ namespace Voyage.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
-            int id, ReviewEditViewModel model)
+            [FromRoute] int id, ReviewEditViewModel model)
         {
+            var current = await reviewService.GetForEditAsync(id, GetUserId());
+
+            if (current == null)
+            {
+                return NotFound();
+            }
+
+            model.Id = current.Id;
+            model.DestinationId = current.DestinationId;
+            model.DestinationName = current.DestinationName;
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -104,7 +120,7 @@ namespace Voyage.Web.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed([FromRoute] int id)
         {
             var destinationId = await reviewService.DeleteAsync(
                 id,

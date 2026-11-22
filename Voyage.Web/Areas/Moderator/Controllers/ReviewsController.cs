@@ -59,6 +59,11 @@ namespace Voyage.Web.Areas.Moderator.Controllers
                 TempData[TempDataKeys.SuccessMessage] =
                     SuccessMessages.ReviewDeletedByModerator;
             }
+            else
+            {
+                TempData[TempDataKeys.ErrorMessage] =
+                    ErrorMessages.ReviewNoLongerExists;
+            }
 
             return RedirectToAction(nameof(Index), new { status, page });
         }
@@ -75,6 +80,11 @@ namespace Voyage.Web.Areas.Moderator.Controllers
             if (updated)
             {
                 TempData[TempDataKeys.SuccessMessage] = successMessage;
+            }
+            else
+            {
+                TempData[TempDataKeys.ErrorMessage] =
+                    ErrorMessages.ReviewNoLongerExists;
             }
 
             return RedirectToAction(nameof(Index), new { status, page });

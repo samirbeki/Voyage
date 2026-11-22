@@ -38,15 +38,15 @@
 
         @if (daysUntilStart > 0)
         {
-            <span class="badge bg-light text-dark p-2">
+            <span class="v-chip">
                 <i class="bi bi-calendar-event"></i>
                 @daysUntilStart @(daysUntilStart == 1 ? "day" : "days") until departure
             </span>
         }
         else if (daysUntilStart == 0)
         {
-            <span class="badge bg-success p-2">
-                Departure day!
+            <span class="v-chip v-chip-success">
+                <i class="bi bi-airplane"></i> Departure day!
             </span>
         }
     </div>
@@ -62,7 +62,7 @@
               method="post"
               class="d-inline">
 
-            <button type="submit" class="btn btn-outline-primary btn-sm">
+            <button type="submit" class="btn btn-outline-navy btn-sm">
                 <i class="bi bi-plus-lg"></i>
                 Add essentials
             </button>
@@ -77,7 +77,7 @@
               class="d-inline"
               onsubmit="return confirm('Mark all items as not packed?');">
 
-            <button type="submit" class="btn btn-outline-secondary btn-sm">
+            <button type="submit" class="btn btn-outline-navy btn-sm">
                 <i class="bi bi-arrow-counterclockwise"></i>
                 Unpack all
             </button>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
 using Voyage.Web.Services.Contracts;
@@ -52,8 +53,8 @@ namespace Voyage.Web.Services
 
             var expense = new Expense
             {
-                Title = model.Title.Trim(),
-                Amount = model.Amount,
+                Title = TextNormalizer.SingleLine(model.Title),
+                Amount = model.Amount!.Value,
                 Category = model.Category,
                 Date = model.Date.Date,
                 TripId = model.TripId
@@ -95,8 +96,8 @@ namespace Voyage.Web.Services
                 return false;
             }
 
-            expense.Title = model.Title.Trim();
-            expense.Amount = model.Amount;
+            expense.Title = TextNormalizer.SingleLine(model.Title);
+            expense.Amount = model.Amount!.Value;
             expense.Category = model.Category;
             expense.Date = model.Date.Date;
 

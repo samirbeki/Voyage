@@ -133,8 +133,8 @@ namespace Voyage.Web.Services
         {
             var destination = new Destination
             {
-                Name = model.Name.Trim(),
-                Country = model.Country.Trim(),
+                Name = TextNormalizer.SingleLine(model.Name),
+                Country = TextNormalizer.SingleLine(model.Country),
                 Description = model.Description.Trim(),
                 ImageUrl = model.ImageUrl?.Trim(),
                 CategoryId = model.CategoryId
@@ -171,8 +171,8 @@ namespace Voyage.Web.Services
                 return false;
             }
 
-            destination.Name = model.Name.Trim();
-            destination.Country = model.Country.Trim();
+            destination.Name = TextNormalizer.SingleLine(model.Name);
+            destination.Country = TextNormalizer.SingleLine(model.Country);
             destination.Description = model.Description.Trim();
             destination.ImageUrl = model.ImageUrl?.Trim();
             destination.CategoryId = model.CategoryId;
@@ -210,8 +210,8 @@ namespace Voyage.Web.Services
             string country,
             int? excludeId = null)
         {
-            name = name.Trim();
-            country = country.Trim();
+            name = TextNormalizer.SingleLine(name);
+            country = TextNormalizer.SingleLine(country);
 
             return await dbContext.Destinations
                 .AnyAsync(d =>

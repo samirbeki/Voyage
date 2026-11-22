@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Request could not be completed";
+    var statusCode = ViewData["StatusCode"] as int? ?? 400;
+}
+
+<div class="v-error">
+    <div class="v-error-code">@statusCode</div>
+
+    <div class="v-error-icon">
+        <i class="bi bi-exclamation-diamond"></i>
+    </div>
+
+    <h1 class="v-error-title">We couldn't complete that request</h1>
+
+    <p class="v-error-text">
+        @(statusCode == 429
+            ? "You are doing that too often. Please wait a moment and try again."
+            : "The request was not valid or has expired. Please go back and try again.")
+    </p>
+
+    <div class="d-flex justify-content-center flex-wrap gap-2">
+        <a class="btn btn-accent" asp-area="" asp-controller="Home" asp-action="Index">
+            <i class="bi bi-house"></i> Back to home
+        </a>
+    </div>
+</div>

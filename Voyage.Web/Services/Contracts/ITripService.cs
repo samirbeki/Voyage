@@ -18,6 +18,8 @@ namespace Voyage.Web.Services.Contracts
 
         Task<bool> EditAsync(int id, TripFormViewModel model, string userId);
 
+        Task<bool> HasExpensesOutsideAsync(int tripId, DateTime startDate, DateTime endDate);
+
         Task<bool> DeleteAsync(int id, string userId);
     }
 }

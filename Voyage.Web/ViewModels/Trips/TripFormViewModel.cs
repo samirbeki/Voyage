@@ -33,7 +33,7 @@ namespace Voyage.Web.ViewModels.Trips
             ValidationConstants.TripBudgetMinValue,
             ValidationConstants.TripBudgetMaxValue,
             ErrorMessage = ErrorMessages.BudgetRange)]
-        public decimal Budget { get; set; }
+        public decimal? Budget { get; set; }
 
         [RegularExpression(
             @"^(https?://.+|/images/.+)$",

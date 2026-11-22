@@ -18,7 +18,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark v-navbar">
+        <nav class="navbar navbar-expand-xl navbar-dark v-navbar">
             <div class="container">
                 <a class="navbar-brand v-brand"
                    asp-area=""
@@ -38,7 +38,7 @@
                 </button>
 
                 <div class="navbar-collapse collapse justify-content-between">
-                    <ul class="navbar-nav ms-lg-4 gap-lg-1">
+                    <ul class="navbar-nav ms-xl-4 gap-xl-1">
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["area"] == null ? "active" : "")"
                                asp-area=""
@@ -113,7 +113,7 @@
                         }
                     </ul>
 
-                    <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2">
+                    <div class="d-flex flex-column flex-xl-row align-items-xl-center gap-2">
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <a class="btn btn-accent btn-sm px-3"
@@ -135,7 +135,7 @@
 
     <div class="container">
         <main role="main" class="v-main">
-            <partial name="_SuccessMessage" />
+            <partial name="~/Views/Shared/_AlertMessages.cshtml" />
             <div id="client-status"
                  class="client-status"
                  aria-live="polite"

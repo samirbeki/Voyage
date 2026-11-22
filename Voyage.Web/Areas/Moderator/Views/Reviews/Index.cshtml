@@ -7,7 +7,7 @@
 <section class="v-section">
     <div class="v-page-header">
         <div>
-            <h1>Review Moderation</h1>
+            <h1 class="v-page-title">Review Moderation</h1>
             <p class="v-muted">Manage reviews submitted by users.</p>
         </div>
     </div>
@@ -43,8 +43,8 @@
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table align-middle">
+        <div class="v-admin-table-wrap">
+            <table class="table align-middle mb-0 v-admin-table">
                 <thead>
                     <tr>
                         <th>Destination</th>
@@ -111,7 +111,7 @@
                                             <input type="hidden" name="id" value="@review.Id" />
                                             <input type="hidden" name="status" value="@Model.Status" />
                                             <input type="hidden" name="page" value="@Model.CurrentPage" />
-                                            <button type="submit" class="btn btn-sm btn-outline-warning">
+                                            <button type="submit" class="btn btn-sm btn-outline-navy">
                                                 Hide
                                             </button>
                                         </form>

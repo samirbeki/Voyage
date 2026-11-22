@@ -163,11 +163,32 @@
                 </strong>
             </div>
 
+            @{
+                bool budgetWarning = Model.RemainingBudget >= 0
+                    && Model.SpentPercent >= ValidationConstants.BudgetWarningPercent;
+            }
             <div class="v-budget-bar mb-2">
-                <div class="v-budget-bar-fill @(Model.RemainingBudget < 0 ? "v-budget-bar-over" : "")"
+                <div class="v-budget-bar-fill @(Model.RemainingBudget < 0 ? "v-budget-bar-over" : budgetWarning ? "v-budget-bar-warning" : "")"
                      style="width: @Model.SpentPercent%"></div>
             </div>
-            <div class="v-budget-bar-label">@Model.SpentPercent% of the budget used</div>
+            @if (Model.RemainingBudget < 0)
+            {
+                <div class="v-budget-bar-label text-danger">
+                    <i class="bi bi-exclamation-circle"></i>
+                    Over budget by @((-Model.RemainingBudget).ToString("0.00")) €
+                </div>
+            }
+            else if (budgetWarning)
+            {
+                <div class="v-budget-bar-label v-budget-warning-text">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    @Model.SpentPercent% of the budget used. Almost at the limit.
+                </div>
+            }
+            else
+            {
+                <div class="v-budget-bar-label">@Model.SpentPercent% of the budget used</div>
+            }
 
             <div class="d-flex justify-content-between mt-3 pt-3 border-top">
                 <span class="v-muted">Per day</span>
@@ -178,7 +199,7 @@
         <div class="v-panel mb-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 class="v-panel-title mb-0">Packing Progress</h2>
-                <span class="v-badge">
+                <span class="v-badge v-badge-teal">
                     @Model.PackingProgress.Percent%
                 </span>
             </div>

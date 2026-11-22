@@ -28,7 +28,7 @@ else
                     </span>
                     @if (review.IsHidden)
                     {
-                        <span class="badge bg-secondary">Hidden</span>
+                        <span class="review-hidden-badge"><i class="bi bi-eye-slash"></i> Hidden by a moderator</span>
                     }
                 </div>
                 <p class="review-comment">@review.Comment</p>
@@ -38,11 +38,11 @@ else
                         <a asp-controller="Reviews"
                            asp-action="Edit"
                            asp-route-id="@review.Id"
-                           class="btn btn-sm btn-outline-primary">Edit</a>
+                           class="btn btn-sm btn-outline-navy"><i class="bi bi-pencil"></i> Edit</a>
                         <a asp-controller="Reviews"
                            asp-action="Delete"
                            asp-route-id="@review.Id"
-                           class="btn btn-sm btn-outline-danger">Delete</a>
+                           class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Delete</a>
                     </div>
                 }
             </li>

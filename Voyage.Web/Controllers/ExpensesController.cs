@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Expenses;
@@ -35,30 +36,21 @@ namespace Voyage.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(ExpenseFormViewModel model)
         {
-            if (!await expenseService.IsDateWithinTripAsync(
+            var form = await expenseService.GetAddFormAsync(
                 model.TripId,
-                model.Date))
+                GetUserId());
+
+            if (form == null)
             {
-                ModelState.AddModelError(
-                    nameof(model.Date),
-                    ErrorMessages.ExpenseDateOutsideTrip);
+                return NotFound();
             }
+
+            CopyTripInfo(form, model);
+
+            await ValidateExpenseAsync(model);
 
             if (!ModelState.IsValid)
             {
-                var form = await expenseService.GetAddFormAsync(
-                    model.TripId,
-                    GetUserId());
-
-                if (form == null)
-                {
-                    return NotFound();
-                }
-
-                model.TripTitle = form.TripTitle;
-                model.TripStartDate = form.TripStartDate;
-                model.TripEndDate = form.TripEndDate;
-
                 return View(model);
             }
 
@@ -97,33 +89,24 @@ namespace Voyage.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
-            int id,
+            [FromRoute] int id,
             ExpenseFormViewModel model)
         {
-            if (!await expenseService.IsDateWithinTripAsync(
-                model.TripId,
-                model.Date))
+            var form = await expenseService.GetForEditAsync(
+                id,
+                GetUserId());
+
+            if (form == null)
             {
-                ModelState.AddModelError(
-                    nameof(model.Date),
-                    ErrorMessages.ExpenseDateOutsideTrip);
+                return NotFound();
             }
+
+            CopyTripInfo(form, model);
+
+            await ValidateExpenseAsync(model);
 
             if (!ModelState.IsValid)
             {
-                var form = await expenseService.GetForEditAsync(
-                    id,
-                    GetUserId());
-
-                if (form == null)
-                {
-                    return NotFound();
-                }
-
-                model.TripTitle = form.TripTitle;
-                model.TripStartDate = form.TripStartDate;
-                model.TripEndDate = form.TripEndDate;
-
                 return View(model);
             }
 
@@ -163,7 +146,7 @@ namespace Voyage.Web.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed([FromRoute] int id)
         {
             var tripId = await expenseService.DeleteAsync(
                 id,
@@ -180,6 +163,50 @@ namespace Voyage.Web.Controllers
                 "Details",
                 "Trips",
                 new { id = tripId });
+        }
+
+        private static void CopyTripInfo(
+            ExpenseFormViewModel source,
+            ExpenseFormViewModel target)
+        {
+            target.TripId = source.TripId;
+            target.TripTitle = source.TripTitle;
+            target.TripStartDate = source.TripStartDate;
+            target.TripEndDate = source.TripEndDate;
+        }
+
+        private async Task ValidateExpenseAsync(ExpenseFormViewModel model)
+        {
+            model.Title = TextNormalizer.SingleLine(model.Title);
+
+            if (IsFieldValid(nameof(model.Title))
+                && model.Title.Length < ValidationConstants.ExpenseTitleMinLength)
+            {
+                ModelState.AddModelError(
+                    nameof(model.Title),
+                    ErrorMessages.ExpenseTitleLength);
+            }
+
+            ValidateMoney(
+                nameof(model.Amount),
+                model.Amount,
+                ErrorMessages.ExpenseAmountDecimals);
+
+            if (IsFieldValid(nameof(model.Date))
+                && !await expenseService.IsDateWithinTripAsync(
+                    model.TripId,
+                    model.Date))
+            {
+                ModelState.AddModelError(
+                    nameof(model.Date),
+                    ErrorMessages.ExpenseDateOutsideTrip);
+            }
+        }
+
+        private bool IsFieldValid(string key)
+        {
+            return ModelState.GetFieldValidationState(key)
+                != ModelValidationState.Invalid;
         }
     }
 }

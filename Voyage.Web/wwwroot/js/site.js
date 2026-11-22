@@ -1,4 +1,32 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿document.addEventListener('submit', function (e) {
+    const form = e.target;
 
-// Write your JavaScript code.
+    if (form.dataset.submitting === 'true') {
+        e.preventDefault();
+        return;
+    }
+
+    setTimeout(function () {
+        if (e.defaultPrevented) {
+            return;
+        }
+
+        form.dataset.submitting = 'true';
+
+        form.querySelectorAll('button[type="submit"], input[type="submit"]')
+            .forEach(function (button) {
+                button.disabled = true;
+            });
+    }, 0);
+});
+
+window.addEventListener('pageshow', function () {
+    document.querySelectorAll('form[data-submitting]').forEach(function (form) {
+        delete form.dataset.submitting;
+
+        form.querySelectorAll('button[type="submit"], input[type="submit"]')
+            .forEach(function (button) {
+                button.disabled = false;
+            });
+    });
+});

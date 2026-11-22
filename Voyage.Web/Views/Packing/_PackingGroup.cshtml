@@ -11,7 +11,7 @@
         </span>
     </div>
 
-    <ul class="list-unstyled mb-0">
+    <ul class="packing-items">
         @foreach (var item in Model.Items)
         {
             var toggleLabel = item.IsPacked
@@ -22,7 +22,7 @@
                 class="packing-item @(item.IsPacked ? "is-packed" : string.Empty)"
                 data-item-id="@item.Id">
 
-                <div class="d-flex justify-content-between align-items-center gap-2 py-2 border-bottom">
+                <div class="packing-row">
                     <form asp-controller="Packing"
                           asp-action="Toggle"
                           asp-route-id="@item.Id"
@@ -30,7 +30,7 @@
                           class="packing-toggle-form flex-grow-1">
 
                         <button type="submit"
-                                class="btn btn-link text-start text-decoration-none p-0 d-flex align-items-center gap-2"
+                                class="packing-toggle"
                                 aria-label="@toggleLabel"
                                 aria-pressed="@item.IsPacked"
                                 data-item-name="@item.Name">
@@ -45,19 +45,19 @@
 
                             @if (item.Quantity > 1)
                             {
-                                <span class="v-muted small">
-                                    × @item.Quantity
-                                </span>
+                                <span class="packing-qty">× @item.Quantity</span>
                             }
                         </button>
                     </form>
 
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="packing-actions">
                         <a asp-controller="Packing"
                            asp-action="Edit"
                            asp-route-id="@item.Id"
-                           class="btn btn-sm btn-outline-secondary">
-                            Edit
+                           class="v-icon-btn"
+                           title="Edit @item.Name"
+                           aria-label="Edit @item.Name">
+                            <i class="bi bi-pencil"></i>
                         </a>
 
                         <form asp-controller="Packing"
@@ -69,8 +69,10 @@
                               onsubmit="return confirm(this.dataset.confirm);">
 
                             <button type="submit"
-                                    class="btn btn-sm btn-outline-danger">
-                                Remove
+                                    class="v-icon-btn v-icon-btn-danger"
+                                    title="Remove @item.Name"
+                                    aria-label="Remove @item.Name">
+                                <i class="bi bi-trash"></i>
                             </button>
                         </form>
                     </div>

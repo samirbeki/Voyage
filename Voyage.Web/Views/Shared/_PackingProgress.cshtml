@@ -1,6 +1,6 @@
 ﻿@model Voyage.Web.ViewModels.Packing.PackingProgressViewModel
 
-<div class="mb-4"
+<div class="v-panel packing-progress mb-4"
      data-packing-progress
      data-total="@Model.Total"
      data-packed="@Model.Packed"
@@ -18,13 +18,12 @@
         </span>
     </div>
 
-    <div class="progress"
+    <div class="progress packing-progress-bar"
          role="progressbar"
          aria-label="Packing progress"
          aria-valuenow="@Model.Percent"
          aria-valuemin="0"
-         aria-valuemax="100"
-         style="height: 10px;">
+         aria-valuemax="100">
 
         <div class="progress-bar @(Model.IsComplete ? "bg-success" : string.Empty)"
              data-progress-bar

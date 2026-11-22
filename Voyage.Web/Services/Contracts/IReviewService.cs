@@ -9,6 +9,7 @@ namespace Voyage.Web.Services.Contracts
 
         Task<RatingSummaryViewModel> GetRatingSummaryAsync(int destinationId);
 
+        Task<bool> DestinationExistsAsync(int destinationId);
         Task<bool> HasUserReviewedAsync(int destinationId, string userId);
 
         Task<bool> CreateAsync(int destinationId, ReviewFormModel model, string userId);

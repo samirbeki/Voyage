@@ -2,12 +2,14 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav align-items-lg-center">
+<ul class="navbar-nav align-items-xl-center">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-            <i class="bi bi-person-circle"></i> @User.Identity?.Name
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage account (@User.Identity?.Name)">
+            <i class="bi bi-person-circle" aria-hidden="true"></i>
+            <span class="d-xl-none d-xxl-inline">@User.Identity?.Name</span>
+            <span class="visually-hidden d-none d-xl-inline d-xxl-none">@User.Identity?.Name</span>
         </a>
     </li>
     <li class="nav-item">
@@ -22,7 +24,7 @@ else
         <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
     <li class="nav-item">
-        <a class="btn btn-outline-light btn-sm px-3 ms-lg-1" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a class="btn btn-outline-light btn-sm px-3 ms-xl-1" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
 }
 </ul>

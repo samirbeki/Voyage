@@ -46,6 +46,8 @@
         public const int PackingItemQuantityMax = 99;
         public const int PackingItemsMaxPerTrip = 200;
 
+        public const int BudgetWarningPercent = 90;
+
         public const int SearchMaxLength = 100;
     }
 }

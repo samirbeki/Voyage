@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
@@ -19,11 +20,13 @@ namespace Voyage.Web.Services
         public async Task<IEnumerable<ReviewViewModel>> GetForDestinationAsync(
             int destinationId, string? userId, bool includeHidden)
         {
-            return await dbContext.Reviews
+            var reviews = await dbContext.Reviews
                 .AsNoTracking()
                 .Where(r =>
                     r.DestinationId == destinationId &&
-                    (includeHidden || !r.IsHidden))
+                    (includeHidden ||
+                     !r.IsHidden ||
+                     (userId != null && r.AuthorId == userId)))
                 .OrderByDescending(r => r.CreatedOn)
                 .Select(r => new ReviewViewModel
                 {
@@ -37,6 +40,8 @@ namespace Voyage.Web.Services
                     IsHidden = r.IsHidden
                 })
                 .ToListAsync();
+
+            return HidePublicEmails(reviews);
         }
 
         public async Task<RatingSummaryViewModel> GetRatingSummaryAsync(int destinationId)
@@ -53,6 +58,12 @@ namespace Voyage.Web.Services
                     ? 0
                     : Math.Round(await ratings.AverageAsync(r => r.Rating), 1)
             };
+        }
+
+        public async Task<bool> DestinationExistsAsync(int destinationId)
+        {
+            return destinationId > 0 &&
+                   await dbContext.Destinations.AnyAsync(d => d.Id == destinationId);
         }
 
         public async Task<bool> HasUserReviewedAsync(int destinationId, string userId)
@@ -79,13 +90,24 @@ namespace Voyage.Web.Services
             {
                 DestinationId = destinationId,
                 AuthorId = userId,
-                Rating = model.Rating,
+                Rating = model.Rating!.Value,
                 Comment = model.Comment.Trim(),
                 CreatedOn = DateTime.UtcNow
             };
 
             await dbContext.Reviews.AddAsync(review);
-            await dbContext.SaveChangesAsync();
+
+            try
+            {
+                await dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+                when (ex.InnerException is SqlException { Number: 2627 or 2601 })
+            {
+                dbContext.Entry(review).State = EntityState.Detached;
+
+                return false;
+            }
 
             return true;
         }
@@ -118,7 +140,7 @@ namespace Voyage.Web.Services
                 return null;
             }
 
-            review.Rating = model.Rating;
+            review.Rating = model.Rating!.Value;
             review.Comment = model.Comment.Trim();
             review.ModifiedOn = DateTime.UtcNow;
 
@@ -234,6 +256,24 @@ namespace Voyage.Web.Services
             await dbContext.SaveChangesAsync();
 
             return true;
+        }
+
+        private static IEnumerable<ReviewViewModel> HidePublicEmails(
+            IEnumerable<ReviewViewModel> reviews)
+        {
+            var list = reviews.ToList();
+
+            foreach (var review in list)
+            {
+                int atIndex = review.AuthorName.IndexOf('@');
+
+                if (atIndex > 0)
+                {
+                    review.AuthorName = review.AuthorName[..atIndex];
+                }
+            }
+
+            return list;
         }
     }
 }

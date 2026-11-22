@@ -5,11 +5,12 @@ namespace Voyage.Web.ViewModels.Reviews
 {
     public class ReviewFormModel
     {
+        [Required(ErrorMessage = ErrorMessages.ReviewRatingRequired)]
         [Range(
             ValidationConstants.ReviewRatingMin,
             ValidationConstants.ReviewRatingMax,
             ErrorMessage = ErrorMessages.ReviewRatingRange)]
-        public int Rating { get; set; } = ValidationConstants.ReviewRatingMax;
+        public int? Rating { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(

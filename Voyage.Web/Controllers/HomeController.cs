@@ -56,6 +56,13 @@ namespace Voyage.Web.Controllers
                 return View("NotFound");
             }
 
+            if (statusCode >= 400 && statusCode < 500)
+            {
+                ViewData["StatusCode"] = statusCode;
+
+                return View("ClientError");
+            }
+
             return View("ServerError");
         }
     }

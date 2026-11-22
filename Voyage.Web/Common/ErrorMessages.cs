@@ -29,6 +29,15 @@
         public const string DestinationExists =
             "A destination with this name already exists in this country.";
 
+        public const string DecimalFormat =
+            "Use a dot for decimals, e.g. 12.50.";
+
+        public const string TripBudgetRange =
+            "Budget must be between 0.01 and 1000000.";
+
+        public const string TripBudgetDecimals =
+            "Budget can have at most 2 decimal places.";
+
         public const string BudgetRange =
             "{0} must be between {1} and {2}.";
 
@@ -65,11 +74,25 @@
         public const string ExpenseDateOutsideTrip =
             "The date must be between the start and end date of the trip.";
 
+        public const string ExpenseAmountDecimals =
+            "Amount can have at most 2 decimal places.";
+
+        public const string ExpenseAmountFormat = DecimalFormat;
+
+        public const string TripDatesExcludeExpenses =
+            "Some expenses fall outside these dates. Edit or delete them first.";
+
         public const string ReviewRatingRange =
             "Rating must be between {1} and {2}.";
 
         public const string ReviewCommentLength =
             "Comment must be between {2} and {1} characters.";
+
+        public const string ReviewNoLongerExists =
+            "This review no longer exists. It may have been deleted already.";
+
+        public const string ReviewRatingRequired =
+            "Please choose a rating from 1 to 5 stars.";
 
         public const string ReviewAlreadyExists =
             "You have already reviewed this destination.";
