@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Voyage.Common.Constants;
-using Voyage.Web.Data;
+using Voyage.Data;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Home;
 

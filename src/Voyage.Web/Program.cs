@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Voyage.Common.Messages;
-using Voyage.Web.Data;
+using Voyage.Data;
+using Voyage.Data.Identity;
 using Voyage.Web.Infrastructure;
-using Voyage.Web.Infrastructure.Identity;
 using Voyage.Web.Infrastructure.ModelBinding;
 using Voyage.Web.Services;
 using Voyage.Web.Services.Contracts;
@@ -17,7 +17,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(
+        connectionString,
+        sql => sql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

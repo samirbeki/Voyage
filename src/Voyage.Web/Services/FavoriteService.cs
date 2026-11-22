@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Voyage.Common.Constants;
 using Voyage.Common.Constants.Validation;
+using Voyage.Data;
+using Voyage.Data.Extensions;
 using Voyage.Data.Models;
 using Voyage.Web.Common;
-using Voyage.Web.Data;
-using Voyage.Web.Extensions;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Favorites;
 
