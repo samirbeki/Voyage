@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Voyage.Web.Common;
+using Voyage.Common.Constants;
 using Voyage.Web.Data;
 
 namespace Voyage.Web.Areas.Identity.Pages.Account;

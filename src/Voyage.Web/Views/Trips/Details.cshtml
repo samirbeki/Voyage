@@ -165,7 +165,7 @@
 
             @{
                 bool budgetWarning = Model.RemainingBudget >= 0
-                    && Model.SpentPercent >= ValidationConstants.BudgetWarningPercent;
+                    && Model.SpentPercent >= TripValidationConstants.BudgetWarningPercent;
             }
             <div class="v-budget-bar mb-2">
                 <div class="v-budget-bar-fill @(Model.RemainingBudget < 0 ? "v-budget-bar-over" : budgetWarning ? "v-budget-bar-warning" : "")"

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Voyage.Web.Common
+namespace Voyage.Common.Utilities
 {
     public static class TextNormalizer
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Voyage.Web.Common;
+using Voyage.Common.Constants.Validation;
 
 namespace Voyage.Web.Data.Entities
 {
@@ -10,18 +10,18 @@ namespace Voyage.Web.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(ValidationConstants.DestinationNameMaxLength)]
+        [MaxLength(DestinationValidationConstants.NameMaxLength)]
         public string Name { get; set; } = null!;
 
         [Required]
-        [MaxLength(ValidationConstants.DestinationCountryMaxLength)]
+        [MaxLength(DestinationValidationConstants.CountryMaxLength)]
         public string Country { get; set; } = null!;
 
         [Required]
-        [MaxLength(ValidationConstants.DestinationDescriptionMaxLength)]
+        [MaxLength(DestinationValidationConstants.DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
-        [MaxLength(ValidationConstants.ImageUrlMaxLength)]
+        [MaxLength(SharedValidationConstants.ImageUrlMaxLength)]
         public string? ImageUrl { get; set; }
 
         public bool IsDeleted { get; set; }

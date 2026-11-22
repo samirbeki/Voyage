@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
 using Voyage.Web.Common;
 
 namespace Voyage.Web.ViewModels.Favorites
@@ -6,7 +8,7 @@ namespace Voyage.Web.ViewModels.Favorites
     public class FavoritesQueryModel
     {
         [StringLength(
-            ValidationConstants.SearchMaxLength,
+            SharedValidationConstants.SearchMaxLength,
             ErrorMessage = ErrorMessages.MaxLengthField)]
         public string? Search { get; set; }
 

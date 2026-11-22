@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Voyage.Web.Common;
+using Voyage.Common.Constants;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
 using Voyage.Web.Services.Contracts;
@@ -194,14 +194,14 @@ namespace Voyage.Web.Services
             int totalPages = Math.Max(
                 1,
                 (int)Math.Ceiling(
-                    totalCount / (double)ValidationConstants.ModerationReviewsPageSize));
+                    totalCount / (double)PagingConstants.ModerationReviewsPerPage));
 
             page = Math.Clamp(page, 1, totalPages);
 
             var reviews = await reviewsQuery
                 .OrderByDescending(r => r.CreatedOn)
-                .Skip((page - 1) * ValidationConstants.ModerationReviewsPageSize)
-                .Take(ValidationConstants.ModerationReviewsPageSize)
+                .Skip((page - 1) * PagingConstants.ModerationReviewsPerPage)
+                .Take(PagingConstants.ModerationReviewsPerPage)
                 .Select(r => new ModerationReviewViewModel
                 {
                     Id = r.Id,

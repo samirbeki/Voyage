@@ -53,8 +53,8 @@
                 <input asp-for="Quantity"
                        class="form-control"
                        type="number"
-                       min="@ValidationConstants.PackingItemQuantityMin"
-                       max="@ValidationConstants.PackingItemQuantityMax" />
+                       min="@PackingItemValidationConstants.QuantityMin"
+                       max="@PackingItemValidationConstants.QuantityMax" />
                 <span asp-validation-for="Quantity"
                       class="text-danger"></span>
             </div>

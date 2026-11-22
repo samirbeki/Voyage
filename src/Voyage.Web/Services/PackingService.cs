@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Voyage.Common.Constants.Validation;
 using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
@@ -80,7 +81,7 @@ namespace Voyage.Web.Services
                     Total = items.Count,
                     Packed = packedCount
                 },
-                MaxItems = ValidationConstants.PackingItemsMaxPerTrip
+                MaxItems = PackingItemValidationConstants.MaxPerTrip
             };
         }
 
@@ -130,7 +131,7 @@ namespace Voyage.Web.Services
             var itemsCount = await dbContext.PackingItems
                 .CountAsync(p => p.TripId == tripId);
 
-            if (itemsCount >= ValidationConstants.PackingItemsMaxPerTrip)
+            if (itemsCount >= PackingItemValidationConstants.MaxPerTrip)
             {
                 return PackingResult.LimitReached;
             }
@@ -305,7 +306,7 @@ namespace Voyage.Web.Services
                     .ToListAsync())
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-            int capacity = ValidationConstants.PackingItemsMaxPerTrip
+            int capacity = PackingItemValidationConstants.MaxPerTrip
                 - existingNames.Count;
 
             if (capacity <= 0)

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Voyage.Web.Common;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
 
 namespace Voyage.Web.ViewModels.Destinations
 {
@@ -7,22 +8,22 @@ namespace Voyage.Web.ViewModels.Destinations
     {
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
-            ValidationConstants.DestinationNameMaxLength,
-            MinimumLength = ValidationConstants.DestinationNameMinLength,
+            DestinationValidationConstants.NameMaxLength,
+            MinimumLength = DestinationValidationConstants.NameMinLength,
             ErrorMessage = ErrorMessages.StringLengthRange)]
         public string Name { get; set; } = null!;
 
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
-            ValidationConstants.DestinationCountryMaxLength,
-            MinimumLength = ValidationConstants.DestinationCountryMinLength,
+            DestinationValidationConstants.CountryMaxLength,
+            MinimumLength = DestinationValidationConstants.CountryMinLength,
             ErrorMessage = ErrorMessages.StringLengthRange)]
         public string Country { get; set; } = null!;
 
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
-            ValidationConstants.DestinationDescriptionMaxLength,
-            MinimumLength = ValidationConstants.DestinationDescriptionMinLength,
+            DestinationValidationConstants.DescriptionMaxLength,
+            MinimumLength = DestinationValidationConstants.DescriptionMinLength,
             ErrorMessage = ErrorMessages.StringLengthRange)]
         public string Description { get; set; } = null!;
 
@@ -30,7 +31,7 @@ namespace Voyage.Web.ViewModels.Destinations
             @"^(https?://.+|/images/.+)$",
             ErrorMessage = ErrorMessages.InvalidImageUrl)]
         [StringLength(
-            ValidationConstants.ImageUrlMaxLength,
+            SharedValidationConstants.ImageUrlMaxLength,
             ErrorMessage = ErrorMessages.MaxLengthField)]
         [Display(Name = "Image URL")]
         public string? ImageUrl { get; set; }

@@ -20,4 +20,8 @@
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Voyage.Common\Voyage.Common.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Voyage.Web.Common;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
 
 namespace Voyage.Web.ViewModels.Categories
 {
@@ -7,13 +8,13 @@ namespace Voyage.Web.ViewModels.Categories
     {
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
-            ValidationConstants.CategoryNameMaxLength,
-            MinimumLength = ValidationConstants.CategoryNameMinLength,
+            CategoryValidationConstants.NameMaxLength,
+            MinimumLength = CategoryValidationConstants.NameMinLength,
             ErrorMessage = ErrorMessages.StringLengthRange)]
         public string Name { get; set; } = null!;
 
         [StringLength(
-            ValidationConstants.CategoryDescriptionMaxLength,
+            CategoryValidationConstants.DescriptionMaxLength,
             ErrorMessage = ErrorMessages.MaxLengthField)]
         public string? Description { get; set; }
     }

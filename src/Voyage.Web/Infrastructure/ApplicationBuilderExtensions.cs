@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
-using Voyage.Web.Common;
+using Voyage.Common.Constants;
 
 namespace Voyage.Web.Infrastructure
 {

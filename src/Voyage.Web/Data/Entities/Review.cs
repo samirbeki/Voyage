@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
-using Voyage.Web.Common;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
 
 namespace Voyage.Web.Data.Entities
 {
@@ -10,13 +11,13 @@ namespace Voyage.Web.Data.Entities
         public int Id { get; set; }
 
         [Range(
-            ValidationConstants.ReviewRatingMin,
-            ValidationConstants.ReviewRatingMax,
+            ReviewValidationConstants.RatingMin,
+            ReviewValidationConstants.RatingMax,
             ErrorMessage = ErrorMessages.ReviewRatingRange)]
         public int Rating { get; set; }
 
         [Required]
-        [MaxLength(ValidationConstants.ReviewCommentMaxLength)]
+        [MaxLength(ReviewValidationConstants.CommentMaxLength)]
         public string Comment { get; set; } = null!;
 
         public DateTime CreatedOn { get; set; }

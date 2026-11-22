@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Voyage.Common.Constants;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
 using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Packing;
@@ -92,7 +95,7 @@ namespace Voyage.Web.Controllers
                         string.Empty,
                         string.Format(
                             ErrorMessages.PackingItemsLimitReached,
-                            ValidationConstants.PackingItemsMaxPerTrip));
+                            PackingItemValidationConstants.MaxPerTrip));
                     break;
             }
 
@@ -254,7 +257,7 @@ namespace Voyage.Web.Controllers
                     TempData[TempDataKeys.ErrorMessage] =
                         string.Format(
                             ErrorMessages.PackingItemsLimitReached,
-                            ValidationConstants.PackingItemsMaxPerTrip);
+                            PackingItemValidationConstants.MaxPerTrip);
                     break;
 
                 case PackingResult.Duplicate:
@@ -273,7 +276,7 @@ namespace Voyage.Web.Controllers
                             ErrorMessages.EssentialsPartiallyAdded,
                             result.Affected,
                             result.NotAddedDueToLimit,
-                            ValidationConstants.PackingItemsMaxPerTrip);
+                            PackingItemValidationConstants.MaxPerTrip);
                     break;
 
                 case PackingResult.Success:

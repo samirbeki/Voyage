@@ -1,6 +1,6 @@
 ﻿@model double
 @{
-    int max = ValidationConstants.ReviewRatingMax;
+    int max = ReviewValidationConstants.RatingMax;
     int filled = (int)Math.Round(Model, MidpointRounding.AwayFromZero);
 }
 <span class="rating-stars" title="@Model.ToString("0.0") out of @max"

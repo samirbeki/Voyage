@@ -15,8 +15,8 @@
         <label asp-for="Rating" class="form-label">Rating</label>
 
         <div class="review-stars" role="radiogroup" aria-label="Choose a rating">
-            @for (int rating = ValidationConstants.ReviewRatingMin;
-                  rating <= ValidationConstants.ReviewRatingMax;
+            @for (int rating = ReviewValidationConstants.RatingMin;
+                  rating <= ReviewValidationConstants.RatingMax;
                   rating++)
             {
                 <input type="radio"
@@ -28,8 +28,8 @@
 
                 <label for="review-rating-@rating"
                        class="review-star-label"
-                       title="@rating / @ValidationConstants.ReviewRatingMax"
-                       aria-label="@rating out of @ValidationConstants.ReviewRatingMax">
+                       title="@rating / @ReviewValidationConstants.RatingMax"
+                       aria-label="@rating out of @ReviewValidationConstants.RatingMax">
                     ★
                 </label>
             }

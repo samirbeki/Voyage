@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
 using Voyage.Web.Common;
 
 namespace Voyage.Web.ViewModels.Packing
@@ -7,14 +9,14 @@ namespace Voyage.Web.ViewModels.Packing
     {
         [Required(ErrorMessage = ErrorMessages.PackingItemNameRequired)]
         [StringLength(
-            ValidationConstants.PackingItemNameMaxLength,
-            MinimumLength = ValidationConstants.PackingItemNameMinLength,
+            PackingItemValidationConstants.NameMaxLength,
+            MinimumLength = PackingItemValidationConstants.NameMinLength,
             ErrorMessage = ErrorMessages.PackingItemNameLength)]
         public string Name { get; set; } = null!;
 
         [Range(
-            ValidationConstants.PackingItemQuantityMin,
-            ValidationConstants.PackingItemQuantityMax,
+            PackingItemValidationConstants.QuantityMin,
+            PackingItemValidationConstants.QuantityMax,
             ErrorMessage = ErrorMessages.PackingItemQuantityRange)]
         public int Quantity { get; set; } = 1;
 

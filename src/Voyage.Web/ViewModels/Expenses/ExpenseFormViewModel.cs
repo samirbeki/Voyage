@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
 using Voyage.Web.Common;
 
 namespace Voyage.Web.ViewModels.Expenses
@@ -7,16 +9,16 @@ namespace Voyage.Web.ViewModels.Expenses
     {
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
-            ValidationConstants.ExpenseTitleMaxLength,
-            MinimumLength = ValidationConstants.ExpenseTitleMinLength,
+            ExpenseValidationConstants.TitleMaxLength,
+            MinimumLength = ExpenseValidationConstants.TitleMinLength,
             ErrorMessage = ErrorMessages.ExpenseTitleLength)]
         public string Title { get; set; } = null!;
 
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [Range(
             typeof(decimal),
-            ValidationConstants.ExpenseAmountMin,
-            ValidationConstants.ExpenseAmountMax,
+            ExpenseValidationConstants.AmountMinValue,
+            ExpenseValidationConstants.AmountMaxValue,
             ErrorMessage = ErrorMessages.ExpenseAmountRange)]
         [Display(Name = "Amount")]
         public decimal? Amount { get; set; }

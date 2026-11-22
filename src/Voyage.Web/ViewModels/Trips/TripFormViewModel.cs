@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Voyage.Web.Common;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
 
 namespace Voyage.Web.ViewModels.Trips
 {
@@ -7,13 +8,13 @@ namespace Voyage.Web.ViewModels.Trips
     {
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
-            ValidationConstants.TripTitleMaxLength,
-            MinimumLength = ValidationConstants.TripTitleMinLength,
+            TripValidationConstants.TitleMaxLength,
+            MinimumLength = TripValidationConstants.TitleMinLength,
             ErrorMessage = ErrorMessages.StringLengthRange)]
         public string Title { get; set; } = null!;
 
         [StringLength(
-            ValidationConstants.TripDescriptionMaxLength,
+            TripValidationConstants.DescriptionMaxLength,
             ErrorMessage = ErrorMessages.MaxLengthField)]
         public string? Description { get; set; }
 
@@ -30,8 +31,8 @@ namespace Voyage.Web.ViewModels.Trips
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [Range(
             typeof(decimal),
-            ValidationConstants.TripBudgetMinValue,
-            ValidationConstants.TripBudgetMaxValue,
+            TripValidationConstants.BudgetMinValue,
+            TripValidationConstants.BudgetMaxValue,
             ErrorMessage = ErrorMessages.BudgetRange)]
         public decimal? Budget { get; set; }
 
@@ -39,7 +40,7 @@ namespace Voyage.Web.ViewModels.Trips
             @"^(https?://.+|/images/.+)$",
             ErrorMessage = ErrorMessages.InvalidImageUrl)]
         [StringLength(
-            ValidationConstants.ImageUrlMaxLength,
+            SharedValidationConstants.ImageUrlMaxLength,
             ErrorMessage = ErrorMessages.MaxLengthField)]
         [Display(Name = "Cover image URL")]
         public string? CoverImageUrl { get; set; }
@@ -60,7 +61,7 @@ namespace Voyage.Web.ViewModels.Trips
                     new[] { nameof(EndDate) });
             }
 
-            if ((EndDate - StartDate).TotalDays > ValidationConstants.TripMaxDays)
+            if ((EndDate - StartDate).TotalDays > TripValidationConstants.MaxDays)
             {
                 yield return new ValidationResult(
                     ErrorMessages.TripTooLong,

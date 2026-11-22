@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Voyage.Web.Common;
+using Voyage.Common.Messages;
 
 namespace Voyage.Web.Controllers
 {

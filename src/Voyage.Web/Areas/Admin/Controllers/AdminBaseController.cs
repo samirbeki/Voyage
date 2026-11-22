@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Voyage.Web.Common;
+using Voyage.Common.Constants;
 
 namespace Voyage.Web.Areas.Admin.Controllers
 {

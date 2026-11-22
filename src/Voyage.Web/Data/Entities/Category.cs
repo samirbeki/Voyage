@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Voyage.Web.Common;
+using Voyage.Common.Constants.Validation;
 
 namespace Voyage.Web.Data.Entities
 {
@@ -9,10 +9,10 @@ namespace Voyage.Web.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(ValidationConstants.CategoryNameMaxLength)]
+        [MaxLength(CategoryValidationConstants.NameMaxLength)]
         public string Name { get; set; } = null!;
 
-        [MaxLength(ValidationConstants.CategoryDescriptionMaxLength)]
+        [MaxLength(CategoryValidationConstants.DescriptionMaxLength)]
         public string? Description { get; set; }
 
         public ICollection<Destination> Destinations { get; set; }

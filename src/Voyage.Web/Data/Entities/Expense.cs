@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Voyage.Common.Constants.Validation;
 using Voyage.Web.Common;
 
 namespace Voyage.Web.Data.Entities
@@ -11,7 +12,7 @@ namespace Voyage.Web.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(ValidationConstants.ExpenseTitleMaxLength)]
+        [MaxLength(ExpenseValidationConstants.TitleMaxLength)]
         public string Title { get; set; } = null!;
 
         [Precision(18, 2)]

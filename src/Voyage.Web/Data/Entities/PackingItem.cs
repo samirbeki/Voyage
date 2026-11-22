@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Voyage.Common.Constants.Validation;
 using Voyage.Web.Common;
 
 namespace Voyage.Web.Data.Entities
@@ -10,12 +11,12 @@ namespace Voyage.Web.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(ValidationConstants.PackingItemNameMaxLength)]
+        [MaxLength(PackingItemValidationConstants.NameMaxLength)]
         public string Name { get; set; } = null!;
 
         [Range(
-            ValidationConstants.PackingItemQuantityMin,
-            ValidationConstants.PackingItemQuantityMax)]
+            PackingItemValidationConstants.QuantityMin,
+            PackingItemValidationConstants.QuantityMax)]
         public int Quantity { get; set; } = 1;
 
         public PackingCategory Category { get; set; }

@@ -18,8 +18,8 @@
         <div class="mb-3">
             <label class="form-label" asp-for="Rating"></label>
             <select class="form-select" asp-for="Rating">
-                @for (int i = ValidationConstants.ReviewRatingMax;
-                    i >= ValidationConstants.ReviewRatingMin; i--)
+                @for (int i = ReviewValidationConstants.RatingMax;
+                    i >= ReviewValidationConstants.RatingMin; i--)
                 {
                     <option value="@i">@i ★</option>
                 }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Voyage.Common.Constants;
+using Voyage.Common.Constants.Validation;
 using Voyage.Web.Common;
 using Voyage.Web.Data;
 using Voyage.Web.Data.Entities;
@@ -37,7 +39,7 @@ namespace Voyage.Web.Services
             }
 
             if (await GetUserFavoritesCountAsync(userId) >=
-                ValidationConstants.FavoritesMaxPerUser)
+                FavoriteValidationConstants.MaxPerUser)
             {
                 return FavoriteResult.LimitReached;
             }
@@ -185,13 +187,13 @@ namespace Voyage.Web.Services
             var totalPages = Math.Max(
                 1,
                 (int)Math.Ceiling(
-                    resultsCount / (double)ValidationConstants.FavoritesPageSize));
+                    resultsCount / (double)PagingConstants.FavoritesPerPage));
 
             var currentPage = Math.Clamp(query.Page, 1, totalPages);
 
             var destinations = await favorites
-                .Skip((currentPage - 1) * ValidationConstants.FavoritesPageSize)
-                .Take(ValidationConstants.FavoritesPageSize)
+                .Skip((currentPage - 1) * PagingConstants.FavoritesPerPage)
+                .Take(PagingConstants.FavoritesPerPage)
                 .Select(f => f.Destination)
                 .Select(DestinationProjections.ToCard)
                 .ToListAsync();
@@ -214,7 +216,7 @@ namespace Voyage.Web.Services
                 TotalPages = totalPages,
                 ResultsCount = resultsCount,
                 TotalSaved = totalSaved,
-                MaxFavorites = ValidationConstants.FavoritesMaxPerUser
+                MaxFavorites = FavoriteValidationConstants.MaxPerUser
             };
         }
     }

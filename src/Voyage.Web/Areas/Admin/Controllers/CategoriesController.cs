@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Voyage.Web.Common;
+using Voyage.Common.Constants;
+using Voyage.Common.Messages;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Categories;
 

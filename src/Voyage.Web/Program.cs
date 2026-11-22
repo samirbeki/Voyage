@@ -3,7 +3,7 @@ using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
-using Voyage.Web.Common;
+using Voyage.Common.Messages;
 using Voyage.Web.Data;
 using Voyage.Web.Infrastructure;
 using Voyage.Web.Infrastructure.Identity;

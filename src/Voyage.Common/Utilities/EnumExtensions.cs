@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace Voyage.Web.Extensions
+namespace Voyage.Common.Utilities
 {
     public static class EnumExtensions
     {

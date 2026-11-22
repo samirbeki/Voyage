@@ -1,4 +1,5 @@
-﻿using Voyage.Web.Common;
+﻿using Voyage.Common.Constants.Validation;
+using Voyage.Web.Common;
 
 namespace Voyage.Web.Services
 {
@@ -14,13 +15,13 @@ namespace Voyage.Web.Services
         {
             int days = Math.Clamp(
                 tripDays,
-                ValidationConstants.PackingItemQuantityMin,
-                ValidationConstants.PackingItemQuantityMax);
+                PackingItemValidationConstants.QuantityMin,
+                PackingItemValidationConstants.QuantityMax);
 
             int halfDays = Math.Clamp(
                 (days + 1) / 2,
-                ValidationConstants.PackingItemQuantityMin,
-                ValidationConstants.PackingItemQuantityMax);
+                PackingItemValidationConstants.QuantityMin,
+                PackingItemValidationConstants.QuantityMax);
 
             return new List<PackingTemplateItem>
             {

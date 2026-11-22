@@ -1,4 +1,4 @@
-﻿namespace Voyage.Web.Common
+﻿namespace Voyage.Common.Messages
 {
     public static class SuccessMessages
     {

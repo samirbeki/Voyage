@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Voyage.Web.Common;
+using Voyage.Common.Constants.Validation;
 using Voyage.Web.Data.Entities;
 
 namespace Voyage.Web.Data.Configurations
@@ -30,7 +30,7 @@ namespace Voyage.Web.Data.Configurations
             {
                 t.HasCheckConstraint(
                     "CK_PackingItem_Quantity",
-                    $"[Quantity] BETWEEN {ValidationConstants.PackingItemQuantityMin} AND {ValidationConstants.PackingItemQuantityMax}");
+                    $"[Quantity] BETWEEN {PackingItemValidationConstants.QuantityMin} AND {PackingItemValidationConstants.QuantityMax}");
 
                 t.HasCheckConstraint(
                     "CK_PackingItem_Category",

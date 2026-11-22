@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Voyage.Web.Common;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
 
 namespace Voyage.Web.ViewModels.Reviews
 {
@@ -7,15 +8,15 @@ namespace Voyage.Web.ViewModels.Reviews
     {
         [Required(ErrorMessage = ErrorMessages.ReviewRatingRequired)]
         [Range(
-            ValidationConstants.ReviewRatingMin,
-            ValidationConstants.ReviewRatingMax,
+            ReviewValidationConstants.RatingMin,
+            ReviewValidationConstants.RatingMax,
             ErrorMessage = ErrorMessages.ReviewRatingRange)]
         public int? Rating { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
-            ValidationConstants.ReviewCommentMaxLength,
-            MinimumLength = ValidationConstants.ReviewCommentMinLength,
+            ReviewValidationConstants.CommentMaxLength,
+            MinimumLength = ReviewValidationConstants.CommentMinLength,
             ErrorMessage = ErrorMessages.ReviewCommentLength)]
         public string Comment { get; set; } = null!;
     }

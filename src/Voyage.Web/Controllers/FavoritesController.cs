@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Voyage.Common.Constants;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
 using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Favorites;
@@ -102,7 +105,7 @@ namespace Voyage.Web.Controllers
                 FavoriteResult.LimitReached =>
                     (string.Format(
                         ErrorMessages.FavoritesLimitReached,
-                        ValidationConstants.FavoritesMaxPerUser), true),
+                        FavoriteValidationConstants.MaxPerUser), true),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(result))
             };

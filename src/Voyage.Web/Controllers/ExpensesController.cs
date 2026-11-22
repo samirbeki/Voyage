@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Voyage.Web.Common;
+using Voyage.Common.Constants;
+using Voyage.Common.Constants.Validation;
+using Voyage.Common.Messages;
+using Voyage.Common.Utilities;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Expenses;
 
@@ -180,7 +183,7 @@ namespace Voyage.Web.Controllers
             model.Title = TextNormalizer.SingleLine(model.Title);
 
             if (IsFieldValid(nameof(model.Title))
-                && model.Title.Length < ValidationConstants.ExpenseTitleMinLength)
+                && model.Title.Length < ExpenseValidationConstants.TitleMinLength)
             {
                 ModelState.AddModelError(
                     nameof(model.Title),

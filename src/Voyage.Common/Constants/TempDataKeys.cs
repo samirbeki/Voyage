@@ -1,4 +1,4 @@
-﻿namespace Voyage.Web.Common
+﻿namespace Voyage.Common.Constants
 {
     public static class TempDataKeys
     {
