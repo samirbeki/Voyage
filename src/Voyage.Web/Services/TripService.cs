@@ -2,8 +2,8 @@
 using Voyage.Common.Utilities;
 using Voyage.Data;
 using Voyage.Data.Models;
-using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
+using Voyage.Web.ViewModels.Enums;
 using Voyage.Web.ViewModels.Expenses;
 using Voyage.Web.ViewModels.Trips;
 

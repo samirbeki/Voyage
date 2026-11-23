@@ -1,5 +1,5 @@
-﻿using Voyage.Web.Common;
-using Voyage.Web.ViewModels.Destinations;
+﻿using Voyage.Web.ViewModels.Destinations;
+using Voyage.Web.ViewModels.Enums;
 
 namespace Voyage.Web.Services.Contracts
 {

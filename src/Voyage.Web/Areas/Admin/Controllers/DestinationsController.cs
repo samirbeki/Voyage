@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Voyage.Common.Constants;
 using Voyage.Common.Messages;
-using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
 using Voyage.Web.ViewModels.Destinations;
+using Voyage.Web.ViewModels.Enums;
 
 namespace Voyage.Web.Areas.Admin.Controllers
 {

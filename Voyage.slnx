@@ -3,6 +3,7 @@
     <Project Path="src/Voyage.Common/Voyage.Common.csproj" />
     <Project Path="src/Voyage.Data/Voyage.Data.csproj" />
     <Project Path="src/Voyage.Data.Models/Voyage.Data.Models.csproj" />
+    <Project Path="src/Voyage.Web.ViewModels/Voyage.Web.ViewModels.csproj" />
     <Project Path="src/Voyage.Web/Voyage.Web.csproj" />
   </Folder>
   <Folder Name="/tests/" />

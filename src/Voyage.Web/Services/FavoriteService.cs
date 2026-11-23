@@ -7,6 +7,7 @@ using Voyage.Data.Extensions;
 using Voyage.Data.Models;
 using Voyage.Web.Common;
 using Voyage.Web.Services.Contracts;
+using Voyage.Web.ViewModels.Enums;
 using Voyage.Web.ViewModels.Favorites;
 
 namespace Voyage.Web.Services
