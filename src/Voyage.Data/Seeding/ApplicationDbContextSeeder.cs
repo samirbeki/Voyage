@@ -14,6 +14,8 @@
                 new ModeratorSeeder(),
                 new DemoUsersSeeder(),
                 new TripSeeder(),
+                new ReviewSeeder(),
+                new FavoriteSeeder(),
                 new DefaultUserRoleSeeder()
             };
 
