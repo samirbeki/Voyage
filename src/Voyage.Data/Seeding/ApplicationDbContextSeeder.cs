@@ -12,6 +12,8 @@
                 new RolesSeeder(),
                 new AdministratorSeeder(),
                 new ModeratorSeeder(),
+                new DemoUsersSeeder(),
+                new TripSeeder(),
                 new DefaultUserRoleSeeder()
             };
 
