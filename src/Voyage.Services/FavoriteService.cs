@@ -5,12 +5,13 @@ using Voyage.Common.Constants.Validation;
 using Voyage.Data;
 using Voyage.Data.Extensions;
 using Voyage.Data.Models;
-using Voyage.Web.Common;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
+using Voyage.Services.Projections;
+using Voyage.Services.Results;
 using Voyage.Web.ViewModels.Enums;
 using Voyage.Web.ViewModels.Favorites;
 
-namespace Voyage.Web.Services
+namespace Voyage.Services
 {
     public class FavoriteService : IFavoriteService
     {

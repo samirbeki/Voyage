@@ -6,11 +6,12 @@ using Voyage.Data;
 using Voyage.Data.Extensions;
 using Voyage.Data.Models;
 using Voyage.Data.Models.Enums;
-using Voyage.Web.Common;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
+using Voyage.Services.Results;
+using Voyage.Services.Templates;
 using Voyage.Web.ViewModels.Packing;
 
-namespace Voyage.Web.Services
+namespace Voyage.Services
 {
     public class PackingService : IPackingService
     {

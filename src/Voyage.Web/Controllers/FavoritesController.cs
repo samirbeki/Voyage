@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.RateLimiting;
 using Voyage.Common.Constants;
 using Voyage.Common.Constants.Validation;
 using Voyage.Common.Messages;
-using Voyage.Web.Common;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
+using Voyage.Services.Results;
 using Voyage.Web.ViewModels.Favorites;
 
 namespace Voyage.Web.Controllers

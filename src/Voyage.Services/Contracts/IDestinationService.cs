@@ -1,7 +1,7 @@
 ﻿using Voyage.Web.ViewModels.Destinations;
 using Voyage.Web.ViewModels.Enums;
 
-namespace Voyage.Web.Services.Contracts
+namespace Voyage.Services.Contracts
 {
     public interface IDestinationService
     {

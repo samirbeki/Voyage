@@ -1,6 +1,6 @@
 ﻿using Voyage.Web.ViewModels.Home;
 
-namespace Voyage.Web.Services.Contracts
+namespace Voyage.Services.Contracts
 {
     public interface IHomeService
     {

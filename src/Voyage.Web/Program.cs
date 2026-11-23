@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Voyage.Common.Messages;
 using Voyage.Data;
 using Voyage.Data.Identity;
+using Voyage.Services;
+using Voyage.Services.Contracts;
 using Voyage.Web.Infrastructure;
 using Voyage.Web.Infrastructure.ModelBinding;
-using Voyage.Web.Services;
-using Voyage.Web.Services.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,6 @@
 ﻿using Voyage.Web.ViewModels.Reviews;
 
-namespace Voyage.Web.Services.Contracts
+namespace Voyage.Services.Contracts
 {
     public interface IReviewService
     {

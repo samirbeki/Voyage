@@ -5,7 +5,7 @@ using Voyage.Common.Constants;
 using Voyage.Common.Constants.Validation;
 using Voyage.Common.Messages;
 using Voyage.Common.Utilities;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
 using Voyage.Web.ViewModels.Expenses;
 
 namespace Voyage.Web.Controllers

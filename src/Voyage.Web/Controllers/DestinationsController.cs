@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Voyage.Common.Constants;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
 using Voyage.Web.ViewModels.Enums;
 
 namespace Voyage.Web.Controllers

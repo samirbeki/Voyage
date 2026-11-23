@@ -2,10 +2,10 @@
 using Voyage.Common.Utilities;
 using Voyage.Data;
 using Voyage.Data.Models;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
 using Voyage.Web.ViewModels.Expenses;
 
-namespace Voyage.Web.Services
+namespace Voyage.Services
 {
     public class ExpenseService : IExpenseService
     {

@@ -1,6 +1,4 @@
-﻿using Voyage.Web.Common;
-
-namespace Voyage.Web.ViewModels.Packing
+﻿namespace Voyage.Services.Results
 {
     public class PackingBulkResult
     {

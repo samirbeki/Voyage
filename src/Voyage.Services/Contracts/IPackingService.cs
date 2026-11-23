@@ -1,7 +1,7 @@
-﻿using Voyage.Web.Common;
+﻿using Voyage.Services.Results;
 using Voyage.Web.ViewModels.Packing;
 
-namespace Voyage.Web.Services.Contracts
+namespace Voyage.Services.Contracts
 {
     public interface IPackingService
     {

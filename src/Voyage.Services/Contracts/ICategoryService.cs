@@ -1,6 +1,6 @@
 ﻿using Voyage.Web.ViewModels.Categories;
 
-namespace Voyage.Web.Services.Contracts
+namespace Voyage.Services.Contracts
 {
     public interface ICategoryService
     {

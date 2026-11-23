@@ -2,7 +2,7 @@
 using Voyage.Data.Models;
 using Voyage.Web.ViewModels.Destinations;
 
-namespace Voyage.Web.Services
+namespace Voyage.Services.Projections
 {
     public static class DestinationProjections
     {

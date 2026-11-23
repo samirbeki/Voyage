@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
 
 namespace Voyage.Web.Controllers
 {

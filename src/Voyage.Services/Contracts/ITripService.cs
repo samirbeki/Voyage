@@ -1,6 +1,6 @@
 ﻿using Voyage.Web.ViewModels.Trips;
 
-namespace Voyage.Web.Services.Contracts
+namespace Voyage.Services.Contracts
 {
     public interface ITripService
     {

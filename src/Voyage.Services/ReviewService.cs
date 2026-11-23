@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Voyage.Common.Constants;
 using Voyage.Data;
 using Voyage.Data.Models;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
 using Voyage.Web.ViewModels.Reviews;
 
-namespace Voyage.Web.Services
+namespace Voyage.Services
 {
     public class ReviewService : IReviewService
     {

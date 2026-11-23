@@ -1,7 +1,7 @@
 ﻿using Voyage.Common.Constants.Validation;
 using Voyage.Data.Models.Enums;
 
-namespace Voyage.Web.Services
+namespace Voyage.Services.Templates
 {
     public record PackingTemplateItem(
         string Name,

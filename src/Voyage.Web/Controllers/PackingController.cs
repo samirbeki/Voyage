@@ -4,8 +4,8 @@ using Voyage.Common.Constants;
 using Voyage.Common.Constants.Validation;
 using Voyage.Common.Messages;
 using Voyage.Data.Models.Enums;
-using Voyage.Web.Common;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
+using Voyage.Services.Results;
 using Voyage.Web.ViewModels.Packing;
 
 namespace Voyage.Web.Controllers

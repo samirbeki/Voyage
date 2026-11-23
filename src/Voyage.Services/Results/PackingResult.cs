@@ -1,4 +1,4 @@
-﻿namespace Voyage.Web.Common
+﻿namespace Voyage.Services.Results
 {
     public enum PackingResult
     {

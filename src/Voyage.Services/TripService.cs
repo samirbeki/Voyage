@@ -2,12 +2,12 @@
 using Voyage.Common.Utilities;
 using Voyage.Data;
 using Voyage.Data.Models;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
 using Voyage.Web.ViewModels.Enums;
 using Voyage.Web.ViewModels.Expenses;
 using Voyage.Web.ViewModels.Trips;
 
-namespace Voyage.Web.Services
+namespace Voyage.Services
 {
     public class TripService : ITripService
     {

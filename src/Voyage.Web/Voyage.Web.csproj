@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Voyage.Common\Voyage.Common.csproj" />
     <ProjectReference Include="..\Voyage.Data.Models\Voyage.Data.Models.csproj" />
     <ProjectReference Include="..\Voyage.Data\Voyage.Data.csproj" />
+    <ProjectReference Include="..\Voyage.Services\Voyage.Services.csproj" />
     <ProjectReference Include="..\Voyage.Web.ViewModels\Voyage.Web.ViewModels.csproj" />
   </ItemGroup>
 

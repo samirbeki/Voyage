@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Voyage.Common.Constants;
 using Voyage.Data;
-using Voyage.Web.Services.Contracts;
+using Voyage.Services.Contracts;
+using Voyage.Services.Projections;
 using Voyage.Web.ViewModels.Home;
 
-namespace Voyage.Web.Services
+namespace Voyage.Services
 {
     public class HomeService : IHomeService
     {
