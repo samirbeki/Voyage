@@ -100,7 +100,7 @@ builder.Services.AddScoped<IPackingService, PackingService>();
 
 var app = builder.Build();
 
-await app.SeedRolesAndAdminAsync();
+await app.SeedDatabaseAsync();
 
 if (app.Environment.IsDevelopment())
 {
