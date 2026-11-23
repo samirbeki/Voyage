@@ -1,7 +1,7 @@
 ﻿using Voyage.Data;
 using Voyage.Data.Seeding;
 
-namespace Voyage.Web.Infrastructure
+namespace Voyage.Web.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
