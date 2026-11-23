@@ -7,5 +7,7 @@
     <Project Path="src/Voyage.Web.ViewModels/Voyage.Web.ViewModels.csproj" />
     <Project Path="src/Voyage.Web/Voyage.Web.csproj" />
   </Folder>
-  <Folder Name="/tests/" />
+  <Folder Name="/tests/">
+    <Project Path="tests/Voyage.Services.Tests/Voyage.Services.Tests.csproj" />
+  </Folder>
 </Solution>
