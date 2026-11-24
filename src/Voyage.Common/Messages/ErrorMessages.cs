@@ -33,7 +33,7 @@
             "Use a dot for decimals, e.g. 12.50.";
 
         public const string TripBudgetRange =
-            "Budget must be between 0.01 and 1000000.";
+            "Budget must be between {0} and {1}.";
 
         public const string TripBudgetDecimals =
             "Budget can have at most 2 decimal places.";
@@ -45,7 +45,7 @@
             "End date cannot be before the start date.";
 
         public const string TripTooLong =
-            "A trip cannot be longer than 365 days.";
+            "A trip cannot be longer than {0} days.";
 
         public const string DestinationsRequired =
             "Select at least one destination.";
@@ -66,10 +66,10 @@
             "This category cannot be deleted because it has destinations.";
 
         public const string ExpenseTitleLength =
-            "Title must be between 2 and 100 characters.";
+            "Title must be between {2} and {1} characters.";
 
         public const string ExpenseAmountRange =
-            "Amount must be between 0.01 and 1000000.";
+            "Amount must be between {1} and {2}.";
 
         public const string ExpenseDateOutsideTrip =
             "The date must be between the start and end date of the trip.";

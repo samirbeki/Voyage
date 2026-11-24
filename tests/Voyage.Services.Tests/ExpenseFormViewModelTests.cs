@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using Voyage.Common.Constants.Validation;
 using Voyage.Common.Messages;
 using Voyage.Data.Models.Enums;
 using Voyage.Web.ViewModels.Expenses;
@@ -24,7 +25,13 @@ namespace Voyage.Services.Tests
             var errors = Validate(CreateModel("Hotel", decimal.Parse(amount, CultureInfo.InvariantCulture)));
 
             var error = Assert.Single(errors);
-            Assert.Equal(ErrorMessages.ExpenseAmountRange, error.ErrorMessage);
+            var expected = string.Format(
+                ErrorMessages.ExpenseAmountRange,
+                nameof(ExpenseFormViewModel.Amount),
+                ExpenseValidationConstants.AmountMinValue,
+                ExpenseValidationConstants.AmountMaxValue);
+
+            Assert.Equal(expected, error.ErrorMessage);
         }
 
         [Fact]
@@ -46,7 +53,13 @@ namespace Voyage.Services.Tests
         {
             var error = Assert.Single(Validate(CreateModel("A", 10m)));
 
-            Assert.Equal(ErrorMessages.ExpenseTitleLength, error.ErrorMessage);
+            var expected = string.Format(
+                ErrorMessages.ExpenseTitleLength,
+                nameof(ExpenseFormViewModel.Title),
+                ExpenseValidationConstants.TitleMaxLength,
+                ExpenseValidationConstants.TitleMinLength);
+
+            Assert.Equal(expected, error.ErrorMessage);
         }
 
         private static List<ValidationResult> Validate(ExpenseFormViewModel model)

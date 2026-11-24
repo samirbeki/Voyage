@@ -41,7 +41,9 @@ namespace Voyage.Services.Tests
             var model = CreateModel(start, start.AddDays(TripValidationConstants.MaxDays + 1));
 
             var error = Assert.Single(Validate(model));
-            Assert.Equal(ErrorMessages.TripTooLong, error.ErrorMessage);
+            Assert.Equal(
+                string.Format(ErrorMessages.TripTooLong, TripValidationConstants.MaxDays),
+                error.ErrorMessage);
         }
 
         [Fact]

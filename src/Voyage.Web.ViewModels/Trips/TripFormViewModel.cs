@@ -64,7 +64,7 @@ namespace Voyage.Web.ViewModels.Trips
             if ((EndDate - StartDate).TotalDays > TripValidationConstants.MaxDays)
             {
                 yield return new ValidationResult(
-                    ErrorMessages.TripTooLong,
+                    string.Format(ErrorMessages.TripTooLong, TripValidationConstants.MaxDays),
                     new[] { nameof(EndDate) });
             }
 

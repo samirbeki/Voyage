@@ -187,7 +187,11 @@ namespace Voyage.Web.Controllers
             {
                 ModelState.AddModelError(
                     nameof(model.Title),
-                    ErrorMessages.ExpenseTitleLength);
+                    string.Format(
+                        ErrorMessages.ExpenseTitleLength,
+                        nameof(model.Title),
+                        ExpenseValidationConstants.TitleMaxLength,
+                        ExpenseValidationConstants.TitleMinLength));
             }
 
             ValidateMoney(
