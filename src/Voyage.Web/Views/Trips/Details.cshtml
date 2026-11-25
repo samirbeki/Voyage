@@ -86,7 +86,12 @@
             }
             else
             {
-                <partial name="_ExpenseChart" model="Model" />
+                <partial name="_ExpenseChart"
+                         model="@(new ExpenseChartViewModel
+                         {
+                             Categories = Model.ExpensesByCategory,
+                             Total = Model.TotalSpent
+                         })" />
 
                 <ul class="v-expense-list">
                     @foreach (var expense in Model.Expenses)

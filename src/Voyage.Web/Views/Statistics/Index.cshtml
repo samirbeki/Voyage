@@ -1,0 +1,201 @@
+﻿@model Voyage.Web.ViewModels.Statistics.UserStatisticsViewModel
+
+@{
+    ViewData["Title"] = "My Statistics";
+}
+
+<div class="v-page-header">
+    <div>
+        <h1 class="v-page-title">My Statistics</h1>
+        <p class="v-page-subtitle">Your journeys in numbers.</p>
+    </div>
+</div>
+
+@if (Model.TripsCount == 0)
+{
+    <partial name="_EmptyState"
+             model="@(new EmptyStateViewModel
+             {
+                 Icon = "bi-bar-chart",
+                 Title = "No statistics yet",
+                 Message = "Plan your first trip and your travel numbers will appear here.",
+                 ActionText = "Plan a trip",
+                 ActionController = "Trips",
+                 ActionName = "Create"
+             })" />
+}
+else
+{
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="v-stat-card">
+                <i class="bi bi-suitcase2 v-stat-card-icon"></i>
+                <span class="v-stat-card-number">@Model.TripsCount</span>
+                <span class="v-stat-card-label">@(Model.TripsCount == 1 ? "Trip" : "Trips")</span>
+                <span class="v-stat-card-note">
+                    @Model.UpcomingCount upcoming · @Model.OngoingCount ongoing · @Model.CompletedCount completed
+                </span>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="v-stat-card">
+                <i class="bi bi-calendar-check v-stat-card-icon"></i>
+                <span class="v-stat-card-number">@Model.DaysTraveled</span>
+                <span class="v-stat-card-label">@(Model.DaysTraveled == 1 ? "Day traveled" : "Days traveled")</span>
+                <span class="v-stat-card-note">Counted from trips that have started</span>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="v-stat-card">
+                <i class="bi bi-globe-europe-africa v-stat-card-icon"></i>
+                <span class="v-stat-card-number">@Model.CountriesVisited</span>
+                <span class="v-stat-card-label">@(Model.CountriesVisited == 1 ? "Country visited" : "Countries visited")</span>
+                <span class="v-stat-card-note">
+                    @Model.DestinationsVisited @(Model.DestinationsVisited == 1 ? "destination" : "destinations")
+                </span>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="v-stat-card">
+                <i class="bi bi-wallet2 v-stat-card-icon"></i>
+                <span class="v-stat-card-number">@Model.TotalSpent.ToString("0.00") €</span>
+                <span class="v-stat-card-label">Total spent</span>
+                <span class="v-stat-card-note">@Model.AverageSpentPerDay.ToString("0.00") € per day on average</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="v-panel">
+                <h2 class="v-panel-title">Spending by category</h2>
+
+                @if (!Model.ExpensesByCategory.Any())
+                {
+                    <p class="v-muted mb-0">No expenses yet. Add expenses to your trips to see where your money goes.</p>
+                }
+                else
+                {
+                    <partial name="_ExpenseChart"
+                             model="@(new ExpenseChartViewModel
+                             {
+                                 Categories = Model.ExpensesByCategory,
+                                 Total = Model.TotalSpent
+                             })" />
+                }
+            </div>
+
+            <div class="v-panel">
+                <h2 class="v-panel-title">Top countries</h2>
+
+                <ul class="v-country-list">
+                    @foreach (var country in Model.TopCountries)
+                    {
+                        <li>
+                            <div class="d-flex justify-content-between mb-1">
+                                <span>@country.Country</span>
+                                <span class="v-muted small">
+                                    @country.TripsCount @(country.TripsCount == 1 ? "trip" : "trips")
+                                </span>
+                            </div>
+                            <div class="v-budget-bar">
+                                <div class="v-budget-bar-fill" style="width: @country.Percent%"></div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="v-panel">
+                <h2 class="v-panel-title">Budget overview</h2>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="v-muted">Planned budget</span>
+                    <strong>@Model.TotalBudget.ToString("0.00") €</strong>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="v-muted">Spent</span>
+                    <strong>@Model.TotalSpent.ToString("0.00") €</strong>
+                </div>
+
+                <div class="v-budget-bar mb-2">
+                    <div class="v-budget-bar-fill" style="width: @Model.BudgetUsedPercent%"></div>
+                </div>
+                <div class="v-budget-bar-label">@Model.BudgetUsedPercent% of all budgets used</div>
+
+                <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+                    <span class="v-muted">Trips over budget</span>
+                    <strong class="@(Model.TripsOverBudget > 0 ? "text-danger" : "")">@Model.TripsOverBudget</strong>
+                </div>
+            </div>
+
+            <div class="v-panel">
+                <h2 class="v-panel-title">Highlights</h2>
+
+                <div class="v-highlight">
+                    <i class="bi bi-hourglass-split"></i>
+                    <div>
+                        <span class="v-highlight-label">Next trip</span>
+                        @if (Model.NextTrip == null)
+                        {
+                            <span class="v-muted">Nothing planned yet</span>
+                        }
+                        else
+                        {
+                            <a asp-controller="Trips" asp-action="Details" asp-route-id="@Model.NextTrip.Id">@Model.NextTrip.Title</a>
+                            <span class="v-muted small">
+                                @Model.NextTrip.StartDate.ToString("dd MMM yyyy") ·
+                                in @Model.NextTrip.DaysUntilStart @(Model.NextTrip.DaysUntilStart == 1 ? "day" : "days")
+                            </span>
+                        }
+                    </div>
+                </div>
+
+                <div class="v-highlight">
+                    <i class="bi bi-cash-stack"></i>
+                    <div>
+                        <span class="v-highlight-label">Most expensive trip</span>
+                        @if (Model.MostExpensiveTrip == null)
+                        {
+                            <span class="v-muted">No expenses yet</span>
+                        }
+                        else
+                        {
+                            <a asp-controller="Trips" asp-action="Details" asp-route-id="@Model.MostExpensiveTrip.Id">@Model.MostExpensiveTrip.Title</a>
+                            <span class="v-muted small">@Model.MostExpensiveTrip.Spent.ToString("0.00") € spent</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="v-highlight">
+                    <i class="bi bi-chat-square-text"></i>
+                    <div>
+                        <span class="v-highlight-label">Reviews written</span>
+                        <span>
+                            @Model.ReviewsCount
+                            @if (Model.AverageRatingGiven.HasValue)
+                            {
+                                <span class="v-muted small">· average rating given</span>
+                                <partial name="_RatingStars" model="Model.AverageRatingGiven.Value" />
+                            }
+                        </span>
+                    </div>
+                </div>
+
+                <div class="v-highlight">
+                    <i class="bi bi-heart"></i>
+                    <div>
+                        <span class="v-highlight-label">Favorite destinations</span>
+                        <a asp-controller="Favorites" asp-action="Index">@Model.FavoritesCount saved</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -3,6 +3,7 @@ using Voyage.Common.Utilities;
 using Voyage.Data;
 using Voyage.Data.Models;
 using Voyage.Services.Contracts;
+using Voyage.Services.Helpers;
 using Voyage.Web.ViewModels.Enums;
 using Voyage.Web.ViewModels.Expenses;
 using Voyage.Web.ViewModels.Trips;
@@ -162,7 +163,8 @@ namespace Voyage.Services
 
             trip.TotalSpent = trip.Expenses.Sum(e => e.Amount);
 
-            trip.ExpensesByCategory = SummarizeByCategory(trip.Expenses, trip.TotalSpent);
+            trip.ExpensesByCategory = ExpenseCategorySummaries.Create(
+                trip.Expenses.Select(e => (e.Category, e.Amount)));
 
             trip.RemainingBudget = trip.Budget - trip.TotalSpent;
 
@@ -289,29 +291,6 @@ namespace Voyage.Services
             await dbContext.SaveChangesAsync();
 
             return true;
-        }
-
-        private static List<ExpenseCategorySummaryViewModel> SummarizeByCategory(
-            IEnumerable<ExpenseViewModel> expenses,
-            decimal totalSpent)
-        {
-            if (totalSpent <= 0)
-            {
-                return new List<ExpenseCategorySummaryViewModel>();
-            }
-
-            return expenses
-                .GroupBy(e => e.Category)
-                .Select(g => new ExpenseCategorySummaryViewModel
-                {
-                    Category = g.Key,
-                    Amount = g.Sum(e => e.Amount),
-                    Count = g.Count(),
-                    Share = Math.Round(g.Sum(e => e.Amount) / totalSpent * 100, 1)
-                })
-                .OrderByDescending(c => c.Amount)
-                .ThenBy(c => c.Category)
-                .ToList();
         }
     }
 }

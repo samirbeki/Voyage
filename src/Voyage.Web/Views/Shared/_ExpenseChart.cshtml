@@ -1,4 +1,4 @@
-﻿@model Voyage.Web.ViewModels.Trips.TripDetailsViewModel
+﻿@model Voyage.Web.ViewModels.Expenses.ExpenseChartViewModel
 @using System.Globalization
 
 @{
@@ -6,7 +6,7 @@
     const double Circumference = 100;
     double offset = 25;
 
-    string total = Model.TotalSpent.ToString("0.00");
+    string total = Model.Total.ToString("0.00");
     string totalSize = total.Length > 8 ? "v-donut-total-xs"
         : total.Length == 8 ? "v-donut-total-sm"
         : total.Length == 7 ? "v-donut-total-md"
@@ -21,9 +21,9 @@
 
         <circle class="v-donut-ring" cx="21" cy="21" r="@Svg(Radius)" />
 
-        @foreach (var item in Model.ExpensesByCategory)
+        @foreach (var item in Model.Categories)
         {
-            double length = (double)(item.Amount / Model.TotalSpent) * Circumference;
+            double length = (double)(item.Amount / Model.Total) * Circumference;
 
             <circle class="v-donut-segment v-chart-@item.Category.ToString().ToLowerInvariant()"
                     cx="21" cy="21" r="@Svg(Radius)"
@@ -40,7 +40,7 @@
     </svg>
 
     <ul class="v-chart-legend">
-        @foreach (var item in Model.ExpensesByCategory)
+        @foreach (var item in Model.Categories)
         {
             <li>
                 <span class="v-chart-dot v-chart-@item.Category.ToString().ToLowerInvariant()"></span>

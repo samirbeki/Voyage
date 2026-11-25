@@ -84,6 +84,15 @@
                                     <i class="bi bi-heart"></i> Favorites
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Statistics" && ViewContext.RouteData.Values["area"] == null ? "active" : "")"
+                                   asp-area=""
+                                   asp-controller="Statistics"
+                                   asp-action="Index">
+                                    <i class="bi bi-bar-chart"></i> Statistics
+                                </a>
+                            </li>
                         }
 
                         @if (User.IsInRole(RoleConstants.Moderator) ||
