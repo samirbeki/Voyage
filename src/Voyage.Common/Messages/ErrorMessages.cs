@@ -135,5 +135,8 @@
 
         public const string PackingConcurrentChange =
             "Your packing list was changed at the same time. Please try again.";
+
+        public const string TravelExpertChangeFailed =
+            "The role could not be changed. Please refresh the page and try again.";
     }
 }

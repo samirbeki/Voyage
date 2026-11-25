@@ -2121,6 +2121,23 @@ a.v-category-count:hover .bi-arrow-right {
     margin-left: 0.25rem;
 }
 
+.review-item.review-expert {
+    border-left: 4px solid var(--voyage-teal);
+}
+
+.review-expert-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(42, 157, 143, 0.12);
+    color: var(--voyage-teal);
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
 .review-hidden-badge {
     display: inline-flex;
     align-items: center;

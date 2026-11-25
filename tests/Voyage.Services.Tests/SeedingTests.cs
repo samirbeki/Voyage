@@ -104,10 +104,39 @@ namespace Voyage.Services.Tests
                 var user = await userManager.FindByEmailAsync(email);
 
                 Assert.NotNull(user);
-                Assert.Equal(new[] { RoleConstants.User }, await userManager.GetRolesAsync(user));
+                Assert.Contains(RoleConstants.User, await userManager.GetRolesAsync(user));
             }
 
             Assert.Equal(DemoEmails.Length + 2, await dbContext.Users.CountAsync());
+        }
+
+        [Fact]
+        public async Task SeedAsync_MakesTwoDemoUsersTravelExperts()
+        {
+            using var provider = BuildServiceProvider(FullSettings());
+
+            await seeder.SeedAsync(dbContext, provider);
+
+            var userManager = provider.GetRequiredService<UserManager<IdentityUser>>();
+            var experts = await userManager.GetUsersInRoleAsync(RoleConstants.TravelExpert);
+
+            Assert.Equal(
+                new[] { "georgi@voyage.test", "maria@voyage.test" },
+                experts.Select(u => u.Email).OrderBy(e => e));
+        }
+
+        [Fact]
+        public async Task SeedAsync_RemovedExpert_DoesNotGetTheRoleBack()
+        {
+            using var provider = BuildServiceProvider(FullSettings());
+            await seeder.SeedAsync(dbContext, provider);
+            var userManager = provider.GetRequiredService<UserManager<IdentityUser>>();
+            var maria = await userManager.FindByEmailAsync("maria@voyage.test");
+            await userManager.RemoveFromRoleAsync(maria!, RoleConstants.TravelExpert);
+
+            await seeder.SeedAsync(dbContext, provider);
+
+            Assert.False(await userManager.IsInRoleAsync(maria!, RoleConstants.TravelExpert));
         }
 
         [Fact]

@@ -20,6 +20,11 @@ namespace Voyage.Services
         public async Task<IEnumerable<ReviewViewModel>> GetForDestinationAsync(
             int destinationId, string? userId, bool includeHidden)
         {
+            var expertRoleId = await dbContext.Roles
+                .Where(r => r.Name == RoleConstants.TravelExpert)
+                .Select(r => r.Id)
+                .FirstOrDefaultAsync();
+
             var reviews = await dbContext.Reviews
                 .AsNoTracking()
                 .Where(r =>
@@ -37,11 +42,17 @@ namespace Voyage.Services
                     CreatedOn = r.CreatedOn,
                     IsEdited = r.ModifiedOn != null,
                     IsMine = userId != null && r.AuthorId == userId,
-                    IsHidden = r.IsHidden
+                    IsHidden = r.IsHidden,
+                    IsExpert = expertRoleId != null && dbContext.UserRoles
+                        .Any(ur => ur.UserId == r.AuthorId && ur.RoleId == expertRoleId)
                 })
                 .ToListAsync();
 
-            return HidePublicEmails(reviews);
+            var ordered = reviews
+                .OrderByDescending(r => r.IsExpert)
+                .ToList();
+
+            return HidePublicEmails(ordered);
         }
 
         public async Task<RatingSummaryViewModel> GetRatingSummaryAsync(int destinationId)

@@ -1,0 +1,100 @@
+﻿@model Voyage.Web.ViewModels.TravelExperts.TravelExpertsPageViewModel
+
+@{
+    ViewData["Title"] = "Travel experts";
+}
+
+<div class="v-page-header">
+    <div>
+        <h1 class="v-page-title">Travel experts</h1>
+        <p class="v-page-subtitle">
+            Reviews from travel experts get a badge and are shown first.
+            Currently @Model.ExpertsCount @(Model.ExpertsCount == 1 ? "expert" : "experts").
+        </p>
+    </div>
+</div>
+
+<form method="get" asp-area="Admin" asp-controller="TravelExperts" asp-action="Index" class="v-card mb-4">
+    <div class="d-flex flex-wrap gap-2">
+        <input type="search"
+               name="search"
+               value="@Model.Search"
+               class="form-control flex-grow-1 w-auto"
+               placeholder="Search by email"
+               aria-label="Search by email" />
+        <button type="submit" class="btn btn-navy">
+            <i class="bi bi-search"></i> Search
+        </button>
+        @if (Model.Search != null)
+        {
+            <a class="btn btn-outline-navy" asp-area="Admin" asp-controller="TravelExperts" asp-action="Index">Clear</a>
+        }
+    </div>
+</form>
+
+<div class="v-card">
+    @if (Model.Users.Any())
+    {
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 v-admin-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th class="text-center">Reviews</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@user.Email</td>
+                            <td class="text-center">@user.ReviewsCount</td>
+                            <td>
+                                @if (user.IsExpert)
+                                {
+                                    <span class="review-expert-badge">
+                                        <i class="bi bi-patch-check-fill"></i> Travel Expert
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="v-muted small">Traveler</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-end">
+                                    @if (user.IsExpert)
+                                    {
+                                        <form method="post" asp-area="Admin" asp-controller="TravelExperts" asp-action="Remove">
+                                            <input type="hidden" name="id" value="@user.Id" />
+                                            <input type="hidden" name="search" value="@Model.Search" />
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                <i class="bi bi-x-circle"></i> Remove expert
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form method="post" asp-area="Admin" asp-controller="TravelExperts" asp-action="Grant">
+                                            <input type="hidden" name="id" value="@user.Id" />
+                                            <input type="hidden" name="search" value="@Model.Search" />
+                                            <button type="submit" class="btn btn-outline-navy btn-sm">
+                                                <i class="bi bi-patch-check"></i> Make expert
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted mb-0">No users match your search.</p>
+    }
+</div>

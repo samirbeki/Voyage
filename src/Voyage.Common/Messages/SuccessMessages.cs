@@ -44,5 +44,11 @@
 
         public const string PackingNothingToUnpack =
             "No items are packed yet.";
+
+        public const string TravelExpertGranted =
+            "{0} is now a Travel Expert.";
+
+        public const string TravelExpertRemoved =
+            "{0} is no longer a Travel Expert.";
     }
 }

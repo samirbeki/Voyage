@@ -502,6 +502,68 @@ namespace Voyage.Services.Tests
             Assert.False(await service.DeleteByModeratorAsync(999));
         }
 
+        [Fact]
+        public async Task GetForDestinationAsync_ExpertReviews_AreShownFirstAndMarked()
+        {
+            var (rome, _) = await AddTwoDestinationsAsync();
+            var maria = await AddUserAsync(dbContext, "maria@voyage.test");
+            var georgi = await AddUserAsync(dbContext, "georgi@voyage.test");
+            var ivan = await AddUserAsync(dbContext, "ivan@voyage.test");
+            await MakeExpertAsync(georgi);
+            await AddReviewAsync(maria, rome, 5, daysAgo: 1);
+            await AddReviewAsync(georgi, rome, 4, daysAgo: 30);
+            await AddReviewAsync(ivan, rome, 3, daysAgo: 5);
+
+            var result = (await service.GetForDestinationAsync(rome.Id, null, false)).ToList();
+
+            Assert.Equal(new[] { "georgi", "maria", "ivan" }, result.Select(r => r.AuthorName));
+            Assert.Equal(new[] { true, false, false }, result.Select(r => r.IsExpert));
+        }
+
+        [Fact]
+        public async Task GetForDestinationAsync_SeveralExperts_AreOrderedNewestFirst()
+        {
+            var (rome, _) = await AddTwoDestinationsAsync();
+            var maria = await AddUserAsync(dbContext, "maria@voyage.test");
+            var georgi = await AddUserAsync(dbContext, "georgi@voyage.test");
+            var ivan = await AddUserAsync(dbContext, "ivan@voyage.test");
+            await MakeExpertAsync(maria);
+            await MakeExpertAsync(georgi);
+            await AddReviewAsync(maria, rome, 5, daysAgo: 20);
+            await AddReviewAsync(georgi, rome, 4, daysAgo: 3);
+            await AddReviewAsync(ivan, rome, 2, daysAgo: 1);
+
+            var result = (await service.GetForDestinationAsync(rome.Id, null, false)).ToList();
+
+            Assert.Equal(new[] { "georgi", "maria", "ivan" }, result.Select(r => r.AuthorName));
+        }
+
+        [Fact]
+        public async Task GetForDestinationAsync_WithoutExpertRole_NoReviewIsMarked()
+        {
+            var (rome, _) = await AddTwoDestinationsAsync();
+            var maria = await AddUserAsync(dbContext, "maria@voyage.test");
+            await AddReviewAsync(maria, rome, 5);
+
+            var result = await service.GetForDestinationAsync(rome.Id, null, false);
+
+            Assert.False(Assert.Single(result).IsExpert);
+        }
+
+        private async Task MakeExpertAsync(IdentityUser user)
+        {
+            var role = await dbContext.Roles.FirstOrDefaultAsync(r => r.Name == RoleConstants.TravelExpert);
+
+            if (role == null)
+            {
+                role = new IdentityRole(RoleConstants.TravelExpert);
+                dbContext.Roles.Add(role);
+            }
+
+            dbContext.UserRoles.Add(new IdentityUserRole<string> { UserId = user.Id, RoleId = role.Id });
+            await dbContext.SaveChangesAsync();
+        }
+
         private async Task<(Destination Rome, Destination Paris)> AddTwoDestinationsAsync()
         {
             var category = await AddCategoryAsync(dbContext, "Culture");

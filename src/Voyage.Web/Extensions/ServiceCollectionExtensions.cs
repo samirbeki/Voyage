@@ -123,6 +123,7 @@ namespace Voyage.Web.Extensions
             services.AddScoped<IFavoriteService, FavoriteService>();
             services.AddScoped<IPackingService, PackingService>();
             services.AddScoped<IStatisticsService, StatisticsService>();
+            services.AddScoped<ITravelExpertService, TravelExpertService>();
 
             return services;
         }

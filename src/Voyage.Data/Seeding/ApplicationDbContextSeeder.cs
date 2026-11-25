@@ -13,6 +13,7 @@
                 new AdministratorSeeder(),
                 new ModeratorSeeder(),
                 new DemoUsersSeeder(),
+                new TravelExpertSeeder(),
                 new TripSeeder(),
                 new ReviewSeeder(),
                 new FavoriteSeeder(),

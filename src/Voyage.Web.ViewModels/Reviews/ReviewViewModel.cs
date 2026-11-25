@@ -17,5 +17,7 @@
         public bool IsMine { get; set; }
 
         public bool IsHidden { get; set; }
+
+        public bool IsExpert { get; set; }
     }
 }
