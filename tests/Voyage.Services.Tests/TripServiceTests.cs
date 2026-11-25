@@ -310,6 +310,96 @@ namespace Voyage.Services.Tests
         }
 
         [Fact]
+        public async Task GetDetailsAsync_NoExpenses_ReturnsEmptyCategorySummary()
+        {
+            var user = await AddUserAsync(dbContext, "elena@voyage.test");
+            var trip = await AddTripAsync(dbContext, user.Id, "Iceland", 80, 8, 3200m);
+
+            var result = await service.GetDetailsAsync(trip.Id, user.Id);
+
+            Assert.NotNull(result);
+            Assert.Empty(result.ExpensesByCategory);
+        }
+
+        [Fact]
+        public async Task GetDetailsAsync_GroupsExpensesByCategoryFromHighestAmount()
+        {
+            var user = await AddUserAsync(dbContext, "maria@voyage.test");
+            var trip = await AddTripAsync(dbContext, user.Id, "Prague and Budapest", -60, 7, 1500m);
+            AddExpense(trip, "Flight", 124m, 0, ExpenseCategory.Transport);
+            AddExpense(trip, "Train", 39.90m, 3, ExpenseCategory.Transport);
+            AddExpense(trip, "Hotel", 300m, 0, ExpenseCategory.Accommodation);
+            AddExpense(trip, "Goulash", 20m, 4, ExpenseCategory.Food);
+            AddExpense(trip, "Trdelnik", 16.10m, 1, ExpenseCategory.Food);
+            await dbContext.SaveChangesAsync();
+
+            var result = await service.GetDetailsAsync(trip.Id, user.Id);
+
+            Assert.NotNull(result);
+            var summary = result.ExpensesByCategory.ToList();
+            Assert.Equal(
+                new[] { ExpenseCategory.Accommodation, ExpenseCategory.Transport, ExpenseCategory.Food },
+                summary.Select(c => c.Category));
+            Assert.Equal(new[] { 300m, 163.90m, 36.10m }, summary.Select(c => c.Amount));
+            Assert.Equal(new[] { 1, 2, 2 }, summary.Select(c => c.Count));
+            Assert.Equal(new[] { 60.0m, 32.8m, 7.2m }, summary.Select(c => c.Share));
+        }
+
+        [Fact]
+        public async Task GetDetailsAsync_CategorySummary_AddsUpToTotalSpent()
+        {
+            var user = await AddUserAsync(dbContext, "dimitar@voyage.test");
+            var trip = await AddTripAsync(dbContext, user.Id, "Borovets", 40, 6, 800m);
+            AddExpense(trip, "Ski pass", 250m, 0, ExpenseCategory.Activities);
+            AddExpense(trip, "Bus", 18.50m, 0, ExpenseCategory.Transport);
+            AddExpense(trip, "Dinner", 42.30m, 2, ExpenseCategory.Food);
+            AddExpense(trip, "Souvenirs", 15m, 5, ExpenseCategory.Shopping);
+            await dbContext.SaveChangesAsync();
+
+            var result = await service.GetDetailsAsync(trip.Id, user.Id);
+
+            Assert.NotNull(result);
+            Assert.Equal(result.TotalSpent, result.ExpensesByCategory.Sum(c => c.Amount));
+            Assert.Equal(4, result.ExpensesByCategory.Count());
+        }
+
+        [Fact]
+        public async Task GetDetailsAsync_SingleCategory_HasFullShare()
+        {
+            var user = await AddUserAsync(dbContext, "stefan@voyage.test");
+            var trip = await AddTripAsync(dbContext, user.Id, "Velingrad", 10, 2, 300m);
+            AddExpense(trip, "Spa hotel", 180m, 0, ExpenseCategory.Accommodation);
+            AddExpense(trip, "Extra night", 63m, 1, ExpenseCategory.Accommodation);
+            await dbContext.SaveChangesAsync();
+
+            var result = await service.GetDetailsAsync(trip.Id, user.Id);
+
+            Assert.NotNull(result);
+            var single = Assert.Single(result.ExpensesByCategory);
+            Assert.Equal(243m, single.Amount);
+            Assert.Equal(100m, single.Share);
+        }
+
+        [Fact]
+        public async Task GetDetailsAsync_EqualAmounts_KeepCategoryOrderAndRoundShares()
+        {
+            var user = await AddUserAsync(dbContext, "ivan@voyage.test");
+            var trip = await AddTripAsync(dbContext, user.Id, "Rila", -45, 1, 150m);
+            AddExpense(trip, "Lunch", 10m, 0, ExpenseCategory.Food);
+            AddExpense(trip, "Bus", 10m, 0, ExpenseCategory.Transport);
+            AddExpense(trip, "Map", 10m, 1, ExpenseCategory.Other);
+            await dbContext.SaveChangesAsync();
+
+            var result = await service.GetDetailsAsync(trip.Id, user.Id);
+
+            Assert.NotNull(result);
+            Assert.Equal(
+                new[] { ExpenseCategory.Transport, ExpenseCategory.Food, ExpenseCategory.Other },
+                result.ExpensesByCategory.Select(c => c.Category));
+            Assert.All(result.ExpensesByCategory, c => Assert.Equal(33.3m, c.Share));
+        }
+
+        [Fact]
         public async Task GetForEditAsync_OwnTrip_ReturnsFormWithSelectedDestinations()
         {
             var user = await AddUserAsync(dbContext, "ivan@voyage.test");
@@ -496,14 +586,19 @@ namespace Voyage.Services.Tests
             Assert.False(await service.DeleteAsync(999, user.Id));
         }
 
-        private void AddExpense(Trip trip, string title, decimal amount, int dayOfTrip)
+        private void AddExpense(
+            Trip trip,
+            string title,
+            decimal amount,
+            int dayOfTrip,
+            ExpenseCategory category = ExpenseCategory.Other)
         {
             dbContext.Expenses.Add(new Expense
             {
                 TripId = trip.Id,
                 Title = title,
                 Amount = amount,
-                Category = ExpenseCategory.Other,
+                Category = category,
                 Date = trip.StartDate.AddDays(dayOfTrip)
             });
         }

@@ -1,0 +1,56 @@
+﻿@model Voyage.Web.ViewModels.Trips.TripDetailsViewModel
+@using System.Globalization
+
+@{
+    const double Radius = 15.9155;
+    const double Circumference = 100;
+    double offset = 25;
+
+    string total = Model.TotalSpent.ToString("0.00");
+    string totalSize = total.Length > 8 ? "v-donut-total-xs"
+        : total.Length == 8 ? "v-donut-total-sm"
+        : total.Length == 7 ? "v-donut-total-md"
+        : string.Empty;
+
+    string Svg(double value) => value.ToString("0.###", CultureInfo.InvariantCulture);
+}
+
+<div class="v-expense-chart">
+    <svg class="v-donut" viewBox="0 0 42 42" role="img" aria-labelledby="expense-chart-title">
+        <title id="expense-chart-title">Expenses by category</title>
+
+        <circle class="v-donut-ring" cx="21" cy="21" r="@Svg(Radius)" />
+
+        @foreach (var item in Model.ExpensesByCategory)
+        {
+            double length = (double)(item.Amount / Model.TotalSpent) * Circumference;
+
+            <circle class="v-donut-segment v-chart-@item.Category.ToString().ToLowerInvariant()"
+                    cx="21" cy="21" r="@Svg(Radius)"
+                    stroke-dasharray="@Svg(length) @Svg(Circumference - length)"
+                    stroke-dashoffset="@Svg(offset)">
+                <title>@item.Category: @item.Amount.ToString("0.00") € (@item.Share.ToString("0.#")%)</title>
+            </circle>
+
+            offset -= length;
+        }
+
+        <text class="v-donut-total @totalSize" x="21" y="21.5">@total</text>
+        <text class="v-donut-label" x="21" y="26">€ spent</text>
+    </svg>
+
+    <ul class="v-chart-legend">
+        @foreach (var item in Model.ExpensesByCategory)
+        {
+            <li>
+                <span class="v-chart-dot v-chart-@item.Category.ToString().ToLowerInvariant()"></span>
+                <span class="v-chart-name">
+                    @item.Category
+                    <span class="v-muted small">(@item.Count)</span>
+                </span>
+                <strong>@item.Amount.ToString("0.00") €</strong>
+                <span class="v-chart-share">@item.Share.ToString("0.#")%</span>
+            </li>
+        }
+    </ul>
+</div>

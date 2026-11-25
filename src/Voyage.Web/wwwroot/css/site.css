@@ -1602,6 +1602,131 @@ a.v-category-count:hover .bi-arrow-right {
     margin-right: 0.5rem;
 }
 
+/* ---------- Expense chart (Trip details) ---------- */
+
+.v-expense-chart {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    background: var(--voyage-bg);
+    border-radius: var(--voyage-radius-sm);
+}
+
+.v-donut {
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+}
+
+.v-donut-ring,
+.v-donut-segment {
+    fill: none;
+    stroke-width: 6;
+}
+
+.v-donut-ring {
+    stroke: var(--voyage-border);
+}
+
+.v-donut-segment {
+    transition: stroke-width .15s ease;
+}
+
+.v-donut-segment:hover {
+    stroke-width: 7.5;
+}
+
+.v-donut-total {
+    font-size: 5.5px;
+    font-weight: 700;
+    fill: var(--voyage-navy);
+    text-anchor: middle;
+}
+
+.v-donut-total-md {
+    font-size: 5px;
+}
+
+.v-donut-total-sm {
+    font-size: 4.5px;
+}
+
+.v-donut-total-xs {
+    font-size: 4px;
+}
+
+.v-donut-label {
+    font-size: 3px;
+    fill: var(--voyage-muted);
+    text-anchor: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.v-chart-legend {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.v-chart-legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.v-chart-name {
+    flex: 1;
+    min-width: 0;
+}
+
+.v-chart-legend strong {
+    color: var(--voyage-navy);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.v-chart-share {
+    width: 3.2rem;
+    text-align: right;
+    font-size: 0.82rem;
+    color: var(--voyage-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.v-chart-dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: currentColor;
+}
+
+.v-chart-transport { stroke: var(--voyage-navy-soft); color: var(--voyage-navy-soft); }
+.v-chart-accommodation { stroke: var(--voyage-teal); color: var(--voyage-teal); }
+.v-chart-food { stroke: var(--voyage-accent); color: var(--voyage-accent); }
+.v-chart-activities { stroke: #E76F51; color: #E76F51; }
+.v-chart-shopping { stroke: #8E7CC3; color: #8E7CC3; }
+.v-chart-other { stroke: #9CA3AF; color: #9CA3AF; }
+
+@media (max-width: 575.98px) {
+    .v-expense-chart {
+        flex-direction: column;
+    }
+
+    .v-chart-legend {
+        width: 100%;
+    }
+}
+
 /* ---------- Budget / progress bar (also used by Packing progress) ---------- */
 
 .v-budget-bar {

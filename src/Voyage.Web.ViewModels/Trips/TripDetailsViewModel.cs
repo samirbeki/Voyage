@@ -40,6 +40,9 @@ namespace Voyage.Web.ViewModels.Trips
         public IEnumerable<ExpenseViewModel> Expenses { get; set; }
             = new List<ExpenseViewModel>();
 
+        public IEnumerable<ExpenseCategorySummaryViewModel> ExpensesByCategory { get; set; }
+            = new List<ExpenseCategorySummaryViewModel>();
+
         public decimal TotalSpent { get; set; }
 
         public decimal RemainingBudget { get; set; }
