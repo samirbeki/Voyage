@@ -10,6 +10,10 @@ namespace Voyage.Data.Configurations
         {
             builder.HasIndex(t => t.OwnerId);
 
+            builder.HasIndex(t => t.ShareToken)
+                .IsUnique()
+                .HasFilter("[ShareToken] IS NOT NULL");
+
             builder.ToTable(t =>
             {
                 t.HasCheckConstraint(

@@ -22,6 +22,8 @@ namespace Voyage.Web.ViewModels.Trips
 
         public DateTime CreatedOn { get; set; }
 
+        public Guid? ShareToken { get; set; }
+
         public int DaysCount { get; set; }
 
         public decimal BudgetPerDay { get; set; }

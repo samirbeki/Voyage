@@ -123,6 +123,7 @@ namespace Voyage.Services
                             .FirstOrDefault()
                         : t.CoverImageUrl,
                     CreatedOn = t.CreatedOn,
+                    ShareToken = t.ShareToken,
                     Destinations = t.TripDestinations
                         .Where(td => !td.Destination.IsDeleted)
                         .OrderBy(td => td.Destination.Name)

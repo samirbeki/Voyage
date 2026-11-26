@@ -55,5 +55,14 @@
         public const string ExpertTipUpdated = "Your expert tip was updated.";
         public const string ExpertTipDeleted = "Your expert tip was deleted.";
         public const string ExpertTipDeletedByModerator = "The expert tip was removed.";
+
+        public const string TripShared =
+            "Share link created. Anyone with the link can view this trip.";
+
+        public const string TripShareLinkRegenerated =
+            "A new share link was created. The old link no longer works.";
+
+        public const string TripSharingStopped =
+            "Sharing is turned off. The link no longer works.";
     }
 }

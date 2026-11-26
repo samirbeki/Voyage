@@ -30,6 +30,8 @@ namespace Voyage.Data.Models
 
         public DateTime CreatedOn { get; set; }
 
+        public Guid? ShareToken { get; set; }
+
         [Required]
         [ForeignKey(nameof(Owner))]
         public string OwnerId { get; set; } = null!;

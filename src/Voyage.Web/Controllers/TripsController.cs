@@ -12,13 +12,16 @@ namespace Voyage.Web.Controllers
     {
         private readonly ITripService tripService;
         private readonly IPackingService packingService;
+        private readonly ITripSharingService tripSharingService;
 
         public TripsController(
             ITripService tripService,
-            IPackingService packingService)
+            IPackingService packingService,
+            ITripSharingService tripSharingService)
         {
             this.tripService = tripService;
             this.packingService = packingService;
+            this.tripSharingService = tripSharingService;
         }
 
         public async Task<IActionResult> Index()
@@ -203,6 +206,54 @@ namespace Voyage.Web.Controllers
             TempData[TempDataKeys.SuccessMessage] = SuccessMessages.TripDeleted;
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Share(int id)
+        {
+            var token = await tripSharingService.ShareAsync(id, GetUserId());
+
+            if (token == null)
+            {
+                return NotFound();
+            }
+
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.TripShared;
+
+            return RedirectToAction(nameof(Details), null, new { id }, "share");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegenerateShareLink(int id)
+        {
+            var token = await tripSharingService.RegenerateAsync(id, GetUserId());
+
+            if (token == null)
+            {
+                return NotFound();
+            }
+
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.TripShareLinkRegenerated;
+
+            return RedirectToAction(nameof(Details), null, new { id }, "share");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> StopSharing(int id)
+        {
+            var success = await tripSharingService.StopSharingAsync(id, GetUserId());
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            TempData[TempDataKeys.SuccessMessage] = SuccessMessages.TripSharingStopped;
+
+            return RedirectToAction(nameof(Details), null, new { id }, "share");
         }
     }
 }

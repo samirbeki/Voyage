@@ -254,6 +254,63 @@
             </a>
         </div>
 
+        <div id="share" class="v-panel mb-4">
+            <h2 class="v-panel-title">Share this trip</h2>
+
+            @if (Model.ShareToken == null)
+            {
+                <p class="v-muted">
+                    Create a read-only link for friends and family. They will see the dates,
+                    destinations and travel costs, but cannot change anything.
+                </p>
+
+                <form method="post" asp-action="Share" asp-route-id="@Model.Id">
+                    <button type="submit" class="btn btn-outline-navy btn-sm w-100">
+                        <i class="bi bi-link-45deg"></i> Create share link
+                    </button>
+                </form>
+            }
+            else
+            {
+                string shareUrl = Url.Action(
+                    "Index",
+                    "SharedTrips",
+                    new { token = Model.ShareToken },
+                    Context.Request.Scheme)!;
+
+                <p class="v-muted small mb-2">Anyone with this link can view the trip.</p>
+
+                <div class="input-group input-group-sm mb-2">
+                    <input type="text"
+                           id="share-link"
+                           class="form-control"
+                           value="@shareUrl"
+                           readonly
+                           aria-label="Share link" />
+                    <button type="button" class="btn btn-navy" data-copy-target="#share-link">
+                        <i class="bi bi-clipboard"></i> Copy
+                    </button>
+                </div>
+
+                <a class="small" href="@shareUrl" target="_blank" rel="noopener">
+                    <i class="bi bi-box-arrow-up-right"></i> Open the shared page
+                </a>
+
+                <div class="d-flex gap-2 mt-3">
+                    <form method="post" asp-action="RegenerateShareLink" asp-route-id="@Model.Id" class="flex-fill">
+                        <button type="submit" class="btn btn-outline-navy btn-sm w-100">
+                            <i class="bi bi-arrow-repeat"></i> New link
+                        </button>
+                    </form>
+                    <form method="post" asp-action="StopSharing" asp-route-id="@Model.Id" class="flex-fill">
+                        <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                            <i class="bi bi-x-circle"></i> Stop sharing
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+
         <div class="v-panel">
             <h2 class="v-panel-title">Actions</h2>
 
@@ -289,3 +346,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/share-link.js" asp-append-version="true"></script>
+}

@@ -125,6 +125,7 @@ namespace Voyage.Web.Extensions
             services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddScoped<ITravelExpertService, TravelExpertService>();
             services.AddScoped<IExpertTipService, ExpertTipService>();
+            services.AddScoped<ITripSharingService, TripSharingService>();
 
             return services;
         }

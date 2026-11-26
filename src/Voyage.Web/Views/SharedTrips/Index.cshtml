@@ -1,0 +1,114 @@
+﻿@model Voyage.Web.ViewModels.Trips.SharedTripViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="v-cover">
+    <span class="v-status v-status-@Model.Status.ToString().ToLower()">@Model.Status</span>
+
+    <img src="@Model.CoverImageUrl"
+         alt="@Model.Title"
+         onerror="this.style.display='none'" />
+
+    <div class="v-cover-overlay">
+        <h1>@Model.Title</h1>
+
+        <div>
+            <i class="bi bi-calendar-event"></i>
+            @Model.StartDate.ToString("dd MMM yyyy")
+            –
+            @Model.EndDate.ToString("dd MMM yyyy")
+        </div>
+
+        <span class="v-badge">
+            <i class="bi bi-clock"></i>
+            @Model.DaysCount @(Model.DaysCount == 1 ? "day" : "days")
+        </span>
+    </div>
+</div>
+
+<p class="v-shared-note">
+    <i class="bi bi-link-45deg"></i>
+    A trip shared by <strong>@Model.OwnerName</strong>. This is a read-only view.
+</p>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="v-panel mb-4">
+            <h2 class="v-panel-title">About this trip</h2>
+
+            @if (string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <p class="v-muted mb-0">No description.</p>
+            }
+            else
+            {
+                <p class="mb-0">@Model.Description</p>
+            }
+        </div>
+
+        <div class="v-panel mb-4">
+            <h2 class="v-panel-title">Destinations</h2>
+
+            @if (!Model.Destinations.Any())
+            {
+                <p class="v-muted mb-0">No destinations.</p>
+            }
+            else
+            {
+                <ul class="v-timeline">
+                    @foreach (var destination in Model.Destinations)
+                    {
+                        <li class="v-timeline-item">
+                            <div class="v-timeline-title">
+                                <a asp-controller="Destinations"
+                                   asp-action="Details"
+                                   asp-route-id="@destination.Id">@destination.Name</a>
+                            </div>
+                            <div class="v-timeline-date">@destination.Country</div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+
+        <div class="v-panel">
+            <h2 class="v-panel-title">Travel costs</h2>
+
+            @if (!Model.ExpensesByCategory.Any())
+            {
+                <p class="v-muted mb-0">No expenses have been added to this trip yet.</p>
+            }
+            else
+            {
+                <partial name="_ExpenseChart"
+                         model="@(new ExpenseChartViewModel
+                         {
+                             Categories = Model.ExpensesByCategory,
+                             Total = Model.TotalSpent
+                         })" />
+            }
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="v-panel">
+            <h2 class="v-panel-title">Plan your own trip</h2>
+            <p class="v-muted">
+                VOYAGE helps you plan trips, track your budget and pack without forgetting anything.
+            </p>
+            <div class="v-actions">
+                <a class="btn btn-accent" asp-controller="Destinations" asp-action="Index">
+                    <i class="bi bi-compass"></i> Explore destinations
+                </a>
+                @if (User.Identity?.IsAuthenticated != true)
+                {
+                    <a class="btn btn-outline-navy" asp-area="Identity" asp-page="/Account/Register">
+                        <i class="bi bi-person-plus"></i> Create a free account
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
