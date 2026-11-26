@@ -27,14 +27,19 @@
 </div>
 
 <div class="row g-4">
-    <div class="col-lg-8">
-        <div class="v-panel">
+    <div class="col-lg-8 d-flex flex-column">
+        <div class="v-panel flex-grow-1">
             <h2 class="v-panel-title">About this destination</h2>
-            <p class="mb-0">@Model.Description</p>
+            <div class="v-destination-description">
+                @foreach (var paragraph in Model.DescriptionParagraphs)
+                {
+                    <p>@paragraph</p>
+                }
+            </div>
         </div>
     </div>
 
-    <div class="col-lg-4">
+    <div class="col-lg-4 v-details-side">
         <div class="v-panel">
             <h2 class="v-panel-title">Actions</h2>
 
@@ -86,8 +91,8 @@
             </div>
         </div>
 
-        <div id="destination-weather"
-             class="mt-4"
+        <div class="v-weather-slot"
+             data-weather-target="now"
              data-weather-url="@Url.Action("Weather", new { id = Model.Id })">
             <div class="v-panel">
                 <p class="v-muted mb-0">
@@ -95,6 +100,14 @@
                 </p>
             </div>
         </div>
+    </div>
+</div>
+
+<div data-weather-target="forecast">
+    <div class="v-panel">
+        <p class="v-muted mb-0">
+            <i class="bi bi-calendar3"></i> Loading the forecast...
+        </p>
     </div>
 </div>
 

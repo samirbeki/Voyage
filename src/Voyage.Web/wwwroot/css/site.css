@@ -479,6 +479,15 @@ h1, h2, h3, h4 {
     margin-bottom: 1rem;
 }
 
+.v-destination-description p {
+    line-height: 1.7;
+    margin-bottom: 0.9rem;
+}
+
+.v-destination-description p:last-child {
+    margin-bottom: 0;
+}
+
 
 /* ---------- Timeline (activities by day) ---------- */
 
@@ -1841,7 +1850,6 @@ a.v-category-count:hover .bi-arrow-right {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
 }
 
 .v-weather-now > div {
@@ -1869,37 +1877,138 @@ a.v-category-count:hover .bi-arrow-right {
     color: var(--voyage-navy-soft);
 }
 
-.v-weather-days {
+.v-weather-forecast {
     list-style: none;
     padding: 0;
     margin: 0;
-    border-top: 1px solid var(--voyage-border);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+    justify-items: center;
+    gap: 0.75rem;
 }
 
-.v-weather-days li {
+.v-forecast-day {
+    --forecast-from: #F1F4F8;
+    --forecast-to: #E2E8F0;
+    --forecast-icon: #64748B;
+    width: 100%;
+    max-width: 7.5rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.45rem 0;
-    border-bottom: 1px solid var(--voyage-border);
+    gap: 0.3rem;
+    padding: 0.9rem 0.6rem 1rem;
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--forecast-from), var(--forecast-to));
+    text-align: center;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.v-forecast-day:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--voyage-shadow);
+}
+
+.v-forecast-sunny {
+    --forecast-from: #FFF6EA;
+    --forecast-to: #FFE1C2;
+    --forecast-icon: var(--voyage-accent-dark);
+}
+
+.v-forecast-rainy {
+    --forecast-from: #EAF7F5;
+    --forecast-to: #CBEBE6;
+    --forecast-icon: var(--voyage-teal);
+}
+
+.v-forecast-stormy {
+    --forecast-from: #EFEDFB;
+    --forecast-to: #D8D3F4;
+    --forecast-icon: #5B4BB7;
+}
+
+.v-forecast-snowy {
+    --forecast-from: #F0F7FE;
+    --forecast-to: #D6E8FA;
+    --forecast-icon: #3B82C4;
+}
+
+.v-forecast-foggy {
+    --forecast-from: #F5F5F4;
+    --forecast-to: #E4E4E2;
+    --forecast-icon: var(--voyage-muted);
 }
 
 .v-weather-day {
-    width: 2.5rem;
     font-weight: 600;
     color: var(--voyage-navy);
 }
 
-.v-weather-days i {
-    font-size: 1.15rem;
-    color: var(--voyage-teal);
+.v-forecast-orb {
+    width: 3rem;
+    height: 3rem;
+    margin: 0.15rem 0;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--voyage-surface);
+    box-shadow: 0 6px 16px rgba(11, 31, 58, 0.1);
+}
+
+.v-forecast-orb i {
+    font-size: 1.45rem;
+    line-height: 1;
+    color: var(--forecast-icon);
+}
+
+.v-weather-forecast-desc {
+    min-height: 2.4em;
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    color: var(--voyage-navy-soft);
 }
 
 .v-weather-range {
-    margin-left: auto;
     display: flex;
-    gap: 0.6rem;
+    gap: 0.5rem;
     font-variant-numeric: tabular-nums;
+}
+
+.v-forecast-bar {
+    position: relative;
+    width: 70%;
+    height: 4px;
+    margin-top: 0.15rem;
+    border-radius: 999px;
+    background: rgba(11, 31, 58, 0.1);
+}
+
+.v-forecast-bar > span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--voyage-teal), var(--voyage-accent));
+}
+
+.v-details-side {
+    display: flex;
+    flex-direction: column;
+}
+
+.v-details-side > :last-child {
+    flex-grow: 1;
+}
+
+.v-weather-slot {
+    display: flex;
+    flex-direction: column;
+}
+
+.v-weather-slot > .v-panel {
+    flex-grow: 1;
 }
 
 .v-weather-source {

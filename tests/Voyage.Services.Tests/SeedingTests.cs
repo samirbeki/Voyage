@@ -284,7 +284,7 @@ namespace Voyage.Services.Tests
 
             var reviews = await dbContext.Reviews.ToListAsync();
 
-            Assert.Equal(52, reviews.Count);
+            Assert.Equal(54, reviews.Count);
             Assert.All(reviews, r =>
             {
                 Assert.InRange(r.Rating, 1, 5);
@@ -310,6 +310,7 @@ namespace Voyage.Services.Tests
         [InlineData("Rome", 5, 4.8)]
         [InlineData("Plitvice Lakes", 3, 4.67)]
         [InlineData("Borovets", 3, 2.67)]
+        [InlineData("Lisbon", 2, 4.5)]
         public async Task SeedAsync_DestinationsHaveExpectedRatings(string destination, int expectedCount, double expectedAverage)
         {
             using var provider = BuildServiceProvider(FullSettings());
@@ -456,7 +457,7 @@ namespace Voyage.Services.Tests
 
             var review = await dbContext.Reviews.SingleAsync(r => r.AuthorId == maria.Id && r.DestinationId == santorini.Id);
             Assert.Equal(2, review.Rating);
-            Assert.Equal(52, await dbContext.Reviews.CountAsync());
+            Assert.Equal(54, await dbContext.Reviews.CountAsync());
         }
 
         [Fact]
@@ -471,8 +472,8 @@ namespace Voyage.Services.Tests
 
             await seeder.SeedAsync(dbContext, provider);
 
-            Assert.Equal(51, await dbContext.Reviews.CountAsync());
-            Assert.Equal(52, await dbContext.Reviews.IgnoreQueryFilters().CountAsync());
+            Assert.Equal(53, await dbContext.Reviews.CountAsync());
+            Assert.Equal(54, await dbContext.Reviews.IgnoreQueryFilters().CountAsync());
         }
 
         [Fact]
@@ -506,7 +507,7 @@ namespace Voyage.Services.Tests
             Assert.Empty(dbContext.TripDestinations.IgnoreQueryFilters().Where(td => td.DestinationId == rome.Id));
             Assert.Empty(dbContext.Reviews.IgnoreQueryFilters().Where(r => r.DestinationId == rome.Id));
             Assert.Empty(dbContext.Favorites.IgnoreQueryFilters().Where(f => f.DestinationId == rome.Id));
-            Assert.Equal(52 - 5, await dbContext.Reviews.CountAsync());
+            Assert.Equal(54 - 5, await dbContext.Reviews.CountAsync());
         }
 
         private async Task<(int Users, int Roles, int UserRoles, int Trips, int Expenses, int Packing, int Reviews, int Favorites)> CountEverythingAsync()

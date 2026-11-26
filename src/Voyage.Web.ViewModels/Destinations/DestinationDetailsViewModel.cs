@@ -17,6 +17,9 @@ namespace Voyage.Web.ViewModels.Destinations
 
         public string Description { get; set; } = null!;
 
+        public IEnumerable<string> DescriptionParagraphs
+            => Description.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
         public int CategoryId { get; set; }
 
         public IEnumerable<DestinationAllViewModel> SimilarDestinations { get; set; } = new List<DestinationAllViewModel>();

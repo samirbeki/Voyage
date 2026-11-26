@@ -1,35 +1,50 @@
 ﻿@model Voyage.Web.ViewModels.Weather.WeatherViewModel
+@using System.Globalization
 
-<div class="v-panel v-weather">
-    <h2 class="v-panel-title">Weather now</h2>
+<div data-weather-part="now">
+    <div class="v-panel v-weather">
+        <h2 class="v-panel-title">Weather now</h2>
 
-    <div class="v-weather-now">
-        <i class="bi @Model.Icon v-weather-icon" aria-hidden="true"></i>
-        <div>
-            <span class="v-weather-temp">@Math.Round(Model.CurrentTemperature)°C</span>
-            <span class="v-weather-desc">@Model.Description</span>
-            <span class="v-muted small">
-                Wind @Math.Round(Model.WindSpeed) km/h · @Model.Location
-            </span>
+        <div class="v-weather-now">
+            <i class="bi @Model.Icon v-weather-icon" aria-hidden="true"></i>
+            <div>
+                <span class="v-weather-temp">@Math.Round(Model.CurrentTemperature)°C</span>
+                <span class="v-weather-desc">@Model.Description</span>
+                <span class="v-muted small">
+                    Wind @Math.Round(Model.WindSpeed) km/h · @Model.Location
+                </span>
+            </div>
         </div>
     </div>
+</div>
 
-    <ul class="v-weather-days">
-        @foreach (var day in Model.Days)
-        {
-            <li>
-                <span class="v-weather-day">@day.Date.ToString("ddd", System.Globalization.CultureInfo.InvariantCulture)</span>
-                <i class="bi @day.Icon" title="@day.Description" aria-label="@day.Description"></i>
-                <span class="v-weather-range">
-                    <strong>@Math.Round(day.MaxTemperature)°</strong>
-                    <span class="v-muted">@Math.Round(day.MinTemperature)°</span>
-                </span>
-            </li>
-        }
-    </ul>
+<div data-weather-part="forecast">
+    <div class="v-panel v-weather">
+        <h2 class="v-panel-title">Forecast</h2>
 
-    <p class="v-weather-source">
-        Weather data by
-        <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
-    </p>
+        <ul class="v-weather-forecast">
+            @foreach (var day in Model.Days)
+            {
+                <li class="v-forecast-day v-forecast-@day.Tone">
+                    <span class="v-weather-day">@day.Date.ToString("ddd", CultureInfo.InvariantCulture)</span>
+                    <span class="v-forecast-orb">
+                        <i class="bi @day.Icon" aria-hidden="true"></i>
+                    </span>
+                    <span class="v-weather-forecast-desc">@day.Description</span>
+                    <span class="v-weather-range">
+                        <strong>@Math.Round(day.MaxTemperature)°</strong>
+                        <span class="v-muted">@Math.Round(day.MinTemperature)°</span>
+                    </span>
+                    <span class="v-forecast-bar" aria-hidden="true">
+                        <span style="left: @Model.RangeStart(day).ToString(CultureInfo.InvariantCulture)%; width: @Model.RangeWidth(day).ToString(CultureInfo.InvariantCulture)%"></span>
+                    </span>
+                </li>
+            }
+        </ul>
+
+        <p class="v-weather-source">
+            Weather data by
+            <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
+        </p>
+    </div>
 </div>

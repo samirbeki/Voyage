@@ -46,8 +46,9 @@
         <div class="mb-4">
             <label class="form-label" asp-for="Description"></label>
             <textarea class="form-control"
-                      rows="5"
+                      rows="8"
                       asp-for="Description"></textarea>
+            <div class="form-text">Separate paragraphs with an empty line.</div>
             <span class="text-danger" asp-validation-for="Description"></span>
         </div>
 
