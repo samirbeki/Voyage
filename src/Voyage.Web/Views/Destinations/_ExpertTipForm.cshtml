@@ -1,0 +1,26 @@
+﻿@model ExpertTipFormModel
+@{
+    int destinationId = (int)ViewData["DestinationId"]!;
+    string destinationName = (string)ViewData["DestinationName"]!;
+}
+
+<form asp-controller="ExpertTips"
+      asp-action="Create"
+      asp-area=""
+      asp-route-destinationId="@destinationId"
+      method="post"
+      class="review-form">
+    <div class="mb-3">
+        <label asp-for="Content" class="form-label">Share a tip for @destinationName</label>
+        <textarea asp-for="Content"
+                  class="form-control"
+                  rows="3"
+                  maxlength="@ExpertTipValidationConstants.ContentMaxLength"
+                  placeholder="The best time to visit, a place locals love, something to avoid..."></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-accent">
+        <i class="bi bi-lightbulb"></i> Publish tip
+    </button>
+</form>

@@ -138,5 +138,17 @@
 
         public const string TravelExpertChangeFailed =
             "The role could not be changed. Please refresh the page and try again.";
+
+        public const string ExpertTipContentLength =
+            "Your tip must be between {2} and {1} characters.";
+
+        public const string ExpertTipAlreadyExists =
+            "You have already shared a tip for this destination. You can edit it instead.";
+
+        public const string ExpertTipCouldNotBeSaved =
+            "Your tip could not be saved. Please check the text and try again.";
+
+        public const string ExpertTipNoLongerExists =
+            "This expert tip no longer exists.";
     }
 }

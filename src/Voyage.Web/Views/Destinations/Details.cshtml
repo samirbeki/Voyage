@@ -115,6 +115,11 @@
     </section>
 }
 
+@if (Model.ExpertTips.Any() || Model.CanAddExpertTip)
+{
+    <partial name="_ExpertTips" model="Model" />
+}
+
 <section id="reviews" class="v-section reviews-section">
     <div class="reviews-heading">
         <h2 class="v-section-title">Reviews</h2>

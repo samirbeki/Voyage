@@ -1,0 +1,37 @@
+﻿@model Voyage.Web.ViewModels.ExpertTips.ExpertTipEditViewModel
+
+@{
+    ViewData["Title"] = "Delete expert tip";
+}
+
+<div class="v-danger-card">
+    <div class="v-danger-icon">
+        <i class="bi bi-exclamation-triangle"></i>
+    </div>
+
+    <h1 class="v-page-title mt-2">Delete expert tip?</h1>
+
+    <p class="v-muted mb-3">
+        Are you sure you want to delete your tip for
+        <strong>@Model.DestinationName</strong>?
+        This cannot be undone.
+    </p>
+
+    <p class="review-comment mb-4">@Model.Content</p>
+
+    <form method="post" asp-action="Delete" asp-route-id="@Model.Id">
+        <div class="d-flex justify-content-center gap-2">
+            <button type="submit" class="btn btn-danger px-4">
+                <i class="bi bi-trash"></i> Yes, delete
+            </button>
+
+            <a class="btn btn-outline-navy"
+               asp-controller="Destinations"
+               asp-action="Details"
+               asp-route-id="@Model.DestinationId"
+               asp-fragment="expert-tips">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>

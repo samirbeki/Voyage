@@ -140,6 +140,38 @@ namespace Voyage.Services.Tests
         }
 
         [Fact]
+        public async Task SeedAsync_CreatesExpertTipsOnlyFromExperts()
+        {
+            using var provider = BuildServiceProvider(FullSettings());
+
+            await seeder.SeedAsync(dbContext, provider);
+
+            var authors = await dbContext.ExpertTips
+                .Select(t => t.Author.Email!)
+                .ToListAsync();
+
+            Assert.Equal(10, authors.Count);
+            Assert.All(authors, email => Assert.Contains(email, new[] { "maria@voyage.test", "georgi@voyage.test" }));
+            Assert.All(
+                await dbContext.ExpertTips.Select(t => t.Content).ToListAsync(),
+                content => Assert.InRange(
+                    content.Length,
+                    ExpertTipValidationConstants.ContentMinLength,
+                    ExpertTipValidationConstants.ContentMaxLength));
+        }
+
+        [Fact]
+        public async Task SeedAsync_RunTwice_DoesNotDuplicateExpertTips()
+        {
+            using var provider = BuildServiceProvider(FullSettings());
+
+            await seeder.SeedAsync(dbContext, provider);
+            await seeder.SeedAsync(dbContext, provider);
+
+            Assert.Equal(10, await dbContext.ExpertTips.CountAsync());
+        }
+
+        [Fact]
         public async Task SeedAsync_CreatesTripsWithExpensesAndPackingItems()
         {
             using var provider = BuildServiceProvider(FullSettings());

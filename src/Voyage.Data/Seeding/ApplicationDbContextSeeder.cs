@@ -16,6 +16,7 @@
                 new TravelExpertSeeder(),
                 new TripSeeder(),
                 new ReviewSeeder(),
+                new ExpertTipSeeder(),
                 new FavoriteSeeder(),
                 new DefaultUserRoleSeeder()
             };

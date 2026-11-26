@@ -1,0 +1,40 @@
+﻿@model Voyage.Web.ViewModels.ExpertTips.ExpertTipEditViewModel
+
+@{
+    ViewData["Title"] = "Edit expert tip";
+}
+
+<div class="v-form-card">
+    <h1 class="v-page-title mb-1">Edit expert tip</h1>
+    <p class="v-page-subtitle mb-4">
+        For <strong>@Model.DestinationName</strong>
+    </p>
+
+    <form method="post" asp-action="Edit" asp-route-id="@Model.Id">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="mb-4">
+            <label class="form-label" asp-for="Content"></label>
+            <textarea class="form-control"
+                      asp-for="Content"
+                      rows="4"
+                      maxlength="@ExpertTipValidationConstants.ContentMaxLength"></textarea>
+            <span class="text-danger" asp-validation-for="Content"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-accent px-4">
+                <i class="bi bi-check-lg"></i> Save changes
+            </button>
+            <a class="btn btn-outline-navy"
+               asp-controller="Destinations"
+               asp-action="Details"
+               asp-route-id="@Model.DestinationId"
+               asp-fragment="expert-tips">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

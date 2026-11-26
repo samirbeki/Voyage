@@ -50,5 +50,10 @@
 
         public const string TravelExpertRemoved =
             "{0} is no longer a Travel Expert.";
+
+        public const string ExpertTipCreated = "Your expert tip was published.";
+        public const string ExpertTipUpdated = "Your expert tip was updated.";
+        public const string ExpertTipDeleted = "Your expert tip was deleted.";
+        public const string ExpertTipDeletedByModerator = "The expert tip was removed.";
     }
 }

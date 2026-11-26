@@ -577,6 +577,44 @@ namespace Voyage.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Voyage.Data.Models.ExpertTip", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<int>("DestinationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DestinationId");
+
+                    b.HasIndex("AuthorId", "DestinationId")
+                        .IsUnique();
+
+                    b.ToTable("ExpertTips");
+                });
+
             modelBuilder.Entity("Voyage.Data.Models.Favorite", b =>
                 {
                     b.Property<string>("UserId")
@@ -833,6 +871,25 @@ namespace Voyage.Data.Migrations
                     b.Navigation("Trip");
                 });
 
+            modelBuilder.Entity("Voyage.Data.Models.ExpertTip", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Voyage.Data.Models.Destination", "Destination")
+                        .WithMany("ExpertTips")
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Destination");
+                });
+
             modelBuilder.Entity("Voyage.Data.Models.Favorite", b =>
                 {
                     b.HasOne("Voyage.Data.Models.Destination", "Destination")
@@ -919,6 +976,8 @@ namespace Voyage.Data.Migrations
 
             modelBuilder.Entity("Voyage.Data.Models.Destination", b =>
                 {
+                    b.Navigation("ExpertTips");
+
                     b.Navigation("Favorites");
 
                     b.Navigation("Reviews");

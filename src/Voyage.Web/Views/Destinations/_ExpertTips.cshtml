@@ -1,0 +1,73 @@
+﻿@model Voyage.Web.ViewModels.Destinations.DestinationDetailsViewModel
+
+<section id="expert-tips" class="v-section">
+    <div class="reviews-heading">
+        <div>
+            <h2 class="v-section-title">Expert tips</h2>
+            <p class="v-muted mb-0">Practical advice from our travel experts.</p>
+        </div>
+    </div>
+
+    @if (Model.CanAddExpertTip)
+    {
+        <partial name="_ExpertTipForm"
+                 model="Model.ExpertTipForm"
+                 view-data='new ViewDataDictionary(ViewData) { { "DestinationId", Model.Id }, { "DestinationName", Model.Name } }' />
+    }
+
+    @if (Model.ExpertTips.Any())
+    {
+        <ul class="expert-tip-list">
+            @foreach (var tip in Model.ExpertTips)
+            {
+                <li class="expert-tip">
+                    <i class="bi bi-lightbulb-fill expert-tip-icon"></i>
+                    <div class="expert-tip-body">
+                        <p class="expert-tip-content">@tip.Content</p>
+                        <div class="expert-tip-meta">
+                            <span class="review-author">@tip.AuthorName</span>
+                            <span class="review-expert-badge">
+                                <i class="bi bi-patch-check-fill"></i> Travel Expert
+                            </span>
+                            <span class="review-date">
+                                @tip.CreatedOn.ToLocalTime().ToString("dd MMM yyyy")
+                                @if (tip.IsEdited)
+                                {
+                                    <em>(edited)</em>
+                                }
+                            </span>
+                        </div>
+                        @if (User.IsInRole(RoleConstants.Moderator) || User.IsInRole(RoleConstants.Administrator))
+                        {
+                            <form method="post"
+                                  asp-area="Moderator"
+                                  asp-controller="ExpertTips"
+                                  asp-action="Delete"
+                                  asp-route-id="@tip.Id"
+                                  asp-route-destinationId="@Model.Id"
+                                  class="review-actions"
+                                  onsubmit="return confirm('Remove this expert tip?');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-shield-x"></i> Remove as moderator
+                                </button>
+                            </form>
+                        }
+                        @if (tip.IsMine)
+                        {
+                            <div class="review-actions">
+                                <a asp-controller="ExpertTips"
+                                   asp-action="Edit"
+                                   asp-route-id="@tip.Id"
+                                   class="btn btn-sm btn-outline-navy"><i class="bi bi-pencil"></i> Edit</a>
+                                <a asp-controller="ExpertTips"
+                                   asp-action="Delete"
+                                   asp-route-id="@tip.Id"
+                                   class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Delete</a>
+                            </div>
+                        }
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+</section>

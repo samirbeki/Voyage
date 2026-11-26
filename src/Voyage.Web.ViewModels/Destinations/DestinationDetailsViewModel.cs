@@ -1,4 +1,5 @@
-﻿using Voyage.Web.ViewModels.Reviews;
+﻿using Voyage.Web.ViewModels.ExpertTips;
+using Voyage.Web.ViewModels.Reviews;
 
 namespace Voyage.Web.ViewModels.Destinations
 {
@@ -27,6 +28,12 @@ namespace Voyage.Web.ViewModels.Destinations
         public bool CanReview { get; set; }
 
         public ReviewFormModel ReviewForm { get; set; } = new();
+
+        public IEnumerable<ExpertTipViewModel> ExpertTips { get; set; } = new List<ExpertTipViewModel>();
+
+        public bool CanAddExpertTip { get; set; }
+
+        public ExpertTipFormModel ExpertTipForm { get; set; } = new();
 
         public bool IsFavorite { get; set; }
 

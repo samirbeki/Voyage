@@ -23,6 +23,8 @@ namespace Voyage.Data
 
         public DbSet<PackingItem> PackingItems { get; set; } = null!;
 
+        public DbSet<ExpertTip> ExpertTips { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

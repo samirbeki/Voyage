@@ -39,5 +39,8 @@ namespace Voyage.Data.Models
 
         public ICollection<Favorite> Favorites { get; set; }
             = new HashSet<Favorite>();
+
+        public ICollection<ExpertTip> ExpertTips { get; set; }
+            = new HashSet<ExpertTip>();
     }
 }

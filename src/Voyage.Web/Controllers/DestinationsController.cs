@@ -10,15 +10,18 @@ namespace Voyage.Web.Controllers
         private readonly IDestinationService destinationService;
         private readonly IReviewService reviewService;
         private readonly IFavoriteService favoriteService;
+        private readonly IExpertTipService expertTipService;
 
         public DestinationsController(
             IDestinationService destinationService,
             IReviewService reviewService,
-            IFavoriteService favoriteService)
+            IFavoriteService favoriteService,
+            IExpertTipService expertTipService)
         {
             this.destinationService = destinationService;
             this.reviewService = reviewService;
             this.favoriteService = favoriteService;
+            this.expertTipService = expertTipService;
         }
 
         public async Task<IActionResult> Index(
@@ -96,6 +99,13 @@ namespace Voyage.Web.Controllers
 
             destination.CanReview = userId != null
                 && !await reviewService.HasUserReviewedAsync(id, userId);
+
+            destination.ExpertTips =
+                await expertTipService.GetForDestinationAsync(id, userId);
+
+            destination.CanAddExpertTip = userId != null
+                && User.IsInRole(RoleConstants.TravelExpert)
+                && await expertTipService.CanAddAsync(id, userId);
 
             return View(destination);
         }
