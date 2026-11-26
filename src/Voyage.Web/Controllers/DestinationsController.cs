@@ -11,17 +11,20 @@ namespace Voyage.Web.Controllers
         private readonly IReviewService reviewService;
         private readonly IFavoriteService favoriteService;
         private readonly IExpertTipService expertTipService;
+        private readonly IWeatherService weatherService;
 
         public DestinationsController(
             IDestinationService destinationService,
             IReviewService reviewService,
             IFavoriteService favoriteService,
-            IExpertTipService expertTipService)
+            IExpertTipService expertTipService,
+            IWeatherService weatherService)
         {
             this.destinationService = destinationService;
             this.reviewService = reviewService;
             this.favoriteService = favoriteService;
             this.expertTipService = expertTipService;
+            this.weatherService = weatherService;
         }
 
         public async Task<IActionResult> Index(
@@ -108,6 +111,26 @@ namespace Voyage.Web.Controllers
                 && await expertTipService.CanAddAsync(id, userId);
 
             return View(destination);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Weather(int id)
+        {
+            var destination = await destinationService.GetDetailsAsync(id);
+
+            if (destination == null)
+            {
+                return NotFound();
+            }
+
+            var weather = await weatherService.GetForecastAsync(destination.Name, destination.Country);
+
+            if (weather == null)
+            {
+                return NoContent();
+            }
+
+            return PartialView("_Weather", weather);
         }
     }
 }

@@ -85,6 +85,16 @@
                 </a>
             </div>
         </div>
+
+        <div id="destination-weather"
+             class="mt-4"
+             data-weather-url="@Url.Action("Weather", new { id = Model.Id })">
+            <div class="v-panel">
+                <p class="v-muted mb-0">
+                    <i class="bi bi-cloud-sun"></i> Loading the weather...
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -158,4 +168,5 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/review-form.js" asp-append-version="true"></script>
+    <script src="~/js/weather.js" asp-append-version="true"></script>
 }

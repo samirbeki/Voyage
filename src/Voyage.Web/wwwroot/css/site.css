@@ -1835,6 +1835,79 @@ a.v-category-count:hover .bi-arrow-right {
     color: var(--voyage-teal);
 }
 
+/* ---------- Weather (Destination details) ---------- */
+
+.v-weather-now {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.v-weather-now > div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.v-weather-icon {
+    font-size: 2.6rem;
+    color: var(--voyage-accent);
+    line-height: 1;
+}
+
+.v-weather-temp {
+    font-family: var(--voyage-font-display);
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--voyage-navy);
+    line-height: 1.1;
+}
+
+.v-weather-desc {
+    font-weight: 600;
+    color: var(--voyage-navy-soft);
+}
+
+.v-weather-days {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--voyage-border);
+}
+
+.v-weather-days li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--voyage-border);
+}
+
+.v-weather-day {
+    width: 2.5rem;
+    font-weight: 600;
+    color: var(--voyage-navy);
+}
+
+.v-weather-days i {
+    font-size: 1.15rem;
+    color: var(--voyage-teal);
+}
+
+.v-weather-range {
+    margin-left: auto;
+    display: flex;
+    gap: 0.6rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.v-weather-source {
+    margin: 0.75rem 0 0;
+    font-size: 0.75rem;
+    color: var(--voyage-muted);
+}
+
 /* ---------- Budget / progress bar (also used by Packing progress) ---------- */
 
 .v-budget-bar {

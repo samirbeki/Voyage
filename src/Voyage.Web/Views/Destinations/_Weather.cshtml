@@ -1,0 +1,35 @@
+﻿@model Voyage.Web.ViewModels.Weather.WeatherViewModel
+
+<div class="v-panel v-weather">
+    <h2 class="v-panel-title">Weather now</h2>
+
+    <div class="v-weather-now">
+        <i class="bi @Model.Icon v-weather-icon" aria-hidden="true"></i>
+        <div>
+            <span class="v-weather-temp">@Math.Round(Model.CurrentTemperature)°C</span>
+            <span class="v-weather-desc">@Model.Description</span>
+            <span class="v-muted small">
+                Wind @Math.Round(Model.WindSpeed) km/h · @Model.Location
+            </span>
+        </div>
+    </div>
+
+    <ul class="v-weather-days">
+        @foreach (var day in Model.Days)
+        {
+            <li>
+                <span class="v-weather-day">@day.Date.ToString("ddd", System.Globalization.CultureInfo.InvariantCulture)</span>
+                <i class="bi @day.Icon" title="@day.Description" aria-label="@day.Description"></i>
+                <span class="v-weather-range">
+                    <strong>@Math.Round(day.MaxTemperature)°</strong>
+                    <span class="v-muted">@Math.Round(day.MinTemperature)°</span>
+                </span>
+            </li>
+        }
+    </ul>
+
+    <p class="v-weather-source">
+        Weather data by
+        <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
+    </p>
+</div>
