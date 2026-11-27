@@ -43,6 +43,30 @@
             <span class="text-danger" asp-validation-for="ImageUrl"></span>
         </div>
 
+        <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+                <label class="form-label" asp-for="Latitude"></label>
+                <input class="form-control"
+                       asp-for="Latitude"
+                       type="number"
+                       step="any"
+                       placeholder="e.g. 38.7223" />
+                <span class="text-danger" asp-validation-for="Latitude"></span>
+            </div>
+
+            <div class="col-sm-6">
+                <label class="form-label" asp-for="Longitude"></label>
+                <input class="form-control"
+                       asp-for="Longitude"
+                       type="number"
+                       step="any"
+                       placeholder="e.g. -9.1393" />
+                <span class="text-danger" asp-validation-for="Longitude"></span>
+            </div>
+
+            <div class="col-12 form-text mt-1">Optional. Used to show the destination on a map.</div>
+        </div>
+
         <div class="mb-4">
             <label class="form-label" asp-for="Description"></label>
             <textarea class="form-control"

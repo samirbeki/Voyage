@@ -1,7 +1,18 @@
 ﻿@model Voyage.Web.ViewModels.Destinations.DestinationDetailsViewModel
+@using System.Globalization
 
 @{
     ViewData["Title"] = Model.Name;
+}
+
+@section Styles {
+    @if (Model.HasCoordinates)
+    {
+        <link rel="stylesheet"
+              href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+              integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+              crossorigin="" />
+    }
 }
 
 <div class="v-cover">
@@ -111,6 +122,34 @@
     </div>
 </div>
 
+@if (Model.HasCoordinates)
+{
+    string latitude = Model.Latitude!.Value.ToString(CultureInfo.InvariantCulture);
+    string longitude = Model.Longitude!.Value.ToString(CultureInfo.InvariantCulture);
+
+    <div class="v-panel v-map-panel">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+            <h2 class="v-panel-title mb-0">On the map</h2>
+
+            <a class="v-map-external"
+               href="https://www.openstreetmap.org/?mlat=@latitude&amp;mlon=@longitude#map=12/@latitude/@longitude"
+               target="_blank"
+               rel="noopener">
+                <i class="bi bi-box-arrow-up-right"></i> Open in OpenStreetMap
+            </a>
+        </div>
+
+        <div class="v-map"
+             data-map
+             data-lat="@latitude"
+             data-lng="@longitude"
+             data-name="@Model.Name"
+             role="region"
+             aria-label="Map of @Model.Name">
+        </div>
+    </div>
+}
+
 @if (Model.SimilarDestinations.Any())
 {
     <section class="v-section">
@@ -182,4 +221,12 @@
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/review-form.js" asp-append-version="true"></script>
     <script src="~/js/weather.js" asp-append-version="true"></script>
+
+    @if (Model.HasCoordinates)
+    {
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+                integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+                crossorigin=""></script>
+        <script src="~/js/destination-map.js" asp-append-version="true"></script>
+    }
 }

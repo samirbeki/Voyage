@@ -29,6 +29,12 @@
         public const string DestinationExists =
             "A destination with this name already exists in this country.";
 
+        public const string CoordinateRange =
+            "{0} must be between {1} and {2}.";
+
+        public const string CoordinatesIncomplete =
+            "Enter both latitude and longitude, or leave both empty.";
+
         public const string DecimalFormat =
             "Use a dot for decimals, e.g. 12.50.";
 

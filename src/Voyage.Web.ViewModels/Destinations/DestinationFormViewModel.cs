@@ -4,7 +4,7 @@ using Voyage.Common.Messages;
 
 namespace Voyage.Web.ViewModels.Destinations
 {
-    public class DestinationFormViewModel
+    public class DestinationFormViewModel : IValidatableObject
     {
         [Required(ErrorMessage = ErrorMessages.RequiredField)]
         [StringLength(
@@ -37,6 +37,18 @@ namespace Voyage.Web.ViewModels.Destinations
         public string? ImageUrl { get; set; }
 
         [Range(
+            DestinationValidationConstants.LatitudeMin,
+            DestinationValidationConstants.LatitudeMax,
+            ErrorMessage = ErrorMessages.CoordinateRange)]
+        public double? Latitude { get; set; }
+
+        [Range(
+            DestinationValidationConstants.LongitudeMin,
+            DestinationValidationConstants.LongitudeMax,
+            ErrorMessage = ErrorMessages.CoordinateRange)]
+        public double? Longitude { get; set; }
+
+        [Range(
             1,
             int.MaxValue,
             ErrorMessage = ErrorMessages.CategoryRequired)]
@@ -45,5 +57,15 @@ namespace Voyage.Web.ViewModels.Destinations
 
         public IEnumerable<CategoryOptionViewModel> Categories { get; set; }
             = new List<CategoryOptionViewModel>();
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Latitude.HasValue != Longitude.HasValue)
+            {
+                yield return new ValidationResult(
+                    ErrorMessages.CoordinatesIncomplete,
+                    new[] { Latitude.HasValue ? nameof(Longitude) : nameof(Latitude) });
+            }
+        }
     }
 }

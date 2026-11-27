@@ -13,6 +13,12 @@ namespace Voyage.Web.ViewModels.Destinations
 
         public string? ImageUrl { get; set; }
 
+        public double? Latitude { get; set; }
+
+        public double? Longitude { get; set; }
+
+        public bool HasCoordinates => Latitude.HasValue && Longitude.HasValue;
+
         public string CategoryName { get; set; } = null!;
 
         public string Description { get; set; } = null!;

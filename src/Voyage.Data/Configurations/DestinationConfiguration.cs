@@ -24,6 +24,8 @@ namespace Voyage.Data.Configurations
                     Name = "Santorini",
                     Country = "Greece",
                     CategoryId = 1,
+                    Latitude = 36.4166,
+                    Longitude = 25.4318,
                     ImageUrl = "/images/destinations/santorini.jpg",
                     Description = Paragraphs(
                         "Whitewashed villages, blue domes and famous sunsets over the Aegean Sea make Santorini one of the most photographed islands in Greece.",
@@ -36,6 +38,8 @@ namespace Voyage.Data.Configurations
                     Name = "Bansko",
                     Country = "Bulgaria",
                     CategoryId = 2,
+                    Latitude = 41.8383,
+                    Longitude = 23.4885,
                     ImageUrl = "/images/destinations/bansko.jpg",
                     Description = Paragraphs(
                         "A mountain town at the foot of Pirin, Bansko is the most popular winter resort in Bulgaria and a great base for summer hiking.",
@@ -48,6 +52,8 @@ namespace Voyage.Data.Configurations
                     Name = "Paris",
                     Country = "France",
                     CategoryId = 3,
+                    Latitude = 48.8566,
+                    Longitude = 2.3522,
                     ImageUrl = "/images/destinations/paris.jpg",
                     Description = Paragraphs(
                         "The city of light, Paris is full of iconic landmarks, sidewalk cafés and some of the best museums in the world.",
@@ -60,6 +66,8 @@ namespace Voyage.Data.Configurations
                     Name = "Rome",
                     Country = "Italy",
                     CategoryId = 4,
+                    Latitude = 41.9028,
+                    Longitude = 12.4964,
                     ImageUrl = "/images/destinations/rome.jpg",
                     Description = Paragraphs(
                         "Ancient ruins, Renaissance art and lively piazzas fill the Eternal City, where almost every street holds a piece of history.",
@@ -72,6 +80,8 @@ namespace Voyage.Data.Configurations
                     Name = "Plitvice Lakes",
                     Country = "Croatia",
                     CategoryId = 5,
+                    Latitude = 44.8654,
+                    Longitude = 15.5820,
                     ImageUrl = "/images/destinations/plitvice.jpg",
                     Description = Paragraphs(
                         "Terraced lakes connected by waterfalls make Plitvice Lakes National Park one of the most beautiful natural sights in Europe.",
@@ -84,6 +94,8 @@ namespace Voyage.Data.Configurations
                     Name = "Interlaken",
                     Country = "Switzerland",
                     CategoryId = 6,
+                    Latitude = 46.6863,
+                    Longitude = 7.8632,
                     ImageUrl = "/images/destinations/interlaken.jpg",
                     Description = Paragraphs(
                         "Set between Lake Thun and Lake Brienz, Interlaken is the base for paragliding, canyoning and alpine adventures in the Bernese Oberland.",
@@ -96,6 +108,8 @@ namespace Voyage.Data.Configurations
                     Name = "Sozopol",
                     Country = "Bulgaria",
                     CategoryId = 1,
+                    Latitude = 42.4178,
+                    Longitude = 27.6956,
                     ImageUrl = "/images/destinations/sozopol.jpg",
                     Description = Paragraphs(
                         "A charming old town on the Black Sea coast with sandy beaches, Sozopol is one of the oldest towns in Bulgaria.",
@@ -108,6 +122,8 @@ namespace Voyage.Data.Configurations
                     Name = "Barcelona",
                     Country = "Spain",
                     CategoryId = 3,
+                    Latitude = 41.3874,
+                    Longitude = 2.1686,
                     ImageUrl = "/images/destinations/barcelona.jpg",
                     Description = Paragraphs(
                         "Gaudí architecture, city beaches and vibrant nightlife come together in Barcelona, the capital of Catalonia on the Mediterranean coast.",
@@ -120,6 +136,8 @@ namespace Voyage.Data.Configurations
                     Name = "Prague",
                     Country = "Czech Republic",
                     CategoryId = 3,
+                    Latitude = 50.0755,
+                    Longitude = 14.4378,
                     ImageUrl = "/images/destinations/prague.jpg",
                     Description = Paragraphs(
                         "A fairytale old town with a famous astronomical clock and the Charles Bridge, Prague is one of the best-preserved capitals in Europe.",
@@ -132,6 +150,8 @@ namespace Voyage.Data.Configurations
                     Name = "Kyoto",
                     Country = "Japan",
                     CategoryId = 4,
+                    Latitude = 35.0116,
+                    Longitude = 135.7681,
                     ImageUrl = "/images/destinations/kyoto.jpg",
                     Description = Paragraphs(
                         "Over a thousand temples, traditional tea houses and beautiful gardens make Kyoto the cultural heart of Japan.",
@@ -144,6 +164,8 @@ namespace Voyage.Data.Configurations
                     Name = "Banff",
                     Country = "Canada",
                     CategoryId = 5,
+                    Latitude = 51.1784,
+                    Longitude = -115.5708,
                     ImageUrl = "/images/destinations/banff.jpg",
                     Description = Paragraphs(
                         "Turquoise lakes and rugged peaks surround Banff, a small mountain town in the heart of the Canadian Rockies.",
@@ -156,6 +178,8 @@ namespace Voyage.Data.Configurations
                     Name = "Queenstown",
                     Country = "New Zealand",
                     CategoryId = 6,
+                    Latitude = -45.0312,
+                    Longitude = 168.6626,
                     ImageUrl = "/images/destinations/queenstown.jpg",
                     Description = Paragraphs(
                         "On the shores of Lake Wakatipu, Queenstown is known as the adventure capital of the world for bungee jumping, jet boating and skiing.",
@@ -168,6 +192,8 @@ namespace Voyage.Data.Configurations
                     Name = "Bali",
                     Country = "Indonesia",
                     CategoryId = 1,
+                    Latitude = -8.4095,
+                    Longitude = 115.1889,
                     ImageUrl = "/images/destinations/bali.jpg",
                     Description = Paragraphs(
                         "Tropical beaches, green rice terraces and spiritual temples make Bali one of the most popular islands in Indonesia.",
@@ -180,6 +206,8 @@ namespace Voyage.Data.Configurations
                     Name = "Zermatt",
                     Country = "Switzerland",
                     CategoryId = 8,
+                    Latitude = 46.0207,
+                    Longitude = 7.7491,
                     ImageUrl = "/images/destinations/zermatt.jpg",
                     Description = Paragraphs(
                         "A car-free alpine village beneath the iconic Matterhorn, Zermatt is one of the most famous mountain resorts in Switzerland.",
@@ -192,6 +220,8 @@ namespace Voyage.Data.Configurations
                     Name = "Velingrad",
                     Country = "Bulgaria",
                     CategoryId = 7,
+                    Latitude = 42.0270,
+                    Longitude = 23.9910,
                     ImageUrl = "/images/destinations/velingrad.jpg",
                     Description = Paragraphs(
                         "Known as the spa capital of the Balkans, Velingrad has dozens of mineral springs in a green valley of the Western Rhodopes.",
@@ -204,6 +234,8 @@ namespace Voyage.Data.Configurations
                     Name = "Istanbul",
                     Country = "Turkey",
                     CategoryId = 4,
+                    Latitude = 41.0082,
+                    Longitude = 28.9784,
                     ImageUrl = "/images/destinations/istanbul.jpg",
                     Description = Paragraphs(
                         "Where Europe meets Asia, Istanbul is a city full of bazaars, mosques and palaces on both shores of the Bosphorus.",
@@ -216,6 +248,8 @@ namespace Voyage.Data.Configurations
                     Name = "Rila Lakes",
                     Country = "Bulgaria",
                     CategoryId = 2,
+                    Latitude = 42.2040,
+                    Longitude = 23.3150,
                     ImageUrl = "/images/destinations/rila.jpg",
                     Description = Paragraphs(
                         "Seven glacial lakes lie one above the other high in the Rila Mountains, making them one of the most visited natural sights in Bulgaria.",
@@ -228,6 +262,8 @@ namespace Voyage.Data.Configurations
                     Name = "Reykjavik",
                     Country = "Iceland",
                     CategoryId = 5,
+                    Latitude = 64.1466,
+                    Longitude = -21.9426,
                     ImageUrl = "/images/destinations/reykjavik.jpg",
                     Description = Paragraphs(
                         "The northernmost capital of any country in the world, Reykjavik is the gateway to geysers, waterfalls and the northern lights.",
@@ -240,6 +276,8 @@ namespace Voyage.Data.Configurations
                     Name = "Budapest",
                     Country = "Hungary",
                     CategoryId = 7,
+                    Latitude = 47.4979,
+                    Longitude = 19.0402,
                     ImageUrl = "/images/destinations/budapest.jpg",
                     Description = Paragraphs(
                         "Grand thermal baths and elegant architecture line the Danube in Budapest, the capital of Hungary.",
@@ -252,6 +290,8 @@ namespace Voyage.Data.Configurations
                     Name = "Borovets",
                     Country = "Bulgaria",
                     CategoryId = 8,
+                    Latitude = 42.2667,
+                    Longitude = 23.6000,
                     ImageUrl = "/images/destinations/borovets.jpg",
                     Description = Paragraphs(
                         "The oldest ski resort in Bulgaria, Borovets lies among tall pine forests on the northern slopes of the Rila Mountains.",
@@ -264,6 +304,8 @@ namespace Voyage.Data.Configurations
                     Name = "Lisbon",
                     Country = "Portugal",
                     CategoryId = 3,
+                    Latitude = 38.7223,
+                    Longitude = -9.1393,
                     ImageUrl = "/images/destinations/lisbon.jpg",
                     Description = Paragraphs(
                         "Built on seven hills above the Tagus River, Lisbon is a sunny capital of colourful tiles, historic trams and ocean views.",

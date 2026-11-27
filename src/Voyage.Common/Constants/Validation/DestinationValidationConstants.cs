@@ -10,5 +10,11 @@
 
         public const int DescriptionMinLength = 10;
         public const int DescriptionMaxLength = 2000;
+
+        public const double LatitudeMin = -90;
+        public const double LatitudeMax = 90;
+
+        public const double LongitudeMin = -180;
+        public const double LongitudeMax = 180;
     }
 }

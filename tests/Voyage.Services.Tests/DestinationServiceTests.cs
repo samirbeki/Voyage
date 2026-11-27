@@ -539,6 +539,114 @@ namespace Voyage.Services.Tests
             Assert.False(result);
         }
 
+        [Fact]
+        public async Task GetDetailsAsync_DestinationWithCoordinates_ReturnsThem()
+        {
+            var category = await AddCategoryAsync(dbContext, "Culture");
+            var destination = await AddDestinationAsync(dbContext, category.Id, "Lisbon", "Portugal");
+            destination.Latitude = 38.7223;
+            destination.Longitude = -9.1393;
+            await dbContext.SaveChangesAsync();
+
+            var result = await service.GetDetailsAsync(destination.Id);
+
+            Assert.NotNull(result);
+            Assert.Equal(38.7223, result.Latitude);
+            Assert.Equal(-9.1393, result.Longitude);
+            Assert.True(result.HasCoordinates);
+        }
+
+        [Fact]
+        public async Task GetDetailsAsync_DestinationWithoutCoordinates_HasNoCoordinates()
+        {
+            var category = await AddCategoryAsync(dbContext, "Culture");
+            var destination = await AddDestinationAsync(dbContext, category.Id, "Plovdiv");
+
+            var result = await service.GetDetailsAsync(destination.Id);
+
+            Assert.NotNull(result);
+            Assert.Null(result.Latitude);
+            Assert.Null(result.Longitude);
+            Assert.False(result.HasCoordinates);
+        }
+
+        [Fact]
+        public async Task AddAsync_WithCoordinates_SavesThem()
+        {
+            var category = await AddCategoryAsync(dbContext, "Culture");
+            var form = CreateForm(category.Id);
+            form.Latitude = 42.1354;
+            form.Longitude = 24.7453;
+
+            await service.AddAsync(form);
+
+            var destination = await dbContext.Destinations.SingleAsync();
+            Assert.Equal(42.1354, destination.Latitude);
+            Assert.Equal(24.7453, destination.Longitude);
+        }
+
+        [Fact]
+        public async Task AddAsync_WithoutCoordinates_SavesNullCoordinates()
+        {
+            var category = await AddCategoryAsync(dbContext, "Culture");
+
+            await service.AddAsync(CreateForm(category.Id));
+
+            var destination = await dbContext.Destinations.SingleAsync();
+            Assert.Null(destination.Latitude);
+            Assert.Null(destination.Longitude);
+        }
+
+        [Fact]
+        public async Task GetForEditAsync_DestinationWithCoordinates_ReturnsThem()
+        {
+            var category = await AddCategoryAsync(dbContext, "Culture");
+            var destination = await AddDestinationAsync(dbContext, category.Id, "Prague", "Czech Republic");
+            destination.Latitude = 50.0755;
+            destination.Longitude = 14.4378;
+            await dbContext.SaveChangesAsync();
+
+            var result = await service.GetForEditAsync(destination.Id);
+
+            Assert.NotNull(result);
+            Assert.Equal(50.0755, result.Latitude);
+            Assert.Equal(14.4378, result.Longitude);
+        }
+
+        [Fact]
+        public async Task EditAsync_NewCoordinates_UpdatesThem()
+        {
+            var category = await AddCategoryAsync(dbContext, "Culture");
+            var destination = await AddDestinationAsync(dbContext, category.Id, "Varna");
+            var form = CreateForm(category.Id);
+            form.Latitude = 43.2141;
+            form.Longitude = 27.9147;
+
+            var result = await service.EditAsync(destination.Id, form);
+
+            Assert.True(result);
+            var updated = await dbContext.Destinations.SingleAsync();
+            Assert.Equal(43.2141, updated.Latitude);
+            Assert.Equal(27.9147, updated.Longitude);
+        }
+
+        [Fact]
+        public async Task EditAsync_EmptyCoordinates_RemovesThem()
+        {
+            var category = await AddCategoryAsync(dbContext, "Culture");
+            var destination = await AddDestinationAsync(dbContext, category.Id, "Varna");
+            destination.Latitude = 43.2141;
+            destination.Longitude = 27.9147;
+            await dbContext.SaveChangesAsync();
+
+            var result = await service.EditAsync(destination.Id, CreateForm(category.Id));
+
+            Assert.True(result);
+            var updated = await dbContext.Destinations.SingleAsync();
+            Assert.Null(updated.Latitude);
+            Assert.Null(updated.Longitude);
+        }
+
         private static DestinationFormViewModel CreateForm(int categoryId)
         {
             return new DestinationFormViewModel

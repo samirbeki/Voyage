@@ -24,6 +24,16 @@ namespace Voyage.Data.Models
         [MaxLength(SharedValidationConstants.ImageUrlMaxLength)]
         public string? ImageUrl { get; set; }
 
+        [Range(
+            DestinationValidationConstants.LatitudeMin,
+            DestinationValidationConstants.LatitudeMax)]
+        public double? Latitude { get; set; }
+
+        [Range(
+            DestinationValidationConstants.LongitudeMin,
+            DestinationValidationConstants.LongitudeMax)]
+        public double? Longitude { get; set; }
+
         public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(Category))]

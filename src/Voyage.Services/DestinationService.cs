@@ -101,6 +101,8 @@ namespace Voyage.Services
                     Name = d.Name,
                     Country = d.Country,
                     ImageUrl = d.ImageUrl,
+                    Latitude = d.Latitude,
+                    Longitude = d.Longitude,
                     CategoryName = d.Category.Name,
                     CategoryId = d.CategoryId,
                     Description = d.Description
@@ -146,6 +148,8 @@ namespace Voyage.Services
                 Country = TextNormalizer.SingleLine(model.Country),
                 Description = model.Description.Trim(),
                 ImageUrl = model.ImageUrl?.Trim(),
+                Latitude = model.Latitude,
+                Longitude = model.Longitude,
                 CategoryId = model.CategoryId
             };
 
@@ -165,6 +169,8 @@ namespace Voyage.Services
                     Country = d.Country,
                     Description = d.Description,
                     ImageUrl = d.ImageUrl,
+                    Latitude = d.Latitude,
+                    Longitude = d.Longitude,
                     CategoryId = d.CategoryId
                 })
                 .FirstOrDefaultAsync();
@@ -184,6 +190,8 @@ namespace Voyage.Services
             destination.Country = TextNormalizer.SingleLine(model.Country);
             destination.Description = model.Description.Trim();
             destination.ImageUrl = model.ImageUrl?.Trim();
+            destination.Latitude = model.Latitude;
+            destination.Longitude = model.Longitude;
             destination.CategoryId = model.CategoryId;
 
             await dbContext.SaveChangesAsync();

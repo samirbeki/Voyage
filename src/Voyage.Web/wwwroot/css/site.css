@@ -2538,3 +2538,53 @@ a.v-category-count:hover .bi-arrow-right {
     margin: 0 0.5rem 0.75rem 0;
     vertical-align: top;
 }
+
+/* ---------- Destination map ---------- */
+
+.v-map-panel {
+    margin-top: 1.5rem;
+}
+
+.v-map {
+    height: 380px;
+    border-radius: var(--voyage-radius-sm);
+    border: 1px solid var(--voyage-border);
+    overflow: hidden;
+    z-index: 0;
+}
+
+.v-map-external {
+    color: var(--voyage-muted);
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.v-map-external:hover {
+    color: var(--voyage-navy);
+}
+
+.v-map .leaflet-control-attribution {
+    font-size: 0.7rem;
+}
+
+.v-map .leaflet-popup-content-wrapper {
+    border-radius: var(--voyage-radius-sm);
+    font-family: var(--voyage-font);
+    color: var(--voyage-navy);
+}
+
+.v-map-marker {
+    background: none;
+    border: none;
+    color: var(--voyage-accent-dark);
+    font-size: 2.1rem;
+    line-height: 1;
+    text-align: center;
+    filter: drop-shadow(0 3px 4px rgba(11, 31, 58, 0.35));
+}
+
+@media (max-width: 575.98px) {
+    .v-map {
+        height: 280px;
+    }
+}
