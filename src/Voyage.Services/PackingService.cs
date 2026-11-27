@@ -103,6 +103,46 @@ namespace Voyage.Services
             };
         }
 
+        public async Task<IEnumerable<PackingReminderViewModel>> GetRemindersAsync(string userId)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(userId);
+
+            var today = DateTime.Today;
+            var windowEnd = today.AddDays(PackingItemValidationConstants.ReminderDaysBeforeStart + 1);
+
+            var trips = await dbContext.Trips
+                .AsNoTracking()
+                .Where(t =>
+                    t.OwnerId == userId &&
+                    t.StartDate >= today &&
+                    t.StartDate < windowEnd &&
+                    (!t.PackingItems.Any() || t.PackingItems.Any(p => !p.IsPacked)))
+                .OrderBy(t => t.StartDate)
+                .ThenBy(t => t.Title)
+                .Take(PackingItemValidationConstants.MaxReminders)
+                .Select(t => new
+                {
+                    t.Id,
+                    t.Title,
+                    t.StartDate,
+                    Total = t.PackingItems.Count(),
+                    Packed = t.PackingItems.Count(p => p.IsPacked)
+                })
+                .ToListAsync();
+
+            return trips
+                .Select(t => new PackingReminderViewModel
+                {
+                    TripId = t.Id,
+                    TripTitle = t.Title,
+                    StartDate = t.StartDate,
+                    DaysUntilStart = (t.StartDate.Date - today).Days,
+                    Total = t.Total,
+                    Packed = t.Packed
+                })
+                .ToList();
+        }
+
         public async Task<PackingResult> AddAsync(
             int tripId,
             PackingItemFormModel model,

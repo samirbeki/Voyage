@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Voyage.Web.ViewModels.Packing.PackingReminderViewModel>
+
+<section class="alert alert-dismissible fade show v-reminder" role="status" aria-label="Packing reminders">
+    <div class="v-reminder-icon">
+        <i class="bi bi-suitcase2"></i>
+    </div>
+
+    <div class="v-reminder-body">
+        <strong class="v-reminder-title">Time to pack!</strong>
+
+        <ul class="v-reminder-list">
+            @foreach (var reminder in Model)
+            {
+                string startsIn = reminder.DaysUntilStart switch
+                {
+                    0 => "starts today",
+                    1 => "starts tomorrow",
+                    _ => $"starts in {reminder.DaysUntilStart} days"
+                };
+
+                string packingState = reminder.IsListEmpty
+                    ? "your packing list is still empty"
+                    : $"{reminder.ItemsLeft} of {reminder.Total} {(reminder.Total == 1 ? "item" : "items")} left to pack";
+
+                <li class="v-reminder-item">
+                    <span>
+                        <strong>@reminder.TripTitle</strong>
+                        @startsIn · @packingState
+                    </span>
+
+                    <a class="v-reminder-link"
+                       asp-controller="Packing"
+                       asp-action="Index"
+                       asp-route-tripId="@reminder.TripId">
+                        Open packing list
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</section>

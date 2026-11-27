@@ -9,6 +9,8 @@ namespace Voyage.Services.Contracts
 
         Task<PackingProgressViewModel> GetProgressAsync(int tripId);
 
+        Task<IEnumerable<PackingReminderViewModel>> GetRemindersAsync(string userId);
+
         Task<PackingResult> AddAsync(
             int tripId,
             PackingItemFormModel model,

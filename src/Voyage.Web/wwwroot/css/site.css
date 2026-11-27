@@ -2606,3 +2606,98 @@ a.v-category-count:hover .bi-arrow-right {
         height: 280px;
     }
 }
+
+/* ---------- Packing reminder ---------- */
+
+.v-reminder {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: var(--voyage-surface);
+    color: var(--voyage-text);
+    border: 1px solid var(--voyage-border);
+    border-left: 4px solid var(--voyage-accent);
+    border-radius: var(--voyage-radius-sm);
+    padding: 1rem 3rem 1rem 1.1rem;
+    margin-bottom: 1.75rem;
+    box-shadow: var(--voyage-shadow);
+}
+
+.v-reminder-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: rgba(244, 162, 89, 0.16);
+    color: var(--voyage-accent-dark);
+    font-size: 1.2rem;
+}
+
+.v-reminder-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.v-reminder-title {
+    display: block;
+    color: var(--voyage-navy);
+    margin-bottom: 0.35rem;
+}
+
+.v-reminder-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.v-reminder-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.25rem 1rem;
+    padding: 0.35rem 0;
+    color: var(--voyage-muted);
+}
+
+.v-reminder-item + .v-reminder-item {
+    border-top: 1px dashed var(--voyage-border);
+}
+
+.v-reminder-item strong {
+    color: var(--voyage-text);
+}
+
+.v-reminder-link {
+    color: var(--voyage-accent-dark);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.v-reminder-link:hover {
+    color: var(--voyage-navy);
+}
+
+.v-reminder-link .bi {
+    transition: transform 0.2s ease;
+}
+
+.v-reminder-link:hover .bi {
+    transform: translateX(3px);
+}
+
+.v-packing-due {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(244, 162, 89, 0.14);
+    color: #9A4F12;
+    border-radius: var(--voyage-radius-sm);
+    padding: 0.55rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
