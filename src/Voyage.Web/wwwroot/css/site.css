@@ -2553,14 +2553,32 @@ a.v-category-count:hover .bi-arrow-right {
     z-index: 0;
 }
 
-.v-map-external {
+.v-map-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+}
+
+.v-map-link {
     color: var(--voyage-muted);
     font-size: 0.875rem;
     text-decoration: none;
+    white-space: nowrap;
 }
 
-.v-map-external:hover {
+.v-map-link:hover {
     color: var(--voyage-navy);
+}
+
+.v-map-directions {
+    color: var(--voyage-accent-dark);
+    font-weight: 600;
+}
+
+.v-map-popup-country {
+    color: var(--voyage-muted);
+    font-size: 0.8rem;
+    margin-top: 0.1rem;
 }
 
 .v-map .leaflet-control-attribution {

@@ -131,12 +131,21 @@
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
             <h2 class="v-panel-title mb-0">On the map</h2>
 
-            <a class="v-map-external"
-               href="https://www.openstreetmap.org/?mlat=@latitude&amp;mlon=@longitude#map=12/@latitude/@longitude"
-               target="_blank"
-               rel="noopener">
-                <i class="bi bi-box-arrow-up-right"></i> Open in OpenStreetMap
-            </a>
+            <div class="v-map-links">
+                <a class="v-map-link v-map-directions"
+                   href="https://www.google.com/maps/dir/?api=1&amp;destination=@latitude,@longitude"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <i class="bi bi-sign-turn-right"></i> Get directions
+                </a>
+
+                <a class="v-map-link"
+                   href="https://www.openstreetmap.org/?mlat=@latitude&amp;mlon=@longitude#map=12/@latitude/@longitude"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <i class="bi bi-box-arrow-up-right"></i> Open in OpenStreetMap
+                </a>
+            </div>
         </div>
 
         <div class="v-map"
@@ -144,6 +153,7 @@
              data-lat="@latitude"
              data-lng="@longitude"
              data-name="@Model.Name"
+             data-country="@Model.Country"
              role="region"
              aria-label="Map of @Model.Name">
         </div>
