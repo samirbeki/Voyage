@@ -13,15 +13,18 @@ namespace Voyage.Web.Controllers
         private readonly ITripService tripService;
         private readonly IPackingService packingService;
         private readonly ITripSharingService tripSharingService;
+        private readonly ITripWeatherService tripWeatherService;
 
         public TripsController(
             ITripService tripService,
             IPackingService packingService,
-            ITripSharingService tripSharingService)
+            ITripSharingService tripSharingService,
+            ITripWeatherService tripWeatherService)
         {
             this.tripService = tripService;
             this.packingService = packingService;
             this.tripSharingService = tripSharingService;
+            this.tripWeatherService = tripWeatherService;
         }
 
         public async Task<IActionResult> Index()
@@ -109,6 +112,24 @@ namespace Voyage.Web.Controllers
                 await packingService.GetProgressAsync(id);
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Weather(int id)
+        {
+            var model = await tripWeatherService.GetForTripAsync(id, GetUserId());
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            if (model.IsFinished || (!model.IsTooEarly && !model.Destinations.Any()))
+            {
+                return NoContent();
+            }
+
+            return PartialView("_TripWeather", model);
         }
 
         [HttpGet]

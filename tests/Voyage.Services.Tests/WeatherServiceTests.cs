@@ -73,6 +73,17 @@ namespace Voyage.Services.Tests
         }
 
         [Fact]
+        public async Task GetForecastAsync_AsksForTheLongestForecast()
+        {
+            handler.Respond("geocoding-api", RomeGeocoding);
+            handler.Respond("api.open-meteo.com/v1/forecast", Forecast);
+
+            await service.GetForecastAsync("Rome", "Italy");
+
+            Assert.Contains("forecast_days=16", handler.RequestedUrls.Last());
+        }
+
+        [Fact]
         public async Task GetForecastAsync_SeveralPlacesWithTheSameName_PicksTheOneInTheGivenCountry()
         {
             handler.Respond("geocoding-api", ParisGeocoding);

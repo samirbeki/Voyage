@@ -130,7 +130,7 @@ namespace Voyage.Web.Controllers
                 return NoContent();
             }
 
-            return PartialView("_Weather", weather);
+            return PartialView("_Weather", weather.FirstDays(WeatherConstants.DestinationForecastDays));
         }
     }
 }

@@ -31,6 +31,23 @@
             return Math.Min(width, 100 - RangeStart(day));
         }
 
+        public WeatherViewModel FirstDays(int count)
+            => WithDays(Days.Take(count));
+
+        public WeatherViewModel ForPeriod(DateTime from, DateTime to)
+            => WithDays(Days.Where(d => d.Date.Date >= from.Date && d.Date.Date <= to.Date));
+
+        private WeatherViewModel WithDays(IEnumerable<WeatherDayViewModel> days)
+            => new()
+            {
+                Location = Location,
+                CurrentTemperature = CurrentTemperature,
+                WindSpeed = WindSpeed,
+                Description = Description,
+                Icon = Icon,
+                Days = days.ToList()
+            };
+
         private double ToPercent(double value)
             => Math.Round(value / Math.Max(ForecastMax - ForecastMin, 1) * 100, 1);
     }

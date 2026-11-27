@@ -2701,3 +2701,50 @@ a.v-category-count:hover .bi-arrow-right {
     font-size: 0.9rem;
     font-weight: 600;
 }
+
+/* ---------- Trip weather ---------- */
+
+.v-trip-weather + .v-trip-weather {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed var(--voyage-border);
+}
+
+.v-trip-weather-place {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--voyage-navy);
+}
+
+.v-trip-weather .v-weather-forecast {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 6.5rem;
+    justify-content: start;
+    overflow-x: auto;
+    padding: 0.35rem 0.1rem 0.75rem;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+}
+
+.v-trip-weather .v-forecast-day {
+    scroll-snap-align: start;
+}
+
+.v-trip-weather .v-forecast-day:hover {
+    transform: none;
+}
+
+.v-trip-weather-place .bi {
+    color: var(--voyage-accent);
+}
+
+.v-trip-weather-note {
+    margin: 1.25rem 0 0;
+    font-size: 0.85rem;
+    color: var(--voyage-muted);
+}

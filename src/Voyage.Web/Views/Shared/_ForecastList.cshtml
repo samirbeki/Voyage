@@ -1,0 +1,26 @@
+﻿@model Voyage.Web.ViewModels.Weather.WeatherViewModel
+@using System.Globalization
+
+@{
+    string dayFormat = ViewData["ForecastDayFormat"] as string ?? "ddd";
+}
+
+<ul class="v-weather-forecast">
+    @foreach (var day in Model.Days)
+    {
+        <li class="v-forecast-day v-forecast-@day.Tone">
+            <span class="v-weather-day">@day.Date.ToString(dayFormat, CultureInfo.InvariantCulture)</span>
+            <span class="v-forecast-orb">
+                <i class="bi @day.Icon" aria-hidden="true"></i>
+            </span>
+            <span class="v-weather-forecast-desc">@day.Description</span>
+            <span class="v-weather-range">
+                <strong>@Math.Round(day.MaxTemperature)°</strong>
+                <span class="v-muted">@Math.Round(day.MinTemperature)°</span>
+            </span>
+            <span class="v-forecast-bar" aria-hidden="true">
+                <span style="left: @Model.RangeStart(day).ToString(CultureInfo.InvariantCulture)%; width: @Model.RangeWidth(day).ToString(CultureInfo.InvariantCulture)%"></span>
+            </span>
+        </li>
+    }
+</ul>

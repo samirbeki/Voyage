@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Voyage.Common.Constants;
 using Voyage.Services.Contracts;
 using Voyage.Services.Helpers;
 using Voyage.Web.ViewModels.Weather;
@@ -14,7 +15,6 @@ namespace Voyage.Services
     {
         private const string GeocodingUrl = "https://geocoding-api.open-meteo.com/v1/search";
         private const string ForecastUrl = "https://api.open-meteo.com/v1/forecast";
-        private const int ForecastDays = 5;
 
         private static readonly TimeSpan SuccessCacheDuration = TimeSpan.FromHours(1);
         private static readonly TimeSpan FailureCacheDuration = TimeSpan.FromMinutes(5);
@@ -86,7 +86,7 @@ namespace Voyage.Services
             string forecastRequest = $"{ForecastUrl}?{coordinates}" +
                 "&current=temperature_2m,weather_code,wind_speed_10m" +
                 "&daily=weather_code,temperature_2m_max,temperature_2m_min" +
-                $"&timezone=auto&forecast_days={ForecastDays}";
+                $"&timezone=auto&forecast_days={WeatherConstants.MaxForecastDays}";
 
             var forecast = await httpClient.GetFromJsonAsync<ForecastResponse>(forecastRequest, JsonOptions);
 

@@ -126,6 +126,7 @@ namespace Voyage.Web.Extensions
             services.AddScoped<ITravelExpertService, TravelExpertService>();
             services.AddScoped<IExpertTipService, ExpertTipService>();
             services.AddScoped<ITripSharingService, TripSharingService>();
+            services.AddScoped<ITripWeatherService, TripWeatherService>();
 
             services.AddMemoryCache();
             services.AddHttpClient<IWeatherService, WeatherService>(client =>

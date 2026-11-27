@@ -1,0 +1,57 @@
+﻿@model Voyage.Web.ViewModels.Weather.TripWeatherViewModel
+@using System.Globalization
+
+@{
+    ViewData["ForecastDayFormat"] = "ddd d";
+}
+
+<div data-weather-part="trip">
+    <div class="v-panel v-weather">
+        <h2 class="v-panel-title">Weather during the trip</h2>
+
+        @if (Model.IsTooEarly)
+        {
+            <p class="v-muted mb-0">
+                <i class="bi bi-calendar-event"></i>
+                The forecast for these dates will be available from
+                @Model.AvailableFrom.ToString("d MMM yyyy", CultureInfo.InvariantCulture).
+            </p>
+        }
+        else
+        {
+            foreach (var destination in Model.Destinations)
+            {
+                <div class="v-trip-weather">
+                    <h3 class="v-trip-weather-place">
+                        <i class="bi bi-geo-alt"></i>
+                        @destination.Name, @destination.Country
+                    </h3>
+
+                    @if (destination.Weather == null)
+                    {
+                        <p class="v-muted small mb-0">The forecast is not available right now.</p>
+                    }
+                    else
+                    {
+                        <partial name="_ForecastList" model="destination.Weather" />
+                    }
+                </div>
+            }
+
+            if (Model.IsPartial)
+            {
+                <p class="v-trip-weather-note">
+                    <i class="bi bi-info-circle"></i>
+                    The forecast covers the days up to
+                    @Model.CoveredUntil.ToString("d MMM", CultureInfo.InvariantCulture).
+                    The rest will appear closer to the trip.
+                </p>
+            }
+
+            <p class="v-weather-source">
+                Weather data by
+                <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
+            </p>
+        }
+    </div>
+</div>
